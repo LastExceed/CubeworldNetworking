@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Threading;
+﻿using System.IO;
 
 namespace Resources.Packet {
     public class EntityUpdatesFinished : Packet {

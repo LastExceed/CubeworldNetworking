@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using Resources.Utilities;
-using System.Threading;
 using System;
 
 namespace Resources.Packet {
