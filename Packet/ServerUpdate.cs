@@ -7,22 +7,21 @@ namespace Resources.Packet {
         public class BlockDelta {
             public IntVector position;
             public ByteVector color;
-            public byte type;
+            public BlockType type;
             public int unknown;
 
             public BlockDelta() { }
-
             public BlockDelta(BinaryReader reader) {
                 position = new IntVector(reader);
                 color = new ByteVector(reader);
-                type = reader.ReadByte();
+                type = (BlockType)reader.ReadByte();
                 unknown = reader.ReadInt32();
             }
 
             public void Write(BinaryWriter writer) {
                 position.Write(writer);
                 color.Write(writer);
-                writer.Write(type);
+                writer.Write((byte)type);
                 writer.Write(unknown);
             }
         }
@@ -38,7 +37,6 @@ namespace Resources.Packet {
             public int unknown;
 
             public Particle() { }
-
             public Particle(BinaryReader reader) {
                 position = new LongVector(reader);
                 velocity = new FloatVector(reader);
@@ -65,22 +63,21 @@ namespace Resources.Packet {
         }
         public class Sound {
             public IntVector position;
-            public int soundID;
+            public SoundID soundID;
             public float pitch;
             public float volume;
 
             public Sound() { }
-
             public Sound(BinaryReader reader) {
                 position = new IntVector(reader);
-                soundID = reader.ReadInt32();
+                soundID = (SoundID)reader.ReadInt32();
                 pitch = reader.ReadSingle();
                 volume = reader.ReadSingle();
             }
 
             public void Write(BinaryWriter writer) {
                 position.Write(writer);
-                writer.Write(soundID);
+                writer.Write((int)soundID);
                 writer.Write(pitch);
                 writer.Write(volume);
             }
@@ -88,32 +85,33 @@ namespace Resources.Packet {
         public class StaticEntity {
             public int chunkX;
             public int chunkY;
-            public int id;
+            public StaticID id;
             public int paddingA;
             public int type;
             public int paddingB;
             public LongVector position;
             public int rotation;
             public FloatVector size;
-            public int closed; //bool?
+            public bool closed; //bool?
+            //3pad
             public int time; //for open/close doors ect
             public int unknown;
             public int paddingC;
             public long guid; //of player who interacts with it
 
             public StaticEntity() { }
-
             public StaticEntity(BinaryReader reader) {
                 chunkX = reader.ReadInt32();
                 chunkY = reader.ReadInt32();
-                id = reader.ReadInt32();
+                id = (StaticID)reader.ReadInt32();
                 paddingA = reader.ReadInt32();
                 type = reader.ReadInt32();
                 paddingB = reader.ReadInt32();
                 position = new LongVector(reader);
                 rotation = reader.ReadInt32();
                 size = new FloatVector(reader);
-                closed = reader.ReadInt32();
+                closed = reader.ReadBoolean();
+                reader.ReadBytes(3);
                 time = reader.ReadInt32();
                 unknown = reader.ReadInt32();
                 paddingC = reader.ReadInt32();
@@ -123,7 +121,7 @@ namespace Resources.Packet {
             public void Write(BinaryWriter writer) {
                 writer.Write(chunkX);
                 writer.Write(chunkY);
-                writer.Write(id);
+                writer.Write((int)id);
                 writer.Write(paddingA);
                 writer.Write(type);
                 writer.Write(paddingB);
@@ -131,6 +129,7 @@ namespace Resources.Packet {
                 writer.Write(rotation);
                 size.Write(writer);
                 writer.Write(closed);
+                writer.Write(new byte[3]);
                 writer.Write(time);
                 writer.Write(unknown);
                 writer.Write(paddingC);
@@ -182,7 +181,6 @@ namespace Resources.Packet {
             public List<DroppedItem> droppedItems = new List<DroppedItem>();
 
             public ChunkItems() { }
-
             public ChunkItems(BinaryReader reader) {
                 chunkX = reader.ReadInt32();
                 chunkY = reader.ReadInt32();
@@ -220,6 +218,7 @@ namespace Resources.Packet {
             public ulong unknownA;
             public List<SubP48> subP48s = new List<SubP48>();
 
+            public P48() { }
             public P48(BinaryReader reader) {
                 unknownA = reader.ReadUInt64();
                 int count = reader.ReadInt32();
@@ -241,7 +240,6 @@ namespace Resources.Packet {
             public Item item;
 
             public Pickup() { }
-
             public Pickup(BinaryReader reader) {
                 guid = reader.ReadInt64();
                 item = new Item(reader);
@@ -259,7 +257,6 @@ namespace Resources.Packet {
             public int xp;
 
             public Kill() { }
-
             public Kill(BinaryReader reader) {
                 killer = reader.ReadInt64();
                 victim = reader.ReadInt64();
@@ -281,7 +278,6 @@ namespace Resources.Packet {
             public int unknown;
 
             public Damage() { }
-
             public Damage(BinaryReader reader) {
                 target = reader.ReadUInt64();
                 attacker = reader.ReadUInt64();
@@ -304,10 +300,10 @@ namespace Resources.Packet {
             public int unknownC;
             public int id;
             public int unknownD;
-            public int monsterID;
+            public EntityType monsterID;
             public int level;
             public byte unknownE;
-            public byte state; //0=ready 1=progressing 2=finished
+            public MissionState state; //0=ready 1=progressing 2=finished
             public short padding;
             public float unknownF;
             public float unknownG;
@@ -315,7 +311,6 @@ namespace Resources.Packet {
             public int chunkY;
 
             public Mission() { }
-
             public Mission(BinaryReader reader) {
                 sectionX = reader.ReadInt32();
                 sectionY = reader.ReadInt32();
@@ -324,10 +319,10 @@ namespace Resources.Packet {
                 unknownC = reader.ReadInt32();
                 id = reader.ReadInt32();
                 unknownD = reader.ReadInt32();
-                monsterID = reader.ReadInt32();
+                monsterID = (EntityType)reader.ReadInt32();
                 level = reader.ReadInt32();
                 unknownE = reader.ReadByte();
-                state = reader.ReadByte();
+                state = (MissionState)reader.ReadByte();
                 padding = reader.ReadInt16();
                 unknownF = reader.ReadSingle();
                 unknownG = reader.ReadSingle();
@@ -343,10 +338,10 @@ namespace Resources.Packet {
                 writer.Write(unknownC);
                 writer.Write(id);
                 writer.Write(unknownD);
-                writer.Write(monsterID);
+                writer.Write((int)monsterID);
                 writer.Write(level);
                 writer.Write(unknownE);
-                writer.Write(state);
+                writer.Write((byte)state);
                 writer.Write(padding);
                 writer.Write(unknownF);
                 writer.Write(unknownG);
@@ -372,7 +367,6 @@ namespace Resources.Packet {
         public ServerUpdate() : base() {
             PacketID = PacketID.serverUpdate;
         }
-
         public ServerUpdate(BinaryReader reader) : this() {
             byte[] uncompressed = Zlib.Decompress(reader.ReadBytes(reader.ReadInt32()));
             MemoryStream stream = new MemoryStream(uncompressed);

@@ -22,7 +22,6 @@ namespace Resources.Packet {
                 spirits[i] = new Spirit();
             }
         }
-
         public Item(BinaryReader reader) {
             type = (ItemType)reader.ReadByte();
             subtype = reader.ReadByte();

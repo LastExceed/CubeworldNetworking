@@ -6,7 +6,6 @@ namespace Resources.Packet {
         public ServerFull() : base() {
             PacketID = PacketID.time;
         }
-
         public ServerFull(BinaryReader reader) : this() {
         }
 

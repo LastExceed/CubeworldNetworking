@@ -14,7 +14,6 @@ namespace Resources.Packet {
         public PassiveProc() : base() {
             PacketID = PacketID.passiveProc;
         }
-
         public PassiveProc(BinaryReader reader) : this() {
             source = reader.ReadInt64();
             target = reader.ReadInt64();

@@ -8,7 +8,6 @@ namespace Resources.Packet {
         public Time() : base() {
             PacketID = PacketID.time;
         }
-
         public Time(BinaryReader reader) : this() {
             day = reader.ReadInt32();
             time = reader.ReadInt32();

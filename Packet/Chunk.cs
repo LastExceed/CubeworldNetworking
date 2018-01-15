@@ -8,7 +8,6 @@ namespace Resources.Packet {
         public Chunk() : base(){
             PacketID = PacketID.chunk;
         }
-
         public Chunk(BinaryReader reader) : base(reader){
             chunkX = reader.ReadInt32();
             chunkY = reader.ReadInt32();

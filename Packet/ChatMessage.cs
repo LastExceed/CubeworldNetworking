@@ -9,7 +9,6 @@ namespace Resources.Packet {
         public ChatMessage() : base() {
             PacketID = PacketID.chat;
         }
-
         public ChatMessage(BinaryReader reader, bool readSender = false) : base(reader){
             if (readSender) sender = reader.ReadInt64();
             message = Encoding.Unicode.GetString(reader.ReadBytes(reader.ReadInt32() * 2));

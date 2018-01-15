@@ -7,7 +7,6 @@ namespace Resources.Packet {
         public MapSeed() : base() {
             PacketID = PacketID.mapseed;
         }
-
         public MapSeed(BinaryReader reader) : this() {
             seed = reader.ReadInt32();
         }

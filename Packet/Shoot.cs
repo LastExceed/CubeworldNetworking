@@ -28,7 +28,6 @@ namespace Resources.Packet {
             unknownV = new IntVector();
             velocity = new FloatVector();
         }
-
         public Shoot(BinaryReader reader) : this() {
             attacker = reader.ReadInt64();
             chunkX = reader.ReadInt32();

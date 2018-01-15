@@ -75,15 +75,34 @@
         unknown7,
         callPet
     }
+
     public enum StaticUpdateType : byte {
-        //TODO
+        TODO
     }
+
     public enum ParticleType : byte {
         normal,
         fire,
         unknown2,
         noSpreadNoRotation,
         noGravity
+    }
+    public enum BlockType : byte {
+        air,
+        solid,
+        liquid,
+        wet,
+    }
+    public enum SoundID : int {
+        TODO
+    }
+    public enum StaticID : int {
+        TODO
+    }
+    public enum MissionState : byte {
+        ready,
+        inProgress,
+        finished,
     }
     public enum Mode : byte {
         idle,

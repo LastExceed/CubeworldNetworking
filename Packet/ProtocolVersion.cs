@@ -7,7 +7,6 @@ namespace Resources.Packet {
         public ProtocolVersion() : base() {
             PacketID = PacketID.version;
         }
-
         public ProtocolVersion(BinaryReader reader) : this() {
             version = reader.ReadInt32();
         }
