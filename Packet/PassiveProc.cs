@@ -1,9 +1,7 @@
 ﻿using System.IO;
 
 namespace Resources.Packet {
-    public class PassiveProc {
-        public const int packetID = 8;
-
+    public class PassiveProc : Packet {
         public long source;
         public long target;
         public ProcType type;
@@ -13,9 +11,11 @@ namespace Resources.Packet {
         public int unknown;
         public long guid3;
 
-        public PassiveProc() { }
+        public PassiveProc() : base() {
+            PacketID = PacketID.passiveProc;
+        }
 
-        public PassiveProc(BinaryReader reader) {
+        public PassiveProc(BinaryReader reader) : this() {
             source = reader.ReadInt64();
             target = reader.ReadInt64();
             type = (ProcType)reader.ReadByte();
@@ -26,10 +26,7 @@ namespace Resources.Packet {
             guid3 = reader.ReadInt64();
         }
 
-        public void Write(BinaryWriter writer, bool writePacketID = true) {
-            if(writePacketID) {
-                writer.Write(packetID);
-            }
+        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
             writer.Write(source);
             writer.Write(target);
             writer.Write((byte)type);

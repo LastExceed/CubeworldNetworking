@@ -1,36 +1,19 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Threading;
+﻿using System.IO;
 
 namespace Resources.Packet {
-    public class MapSeed {
-        public const int packetID = 15;
-
+    public class MapSeed : Packet{
         public int seed;
 
-        public MapSeed() { }
+        public MapSeed() : base() {
+            PacketID = PacketID.mapseed;
+        }
 
-        public MapSeed(BinaryReader reader) {
+        public MapSeed(BinaryReader reader) : this() {
             seed = reader.ReadInt32();
         }
 
-        public void Write(BinaryWriter writer, bool writePacketID = true) {
-            if(writePacketID) {
-                writer.Write(packetID);
-            }
+        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
             writer.Write(seed);
-        }
-        public void Broadcast(Dictionary<ulong, Player> players, long toSkip) {
-            foreach(Player player in new List<Player>(players.Values)) {
-                if(player.entityData.guid != toSkip) {
-                    SpinWait.SpinUntil(() => player.available);
-                    player.available = false;
-                    try {
-                        this.Write(player.writer);
-                    } catch { }
-                    player.available = true;
-                }
-            }
         }
     }
 }

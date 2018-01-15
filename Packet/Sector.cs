@@ -1,23 +1,20 @@
 ﻿using System.IO;
 
 namespace Resources.Packet {
-    public class Sector {
-        public const int packetID = 12;
-
+    public class Sector : Packet{
         public int sectorX;
         public int sectorY;
 
-        public Sector() { }
+        public Sector() : base() {
+            PacketID = PacketID.sector;
+        }
 
-        public Sector(BinaryReader reader) {
+        public Sector(BinaryReader reader) : this() {
             sectorX = reader.ReadInt32();
             sectorY = reader.ReadInt32();
         }
 
-        public void Write(BinaryWriter writer, bool writePacketID = true) {
-            if(writePacketID) {
-                writer.Write(packetID);
-            }
+        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
             writer.Write(sectorX);
             writer.Write(sectorY);
         }

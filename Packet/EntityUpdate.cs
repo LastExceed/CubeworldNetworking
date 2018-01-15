@@ -6,7 +6,7 @@ using System.Threading;
 using System;
 
 namespace Resources.Packet {
-    public class EntityUpdate {
+    public class EntityUpdate : Packet{
         public class Appearance {
             public byte unknownA;
             public byte unknownB;
@@ -519,15 +519,11 @@ namespace Resources.Packet {
             }
         }
 
-        public EntityUpdate() {
-            /*equipment = new Part.Item[13];
-            for(int i = 0; i < 13; i++) {
-                equipment[i] = new Part.Item();
-            }*/
+        public EntityUpdate() : base(){
+            PacketID = PacketID.entityUpdate;
         }
-        public EntityUpdate(BinaryReader reader) {
+        public EntityUpdate(BinaryReader reader) : base(reader){
             byte[] uncompressed = Zlib.Decompress(reader.ReadBytes(reader.ReadInt32()));
-
             MemoryStream stream = new MemoryStream(uncompressed);
             BinaryReader r = new BinaryReader(stream);
             guid = r.ReadInt64();
@@ -918,23 +914,8 @@ namespace Resources.Packet {
             manaCubes = null;
         }
 
-        public void Write(BinaryWriter writer) {
-            var data = Data;
-            writer.Write(data);
-        }
-        public void Broadcast(Dictionary<long, Player> players, long toSkip) {
-            byte[] data = this.Data;
-            foreach(Player player in new List<Player>(players.Values)) {
-                if(player.entityData.guid != toSkip) {
-                    SpinWait.SpinUntil(() => player.available);
-                    player.available = false;
-                    try
-                    {
-                        player.writer.Write(data);
-                    } catch { }
-                    player.available = true;
-                }
-            }
+        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
+            writer.Write(Data);
         }
     }
 }

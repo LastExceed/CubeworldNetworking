@@ -1,9 +1,7 @@
 ﻿using System.IO;
 
 namespace Resources.Packet {
-    public class EntityAction {
-        public const int packetID = 6;
-
+    public class EntityAction : Packet{
         public Item item;
         public int chunkX;
         public int chunkY;
@@ -12,9 +10,11 @@ namespace Resources.Packet {
         public ActionType type;
         //3 pad
 
-        public EntityAction() { }
+        public EntityAction() : base() {
+            PacketID = PacketID.entityAction;
+        }
 
-        public EntityAction(BinaryReader reader) {
+        public EntityAction(BinaryReader reader) : base(reader) {
             item = new Item(reader);
             chunkX = reader.ReadInt32();
             chunkY = reader.ReadInt32();
@@ -24,10 +24,7 @@ namespace Resources.Packet {
             reader.ReadBytes(3); //pad
         }
 
-        public void Write(BinaryWriter writer, bool writePacketID = true) {
-            if(writePacketID) {
-                writer.Write(packetID);
-            }
+        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
             item.Write(writer);
             writer.Write(chunkX);
             writer.Write(chunkY);

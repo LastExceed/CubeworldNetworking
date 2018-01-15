@@ -1,37 +1,19 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Threading;
+﻿using System.IO;
 
 namespace Resources.Packet {
-    public class ProtocolVersion {
-        public const int packetID = 17;
-
+    public class ProtocolVersion : Packet {
         public int version;
 
-        public ProtocolVersion() { }
+        public ProtocolVersion() : base() {
+            PacketID = PacketID.version;
+        }
 
-        public ProtocolVersion(BinaryReader reader) {
+        public ProtocolVersion(BinaryReader reader) : this() {
             version = reader.ReadInt32();
         }
 
-        public void Write(BinaryWriter writer, bool writePacketID = true) {
-            if(writePacketID) {
-                writer.Write(packetID);
-            }
+        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
             writer.Write(version);
-        }
-
-        public void Broadcast(Dictionary<ulong, Player> players, long toSkip) {
-            foreach(Player player in new List<Player>(players.Values)) {
-                if(player.entityData.guid != toSkip) {
-                    SpinWait.SpinUntil(() => player.available);
-                    player.available = false;
-                    try {
-                        this.Write(player.writer);
-                    } catch { }
-                    player.available = true;
-                }
-            }
         }
     }
 }

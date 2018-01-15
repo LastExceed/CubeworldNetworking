@@ -2,9 +2,7 @@
 using System.IO;
 
 namespace Resources.Packet {
-    public class Shoot {
-        public const int packetID = 9;
-
+    public class Shoot : Packet {
         public long attacker;
         public int chunkX;
         public int chunkY;
@@ -24,13 +22,14 @@ namespace Resources.Packet {
         public float unknownC;
         public float unknownD;
 
-        public Shoot() {
+        public Shoot() : base() {
+            PacketID = PacketID.shoot;
             position = new LongVector();
             unknownV = new IntVector();
             velocity = new FloatVector();
         }
 
-        public Shoot(BinaryReader reader) {
+        public Shoot(BinaryReader reader) : this() {
             attacker = reader.ReadInt64();
             chunkX = reader.ReadInt32();
             chunkY = reader.ReadInt32();
@@ -51,10 +50,7 @@ namespace Resources.Packet {
             unknownD = reader.ReadSingle();
         }
 
-        public void Write(BinaryWriter writer, bool writePacketID = true) {
-            if(writePacketID) {
-                writer.Write(packetID);
-            }
+        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
             writer.Write(attacker);
             writer.Write(chunkX);
             writer.Write(chunkY);

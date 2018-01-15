@@ -2,9 +2,7 @@
 using Resources.Utilities;
 
 namespace Resources.Packet {
-    public class Hit {
-        public const int packetID = 7;
-
+    public class Hit : Packet {
         public long attacker;
         public long target;
         public float damage;
@@ -18,9 +16,11 @@ namespace Resources.Packet {
         public byte showlight;
         public byte paddingB;
 
-        public Hit() { }
+        public Hit() : base() {
+            PacketID = PacketID.hit;
+        }
 
-        public Hit(BinaryReader reader) {
+        public Hit(BinaryReader reader) : this() {
             attacker = reader.ReadInt64();
             target = reader.ReadInt64();
             damage = reader.ReadSingle();
@@ -35,10 +35,7 @@ namespace Resources.Packet {
             paddingB = reader.ReadByte();
         }
 
-        public void Write(BinaryWriter writer, bool writePacketID = true) {
-            if(writePacketID) {
-                writer.Write(packetID);
-            }
+        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
             writer.Write(attacker);
             writer.Write(target);
             writer.Write(damage);

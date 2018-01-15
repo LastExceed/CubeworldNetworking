@@ -4,7 +4,7 @@ using System.Threading;
 using Resources.Utilities;
 
 namespace Resources.Packet {
-    public class ServerUpdate {
+    public class ServerUpdate : Packet {
         public class BlockDelta {
             public IntVector position;
             public ByteVector color;
@@ -356,8 +356,6 @@ namespace Resources.Packet {
             }
         }
 
-        public const int packetID = 4;
-
         public List<BlockDelta> blockDeltas = new List<BlockDelta>();
         public List<Hit> hits = new List<Hit>();
         public List<Particle> particles = new List<Particle>();
@@ -372,13 +370,12 @@ namespace Resources.Packet {
         public List<PassiveProc> passiveProcs = new List<PassiveProc>();
         public List<Mission> missions = new List<Mission>();
 
-        public ServerUpdate() {
-
+        public ServerUpdate() : base() {
+            PacketID = PacketID.serverUpdate;
         }
 
-        public ServerUpdate(BinaryReader reader) {
+        public ServerUpdate(BinaryReader reader) : this() {
             byte[] uncompressed = Zlib.Decompress(reader.ReadBytes(reader.ReadInt32()));
-
             MemoryStream stream = new MemoryStream(uncompressed);
             BinaryReader r = new BinaryReader(stream);
 
@@ -520,30 +517,10 @@ namespace Resources.Packet {
             return Zlib.Compress(stream.ToArray());
         }
 
-        public void Write(BinaryWriter writer, bool writePacketID = true) {
+        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
             byte[] data = GetBytes();
-
-            if(writePacketID) {
-                writer.Write(packetID);
-            }
             writer.Write(data.Length);
             writer.Write(data);
-        }
-
-        public void Broadcast(Dictionary<long, Player> players, long toSkip) {
-            byte[] data = GetBytes();
-            foreach(Player player in new List<Player>(players.Values)) {
-                if(player.entityData.guid != toSkip) {
-                    SpinWait.SpinUntil(() => player.available);
-                    player.available = false;
-                    try {
-                        player.writer.Write(packetID);
-                        player.writer.Write(data.Length);
-                        player.writer.Write(data);
-                    } catch { }
-                    player.available = true;
-                }
-            }
         }
     }
 }
