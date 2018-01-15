@@ -271,6 +271,41 @@
         legendary,
         mythic,
     }
+    public enum ItemMaterial : byte{
+        None,
+        Iron,
+        Wood,
+        //
+        //
+        Obsidian = 5,
+        unknown,
+        Bone,
+        //
+        //
+        //
+        Gold = 11,
+        Silver,
+        Emerald,
+        Sapphire,
+        Ruby,
+        Diamond,
+        Sandstone,
+        Saurian,
+        Parrot,
+        Mammoth,
+        Plant,
+        Ice,
+        Licht,
+        Glass,
+        Silk,
+        Linen,
+        Cotton,
+
+        Fire = 128,
+        Unholy,
+        IceSpirit,
+        Wind,
+    }
     public enum EntityType : int{
         ElfMale,
         ElfFemale,
