@@ -204,9 +204,9 @@ namespace Resources.Packet {
         public FloatVector extraVel;
         public float? viewportPitch;
         public int? physicsFlags;
-        public byte? hostility;
-        public int? entityType;
-        public byte? mode;
+        public Hostility? hostility;
+        public EntityType? entityType;
+        public Mode? mode;
         public int? modeTimer;
         public int? combo;
         public int? lastHitTime;
@@ -218,7 +218,7 @@ namespace Resources.Packet {
         public int? ice;
         public int? wind;
         public int? showPatchTime;
-        public byte? entityClass;
+        public EntityClass? entityClass;
         public byte? specialization;
         public float? charge;
         public FloatVector unused24;
@@ -551,13 +551,13 @@ namespace Resources.Packet {
                 physicsFlags = r.ReadInt32();
             }
             if(Tools.GetBit(bitfield, 7)) {
-                hostility = r.ReadByte();
+                hostility = (Hostility)r.ReadByte();
             }
             if(Tools.GetBit(bitfield, 8)) {
-                entityType = r.ReadInt32();
+                entityType = (EntityType)r.ReadInt32();
             }
             if(Tools.GetBit(bitfield, 9)) {
-                mode = r.ReadByte();
+                mode = (Mode)r.ReadByte();
             }
             if(Tools.GetBit(bitfield, 10)) {
                 modeTimer = r.ReadInt32();
@@ -593,7 +593,7 @@ namespace Resources.Packet {
                 showPatchTime = r.ReadInt32();
             }
             if(Tools.GetBit(bitfield, 21)) {
-                entityClass = r.ReadByte();
+                entityClass = (EntityClass)r.ReadByte();
             }
             if(Tools.GetBit(bitfield, 22)) {
                 specialization = r.ReadByte();
