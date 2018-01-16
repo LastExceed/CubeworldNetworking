@@ -76,10 +76,6 @@
         callPet
     }
 
-    public enum StaticUpdateType : byte {
-        TODO
-    }
-
     public enum ParticleType : byte {
         normal,
         fire,
@@ -96,7 +92,7 @@
     public enum SoundID : int {
         TODO
     }
-    public enum StaticID : int {
+    public enum StaticEntityType : int {
         TODO
     }
     public enum MissionState : byte {

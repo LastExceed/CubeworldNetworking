@@ -12,7 +12,7 @@ namespace Resources.Packet {
         public int paddingA;
         public LongVector position = new LongVector();
         public FloatVector direction = new FloatVector();
-        public bool isYellow;
+        public byte isYellow;
         public DamageType type;
         public bool showlight;
         public byte paddingB;
@@ -30,7 +30,7 @@ namespace Resources.Packet {
             paddingA = reader.ReadInt32();
             position = new LongVector(reader);
             direction = new FloatVector(reader);
-            isYellow = reader.ReadBoolean();
+            isYellow = reader.ReadByte();
             type = (DamageType)reader.ReadByte();
             showlight = reader.ReadBoolean();
             paddingB = reader.ReadByte();

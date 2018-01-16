@@ -85,9 +85,9 @@ namespace Resources.Packet {
         public class StaticEntity {
             public int chunkX;
             public int chunkY;
-            public StaticID id;
+            public int id;
             public int paddingA;
-            public int type;
+            public StaticEntityType type;
             public int paddingB;
             public LongVector position;
             public int rotation;
@@ -103,9 +103,9 @@ namespace Resources.Packet {
             public StaticEntity(BinaryReader reader) {
                 chunkX = reader.ReadInt32();
                 chunkY = reader.ReadInt32();
-                id = (StaticID)reader.ReadInt32();
+                id = reader.ReadInt32();
                 paddingA = reader.ReadInt32();
-                type = reader.ReadInt32();
+                type = (StaticEntityType)reader.ReadInt32();
                 paddingB = reader.ReadInt32();
                 position = new LongVector(reader);
                 rotation = reader.ReadInt32();
@@ -121,9 +121,9 @@ namespace Resources.Packet {
             public void Write(BinaryWriter writer) {
                 writer.Write(chunkX);
                 writer.Write(chunkY);
-                writer.Write((int)id);
+                writer.Write(id);
                 writer.Write(paddingA);
-                writer.Write(type);
+                writer.Write((int)type);
                 writer.Write(paddingB);
                 position.Write(writer);
                 writer.Write(rotation);
