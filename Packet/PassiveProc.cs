@@ -25,7 +25,7 @@ namespace Resources.Packet {
             guid3 = reader.ReadInt64();
         }
 
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
+        protected override void WritePacketData(BinaryWriter writer) {
             writer.Write(source);
             writer.Write(target);
             writer.Write((byte)type);

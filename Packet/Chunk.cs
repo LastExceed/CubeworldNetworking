@@ -13,7 +13,7 @@ namespace Resources.Packet {
             chunkY = reader.ReadInt32();
         }
 
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
+        protected override void WritePacketData(BinaryWriter writer) {
             writer.Write(chunkX);
             writer.Write(chunkY);
         }

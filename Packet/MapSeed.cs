@@ -11,7 +11,7 @@ namespace Resources.Packet {
             seed = reader.ReadInt32();
         }
 
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
+        protected override void WritePacketData(BinaryWriter writer) {
             writer.Write(seed);
         }
     }

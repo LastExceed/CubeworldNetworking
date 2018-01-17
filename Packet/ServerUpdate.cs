@@ -438,82 +438,78 @@ namespace Resources.Packet {
             }
         }
 
-        public byte[] GetBytes() {
+        protected override void WritePacketData(BinaryWriter writer) {
             MemoryStream stream = new MemoryStream();
-            BinaryWriter writer = new BinaryWriter(stream);
+            BinaryWriter _wr = new BinaryWriter(stream);
 
-            writer.Write(blockDeltas.Count);
-            foreach(BlockDelta blockDelta in blockDeltas) {
-                blockDelta.Write(writer);
+            _wr.Write(blockDeltas.Count);
+            foreach (BlockDelta blockDelta in blockDeltas) {
+                blockDelta.Write(_wr);
             }
 
-            writer.Write(hits.Count);
-            foreach(Hit hit in hits) {
-                hit.Write(writer, false);
+            _wr.Write(hits.Count);
+            foreach (Hit hit in hits) {
+                hit.Write(_wr, false);
             }
 
-            writer.Write(particles.Count);
-            foreach(Particle particle in particles) {
-                particle.Write(writer);
+            _wr.Write(particles.Count);
+            foreach (Particle particle in particles) {
+                particle.Write(_wr);
             }
 
-            writer.Write(sounds.Count);
-            foreach(Sound sound in sounds) {
-                sound.Write(writer);
+            _wr.Write(sounds.Count);
+            foreach (Sound sound in sounds) {
+                sound.Write(_wr);
             }
 
-            writer.Write(shoots.Count);
-            foreach(Shoot shoot in shoots) {
-                shoot.Write(writer, false);
+            _wr.Write(shoots.Count);
+            foreach (Shoot shoot in shoots) {
+                shoot.Write(_wr, false);
             }
 
-            writer.Write(statics.Count);
-            foreach(StaticEntity staticEntity in statics) {
-                staticEntity.Write(writer);
+            _wr.Write(statics.Count);
+            foreach (StaticEntity staticEntity in statics) {
+                staticEntity.Write(_wr);
             }
 
-            writer.Write(chunkItems.Count);
-            foreach(ChunkItems chunkItem in chunkItems) {
-                chunkItem.Write(writer);
+            _wr.Write(chunkItems.Count);
+            foreach (ChunkItems chunkItem in chunkItems) {
+                chunkItem.Write(_wr);
             }
 
-            writer.Write(p48s.Count);
-            foreach(P48 p48 in p48s) {
-                p48.Write(writer);
+            _wr.Write(p48s.Count);
+            foreach (P48 p48 in p48s) {
+                p48.Write(_wr);
             }
 
-            writer.Write(pickups.Count);
-            foreach(Pickup pickup in pickups) {
-                pickup.Write(writer);
+            _wr.Write(pickups.Count);
+            foreach (Pickup pickup in pickups) {
+                pickup.Write(_wr);
             }
 
-            writer.Write(kills.Count);
-            foreach(Kill kill in kills) {
-                kill.Write(writer);
+            _wr.Write(kills.Count);
+            foreach (Kill kill in kills) {
+                kill.Write(_wr);
             }
 
-            writer.Write(damages.Count);
-            foreach(Damage damage in damages) {
-                damage.Write(writer);
+            _wr.Write(damages.Count);
+            foreach (Damage damage in damages) {
+                damage.Write(_wr);
             }
 
-            writer.Write(passiveProcs.Count); //npc rClick ??? todo
-            foreach(PassiveProc passiveProc in passiveProcs) {
-                passiveProc.Write(writer, false);
+            _wr.Write(passiveProcs.Count); //npc rClick ??? todo
+            foreach (PassiveProc passiveProc in passiveProcs) {
+                passiveProc.Write(_wr, false);
             }
 
-            writer.Write(missions.Count);
-            foreach(Mission mission in missions) {
-                mission.Write(writer);
+            _wr.Write(missions.Count);
+            foreach (Mission mission in missions) {
+                mission.Write(_wr);
             }
 
-            return Zlib.Compress(stream.ToArray());
-        }
-
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
-            byte[] data = GetBytes();
-            writer.Write(data.Length);
-            writer.Write(data);
+            byte[] data = Zlib.Compress(stream.ToArray());
+            _wr.Write(data.Length);
+            _wr.Write(data);
         }
     }
 }

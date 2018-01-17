@@ -13,7 +13,7 @@ namespace Resources.Packet {
             time = reader.ReadInt32();
         }
 
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
+        protected override void WritePacketData(BinaryWriter writer) {
             writer.Write(day);
             writer.Write(time);
         }

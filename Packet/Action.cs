@@ -23,7 +23,7 @@ namespace Resources.Packet {
             reader.ReadBytes(3); //pad
         }
 
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
+        protected override void WritePacketData(BinaryWriter writer) {
             item.Write(writer);
             writer.Write(chunkX);
             writer.Write(chunkY);

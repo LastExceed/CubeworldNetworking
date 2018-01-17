@@ -9,6 +9,6 @@ namespace Resources.Packet {
         public ServerFull(BinaryReader reader) : this() {
         }
 
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) { }
+        protected override void WritePacketData(BinaryWriter writer) { }
     }
 }

@@ -49,7 +49,7 @@ namespace Resources.Packet {
             unknownD = reader.ReadSingle();
         }
 
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
+        protected override void WritePacketData(BinaryWriter writer) {
             writer.Write(attacker);
             writer.Write(chunkX);
             writer.Write(chunkY);

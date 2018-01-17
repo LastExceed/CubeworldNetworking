@@ -232,7 +232,7 @@
         empty,
         food,
         formula,
-        weapon,
+        Weapon,
         chest,
         gloves,
         boots,

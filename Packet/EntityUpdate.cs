@@ -458,7 +458,6 @@ namespace Resources.Packet {
 
                 stream = new MemoryStream();
                 writer = new BinaryWriter(stream);
-                writer.Write((int)PacketID.entityUpdate);
                 writer.Write(compressed.Length);
                 writer.Write(compressed);
                 return stream.ToArray();
@@ -676,12 +675,15 @@ namespace Resources.Packet {
                 manaCubes = r.ReadInt32();
             }
         }
-
         public EntityUpdate(byte[] data) : this(Convert(data)) { }
         private static BinaryReader Convert(byte[] data) {
             var reader = new BinaryReader(new MemoryStream(data));
             reader.ReadInt32();
             return reader;
+        }
+
+        protected override void WritePacketData(BinaryWriter writer) {
+            writer.Write(Data);
         }
 
         public void Merge(EntityUpdate playerEntityData) {
@@ -910,10 +912,6 @@ namespace Resources.Packet {
             unused42 = null;
             skillDistribution = null;
             manaCubes = null;
-        }
-
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
-            writer.Write(Data);
         }
     }
 }

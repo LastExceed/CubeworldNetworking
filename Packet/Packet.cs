@@ -9,24 +9,24 @@ namespace Resources.Packet {
         public Packet() { }
         public Packet(BinaryReader reader) { }
 
-        protected abstract void WritePacketData(BinaryWriter writer, bool writePacketID = true);
+        protected abstract void WritePacketData(BinaryWriter writer);
 
         public void Write(BinaryWriter writer, bool writePacketID = true) {
             if (writePacketID) writer.Write((int)PacketID);
             this.WritePacketData(writer);
         }
-        public void Broadcast(Dictionary<long, Player> players, long toSkip) {
-            foreach (Player player in new List<Player>(players.Values)) {
-                if (player.entityData.guid != toSkip) {
-                    SpinWait.SpinUntil(() => player.available);
-                    player.available = false;
-                    try {
-                        this.Write(player.writer);
-                    }
-                    catch (IOException) { }
-                    player.available = true;
-                }
-            }
-        }
+        //public void Broadcast(Dictionary<long, Player> players, long toSkip) {
+        //    foreach (Player player in new List<Player>(players.Values)) {
+        //        if (player.entityData.guid != toSkip) {
+        //            SpinWait.SpinUntil(() => player.available);
+        //            player.available = false;
+        //            try {
+        //                this.Write(player.writer);
+        //            }
+        //            catch (IOException) { }
+        //            player.available = true;
+        //        }
+        //    }
+        //}
     }
 }

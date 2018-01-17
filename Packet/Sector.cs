@@ -13,7 +13,7 @@ namespace Resources.Packet {
             sectorY = reader.ReadInt32();
         }
 
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
+        protected override void WritePacketData(BinaryWriter writer) {
             writer.Write(sectorX);
             writer.Write(sectorY);
         }

@@ -8,6 +8,6 @@ namespace Resources.Packet {
         }
         public EntityUpdatesFinished(BinaryReader reader) : this() { }
 
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) { }
+        protected override void WritePacketData(BinaryWriter writer) { }
     }
 }

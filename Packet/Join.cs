@@ -15,7 +15,7 @@ namespace Resources.Packet {
             junk = reader.ReadBytes(0x1168);
         }
 
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
+        protected override void WritePacketData(BinaryWriter writer) {
             writer.Write(unknown);
             writer.Write(guid);
             writer.Write(junk);

@@ -36,7 +36,7 @@ namespace Resources.Packet {
             paddingB = reader.ReadByte();
         }
 
-        protected override void WritePacketData(BinaryWriter writer, bool writePacketID = true) {
+        protected override void WritePacketData(BinaryWriter writer) {
             writer.Write(attacker);
             writer.Write(target);
             writer.Write(damage);
