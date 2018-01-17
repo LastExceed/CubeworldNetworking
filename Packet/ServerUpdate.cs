@@ -508,8 +508,12 @@ namespace Resources.Packet {
             }
 
             byte[] data = Zlib.Compress(stream.ToArray());
+            stream = new MemoryStream();
+            _wr = new BinaryWriter(stream);
             _wr.Write(data.Length);
             _wr.Write(data);
+
+            writer.Write(stream.ToArray());
         }
     }
 }

@@ -678,7 +678,7 @@ namespace Resources.Packet {
         public EntityUpdate(byte[] data) : this(Convert(data)) { }
         private static BinaryReader Convert(byte[] data) {
             var reader = new BinaryReader(new MemoryStream(data));
-            reader.ReadInt32();
+            reader.ReadByte();
             return reader;
         }
 
