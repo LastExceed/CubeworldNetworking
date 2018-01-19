@@ -15,18 +15,5 @@ namespace Resources.Packet {
             if (writePacketID) writer.Write((int)PacketID);
             this.WritePacketData(writer);
         }
-        //public void Broadcast(Dictionary<long, Player> players, long toSkip) {
-        //    foreach (Player player in new List<Player>(players.Values)) {
-        //        if (player.entityData.guid != toSkip) {
-        //            SpinWait.SpinUntil(() => player.available);
-        //            player.available = false;
-        //            try {
-        //                this.Write(player.writer);
-        //            }
-        //            catch (IOException) { }
-        //            player.available = true;
-        //        }
-        //    }
-        //}
     }
 }
