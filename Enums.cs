@@ -47,7 +47,7 @@
         player,
         enemy,
         unknown2,
-        NPC,
+        npc,
         unknown4,
         pet,
         neutral
