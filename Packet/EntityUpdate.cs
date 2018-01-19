@@ -243,7 +243,7 @@ namespace Resources.Packet {
         public string name;
         public SkillDistribution skillDistribution;
         public int? manaCubes;
-        public byte[] Data {
+        internal byte[] Data {
             get {
                 long bitfield = 0;
 

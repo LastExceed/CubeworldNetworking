@@ -322,6 +322,7 @@
         Wind,
     }
     public enum EntityType : int{
+        None = -1,
         ElfMale,
         ElfFemale,
         HumanMale,
