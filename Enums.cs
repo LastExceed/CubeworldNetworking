@@ -75,7 +75,6 @@
         unknown7,
         callPet
     }
-
     public enum ParticleType : byte {
         normal,
         fire,
@@ -100,6 +99,7 @@
         inProgress,
         finished,
     }
+
     public enum Mode : byte {
         idle,
         war_dual_wield001,
@@ -213,115 +213,7 @@
         manacube,
         unknown110,//weird                                                                 
     }
-    public enum Equipment : byte {
-        unknown,
-        neck,
-        chest,
-        feet,
-        hands,
-        shoulder,
-        leftWeapon,
-        rightWeapon,
-        leftRing,
-        rightRing,
-        lamp,
-        special,
-        pet
-    }
-    public enum ItemType : byte {
-        empty,
-        food,
-        formula,
-        Weapon,
-        chest,
-        gloves,
-        boots,
-        shoulder,
-        amulet,
-        ring,
-        spirit,
-        nugget,
-        coin,
-        platinumCoin,
-        leftovers,
-        beak,
-        painting,
-        vase,
-        candle,
-        pet,
-        petFood,
-        quest,
-        unknown,
-        special,
-        lamp
-    }
-    public enum WeaponSubtype : byte {
-        sword,
-        axe,
-        mace,
-        dagger,
-        fist,
-        longsword,
-        bow,
-        crossbow,
-        boomerand,
-        arrow,
-        staff,
-        wand,
-        bracelet,
-        shield,
-        quiver,
-        greatsword,
-        greataxe,
-        greatmace,
-        pitchfork,
-        pickaxe,
-        torch,
-    }
-    public enum ItemRarity : byte {
-        normal,
-        uncommon,
-        rare,
-        epic,
-        legendary,
-        mythic,
-    }
-    public enum ItemMaterial : byte{
-        None,
-        Iron,
-        Wood,
-        //
-        //
-        Obsidian = 5,
-        unknown,
-        Bone,
-        //
-        //
-        //
-        Gold = 11,
-        Silver,
-        Emerald,
-        Sapphire,
-        Ruby,
-        Diamond,
-        Sandstone,
-        Saurian,
-        Parrot,
-        Mammoth,
-        Plant,
-        Ice,
-        Licht,
-        Glass,
-        Silk,
-        Linen,
-        Cotton,
-
-        Fire = 128,
-        Unholy,
-        IceSpirit,
-        Wind,
-    }
-    public enum EntityType : int{
+    public enum EntityType : int {
         None = -1,
         ElfMale,
         ElfFemale,
@@ -486,5 +378,176 @@
         Ranger,
         Mage,
         Rogue
+    }
+    public enum Equipment : byte {
+        unknown,
+        neck,
+        chest,
+        feet,
+        hands,
+        shoulder,
+        leftWeapon,
+        rightWeapon,
+        leftRing,
+        rightRing,
+        lamp,
+        special,
+        pet
+    }
+
+    public enum ItemType : byte {
+        empty,
+        food,
+        formula,
+        Weapon,
+        chest,
+        gloves,
+        boots,
+        shoulder,
+        amulet,
+        ring,
+        block,
+        resource,
+        coin,
+        platinumCoin,
+        leftovers,
+        beak,
+        painting,
+        vase,
+        candle,
+        pet,
+        petFood,
+        quest,
+        unknown,
+        special,
+        lamp
+    }
+    public enum ItemSubtypeFood {
+        Cookie,
+        LifePotion,
+        CactusPotion,
+        ManaPotion,
+        GinsengSoup,
+        SnowberryMash,
+        MushroomSpit,
+        Bomb,
+        PineappleSlice,
+        PumpkinMuffin,
+    }
+    public enum ItemSubtypeWeapon : byte {
+        sword,
+        axe,
+        mace,
+        dagger,
+        fist,
+        longsword,
+        bow,
+        crossbow,
+        boomerand,
+        arrow,
+        staff,
+        wand,
+        bracelet,
+        shield,
+        quiver,
+        greatsword,
+        greataxe,
+        greatmace,
+        pitchfork,
+        pickaxe,
+        torch,
+    }
+    public enum ItemSubtypeResource {
+        Nugget,
+        Log,
+        Feather,
+        Horn,
+        Claw,
+        Fiber,
+        Cobweb,
+        Hair,
+        Crystal,
+        Yarn,
+        Cube,
+        Capsule,
+        Flask,
+        Orb,
+        Spirit,
+        Mushroom,
+        Pumpkin,
+        Pineapple,
+        RadishSlice,
+        ShimmerMushroom,
+        GinsengRoot,
+        OnionSlice,
+        Heartflower,
+        PricklyPear,
+        Iceflower,
+        Soulflower,
+        WaterFlask,
+        Snowberry,
+    }
+    public enum ItemSubtypeCandle {
+        Red,
+        Green,
+    }
+    public enum ItemSubtypeQuest {
+        AmuletYellow,
+        AmuletBlue,
+        Jewelcase,
+        Key,
+        Medicine,
+        Anitvenom,
+        Bandaid,
+        Crutch,
+        Bandage,
+        Salve,
+    }
+    public enum ItemSubtypeSpecial {
+        HangGlider,
+        Boat,
+    }
+    public enum ItemRarity : byte {
+        normal,
+        uncommon,
+        rare,
+        epic,
+        legendary,
+        mythic,
+    }
+    public enum ItemMaterial : byte{
+        None,
+        Iron,
+        Wood,
+        //
+        //
+        Obsidian = 5,
+        unknown,
+        Bone,
+        //
+        //
+        //
+        Gold = 11,
+        Silver,
+        Emerald,
+        Sapphire,
+        Ruby,
+        Diamond,
+        Sandstone,
+        Saurian,
+        Parrot,
+        Mammoth,
+        Plant,
+        Ice,
+        Licht,
+        Glass,
+        Silk,
+        Linen,
+        Cotton,
+
+        Fire = 128,
+        Unholy,
+        IceSpirit,
+        Wind,
     }
 }
