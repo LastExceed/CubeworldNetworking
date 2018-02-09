@@ -18,7 +18,7 @@ namespace Resources.Packet {
         public byte paddingB;
 
         public Hit() : base() {
-            PacketID = PacketID.hit;
+            PacketID = PacketID.Hit;
         }
         public Hit(BinaryReader reader) : this() {
             attacker = reader.ReadInt64();

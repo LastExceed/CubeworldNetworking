@@ -11,7 +11,7 @@ namespace Resources.Packet {
         //3 pad
 
         public EntityAction() : base() {
-            PacketID = PacketID.entityAction;
+            PacketID = PacketID.EntityAction;
         }
         public EntityAction(BinaryReader reader) : base(reader) {
             item = new Item(reader);

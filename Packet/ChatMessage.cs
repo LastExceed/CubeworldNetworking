@@ -7,7 +7,7 @@ namespace Resources.Packet {
         public string message;
 
         public ChatMessage() : base() {
-            PacketID = PacketID.chat;
+            PacketID = PacketID.Chat;
         }
         public ChatMessage(BinaryReader reader, bool readSender = false) : base(reader) {
             if (readSender) sender = reader.ReadInt64();

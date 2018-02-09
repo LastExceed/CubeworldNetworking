@@ -365,7 +365,7 @@ namespace Resources.Packet {
         public List<Mission> missions = new List<Mission>();
 
         public ServerUpdate() : base() {
-            PacketID = PacketID.serverUpdate;
+            PacketID = PacketID.ServerUpdate;
         }
         public ServerUpdate(BinaryReader reader) : this() {
             byte[] uncompressed = Zlib.Decompress(reader.ReadBytes(reader.ReadInt32()));

@@ -4,7 +4,7 @@ namespace Resources.Packet {
     public class ServerFull : Packet {
 
         public ServerFull() : base() {
-            PacketID = PacketID.time;
+            PacketID = PacketID.Time;
         }
         public ServerFull(BinaryReader reader) : this() {
         }

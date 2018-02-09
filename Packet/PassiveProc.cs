@@ -12,7 +12,7 @@ namespace Resources.Packet {
         public long guid3;
 
         public PassiveProc() : base() {
-            PacketID = PacketID.passiveProc;
+            PacketID = PacketID.PassiveProc;
         }
         public PassiveProc(BinaryReader reader) : this() {
             source = reader.ReadInt64();

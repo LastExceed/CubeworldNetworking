@@ -6,7 +6,7 @@ namespace Resources.Packet {
         public int sectorY;
 
         public Sector() : base() {
-            PacketID = PacketID.sector;
+            PacketID = PacketID.Sector;
         }
         public Sector(BinaryReader reader) : this() {
             sectorX = reader.ReadInt32();

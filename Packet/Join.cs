@@ -7,7 +7,7 @@ namespace Resources.Packet {
         public byte[] junk;
 
         public Join() : base() {
-            PacketID = PacketID.joinPacket;
+            PacketID = PacketID.JoinPacket;
         }
         public Join(BinaryReader reader) : this() {
             unknown = reader.ReadInt32();

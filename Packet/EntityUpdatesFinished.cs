@@ -4,7 +4,7 @@ namespace Resources.Packet {
     public class EntityUpdatesFinished : Packet {
 
         public EntityUpdatesFinished() : base() {
-            PacketID = PacketID.entityUpdatesFinished;
+            PacketID = PacketID.EntityUpdatesFinished;
         }
         public EntityUpdatesFinished(BinaryReader reader) : this() { }
 
