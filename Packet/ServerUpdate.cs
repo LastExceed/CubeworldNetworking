@@ -149,6 +149,7 @@ namespace Resources.Packet {
                 public int unknownB;
                 public int unknownC;
 
+                public DroppedItem() { }
                 public DroppedItem(BinaryReader reader) {
                     item = new Item(reader);
                     posX = reader.ReadInt64();
@@ -201,26 +202,27 @@ namespace Resources.Packet {
         }
         public class P48 {
             public class SubP48 {
+                public ulong unknownA;
                 public ulong unknownB;
-                public ulong unknownC;
 
+                public SubP48() { }
                 public SubP48(BinaryReader reader) {
+                    unknownA = reader.ReadUInt64();
                     unknownB = reader.ReadUInt64();
-                    unknownC = reader.ReadUInt64();
                 }
 
                 public void Write(BinaryWriter writer) {
+                    writer.Write(unknownA);
                     writer.Write(unknownB);
-                    writer.Write(unknownC);
                 }
             }
 
-            public ulong unknownA;
+            public ulong unknown;
             public List<SubP48> subP48s = new List<SubP48>();
 
             public P48() { }
             public P48(BinaryReader reader) {
-                unknownA = reader.ReadUInt64();
+                unknown = reader.ReadUInt64();
                 int count = reader.ReadInt32();
                 for (int i = 0; i < count; i++) {
                     subP48s.Add(new SubP48(reader));
@@ -228,7 +230,7 @@ namespace Resources.Packet {
             }
 
             public void Write(BinaryWriter writer) {
-                writer.Write(unknownA);
+                writer.Write(unknown);
                 writer.Write(subP48s.Count);
                 foreach (SubP48 subP48 in subP48s) {
                     subP48.Write(writer);
