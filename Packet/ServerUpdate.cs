@@ -307,8 +307,8 @@ namespace Resources.Packet {
             public byte unknownE;
             public MissionState state; //0=ready 1=progressing 2=finished
             public short padding;
-            public float currentHP;
-            public float maxHP;
+            public int currentHP;
+            public int maxHP;
             public int chunkX;
             public int chunkY;
 
@@ -326,8 +326,8 @@ namespace Resources.Packet {
                 unknownE = reader.ReadByte();
                 state = (MissionState)reader.ReadByte();
                 padding = reader.ReadInt16();
-                currentHP = reader.ReadSingle();
-                maxHP = reader.ReadSingle();
+                currentHP = reader.ReadInt32();
+                maxHP = reader.ReadInt32();
                 chunkX = reader.ReadInt32();
                 chunkY = reader.ReadInt32();
             }
