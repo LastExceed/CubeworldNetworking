@@ -252,199 +252,199 @@ namespace Resources.Packet {
 
                 if (position != null) {
                     position.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 0);
+                    Tools.SetBit(ref bitfield, 0, true);
                 }
                 if (rotation != null) {
                     rotation.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 1);
+                    Tools.SetBit(ref bitfield, 1, true);
                 }
                 if (velocity != null) {
                     velocity.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 2);
+                    Tools.SetBit(ref bitfield, 2, true);
                 }
                 if (acceleration != null) {
                     acceleration.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 3);
+                    Tools.SetBit(ref bitfield, 3, true);
                 }
                 if (extraVel != null) {
                     extraVel.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 4);
+                    Tools.SetBit(ref bitfield, 4, true);
                 }
                 if (viewportPitch != null) {
                     writer.Write((float)viewportPitch);
-                    Tools.SetBit(ref bitfield, true, 5);
+                    Tools.SetBit(ref bitfield, 5, true);
                 }
                 if (physicsFlags != null) {
                     writer.Write((int)physicsFlags);
-                    Tools.SetBit(ref bitfield, true, 6);
+                    Tools.SetBit(ref bitfield, 6, true);
                 }
                 if (hostility != null) {
                     writer.Write((byte)hostility);
-                    Tools.SetBit(ref bitfield, true, 7);
+                    Tools.SetBit(ref bitfield, 7, true);
                 }
                 if (entityType != null) {
                     writer.Write((int)entityType);
-                    Tools.SetBit(ref bitfield, true, 8);
+                    Tools.SetBit(ref bitfield, 8, true);
                 }
                 if (mode != null) {
                     writer.Write((byte)mode);
-                    Tools.SetBit(ref bitfield, true, 9);
+                    Tools.SetBit(ref bitfield, 9, true);
                 }
                 if (modeTimer != null) {
                     writer.Write((int)modeTimer);
-                    Tools.SetBit(ref bitfield, true, 10);
+                    Tools.SetBit(ref bitfield, 10, true);
                 }
                 if (combo != null) {
                     writer.Write((int)combo);
-                    Tools.SetBit(ref bitfield, true, 11);
+                    Tools.SetBit(ref bitfield, 11, true);
                 }
                 if (lastHitTime != null) {
                     writer.Write((int)lastHitTime);
-                    Tools.SetBit(ref bitfield, true, 12);
+                    Tools.SetBit(ref bitfield, 12, true);
                 }
                 if (appearance != null) {
                     appearance.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 13);
+                    Tools.SetBit(ref bitfield, 13, true);
                 }
                 if (entityFlags != null) {
                     writer.Write((short)entityFlags);
-                    Tools.SetBit(ref bitfield, true, 14);
+                    Tools.SetBit(ref bitfield, 14, true);
                 }
                 if (roll != null) {
                     writer.Write((int)roll);
-                    Tools.SetBit(ref bitfield, true, 15);
+                    Tools.SetBit(ref bitfield, 15, true);
                 }
                 if (stun != null) {
                     writer.Write((int)stun);
-                    Tools.SetBit(ref bitfield, true, 16);
+                    Tools.SetBit(ref bitfield, 16, true);
                 }
                 if (slow != null) {
                     writer.Write((int)slow);
-                    Tools.SetBit(ref bitfield, true, 17);
+                    Tools.SetBit(ref bitfield, 17, true);
                 }
                 if (ice != null) {
                     writer.Write((int)ice);
-                    Tools.SetBit(ref bitfield, true, 18);
+                    Tools.SetBit(ref bitfield, 18, true);
                 }
                 if (wind != null) {
                     writer.Write((int)wind);
-                    Tools.SetBit(ref bitfield, true, 19);
+                    Tools.SetBit(ref bitfield, 19, true);
                 }
                 if (showPatchTime != null) {
                     writer.Write((int)showPatchTime);
-                    Tools.SetBit(ref bitfield, true, 20);
+                    Tools.SetBit(ref bitfield, 20, true);
                 }
                 if (entityClass != null) {
                     writer.Write((byte)entityClass);
-                    Tools.SetBit(ref bitfield, true, 21);
+                    Tools.SetBit(ref bitfield, 21, true);
                 }
                 if (specialization != null) {
                     writer.Write((byte)specialization);
-                    Tools.SetBit(ref bitfield, true, 22);
+                    Tools.SetBit(ref bitfield, 22, true);
                 }
                 if (charge != null) {
                     writer.Write((float)charge);
-                    Tools.SetBit(ref bitfield, true, 23);
+                    Tools.SetBit(ref bitfield, 23, true);
                 }
                 if (unused24 != null) {
                     unused24.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 24);
+                    Tools.SetBit(ref bitfield, 24, true);
                 }
                 if (unused25 != null) {
                     unused25.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 25);
+                    Tools.SetBit(ref bitfield, 25, true);
                 }
                 if (rayHit != null) {
                     rayHit.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 26);
+                    Tools.SetBit(ref bitfield, 26, true);
                 }
                 if (HP != null) {
                     writer.Write((float)HP);
-                    Tools.SetBit(ref bitfield, true, 27);
+                    Tools.SetBit(ref bitfield, 27, true);
                 }
                 if (MP != null) {
                     writer.Write((float)MP);
-                    Tools.SetBit(ref bitfield, true, 28);
+                    Tools.SetBit(ref bitfield, 28, true);
                 }
                 if (block != null) {
                     writer.Write((float)block);
-                    Tools.SetBit(ref bitfield, true, 29);
+                    Tools.SetBit(ref bitfield, 29, true);
                 }
                 if (multipliers != null) {
                     multipliers.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 30);
+                    Tools.SetBit(ref bitfield, 30, true);
                 }
                 if (unused31 != null) {
                     writer.Write((byte)unused31);
-                    Tools.SetBit(ref bitfield, true, 31);
+                    Tools.SetBit(ref bitfield, 31, true);
                 }
                 if (unused32 != null) {
                     writer.Write((byte)unused32);
-                    Tools.SetBit(ref bitfield, true, 32);
+                    Tools.SetBit(ref bitfield, 32, true);
                 }
                 if (level != null) {
                     writer.Write((int)level);
-                    Tools.SetBit(ref bitfield, true, 33);
+                    Tools.SetBit(ref bitfield, 33, true);
                 }
                 if (XP != null) {
                     writer.Write((int)XP);
-                    Tools.SetBit(ref bitfield, true, 34);
+                    Tools.SetBit(ref bitfield, 34, true);
                 }
                 if (parentOwner != null) {
                     writer.Write((long)parentOwner);
-                    Tools.SetBit(ref bitfield, true, 35);
+                    Tools.SetBit(ref bitfield, 35, true);
                 }
                 if (unused36 != null) {
                     writer.Write((long)unused36);
-                    Tools.SetBit(ref bitfield, true, 36);
+                    Tools.SetBit(ref bitfield, 36, true);
                 }
                 if (powerBase != null) {
                     writer.Write((byte)powerBase);
-                    Tools.SetBit(ref bitfield, true, 37);
+                    Tools.SetBit(ref bitfield, 37, true);
                 }
                 if (unused38 != null) {
                     writer.Write((int)unused38);
-                    Tools.SetBit(ref bitfield, true, 38);
+                    Tools.SetBit(ref bitfield, 38, true);
                 }
                 if (unused39 != null) {
                     unused39.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 39);
+                    Tools.SetBit(ref bitfield, 39, true);
                 }
                 if (spawnPos != null) {
                     spawnPos.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 40);
+                    Tools.SetBit(ref bitfield, 40, true);
                 }
                 if (unused41 != null) {
                     unused41.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 41);
+                    Tools.SetBit(ref bitfield, 41, true);
                 }
                 if (unused42 != null) {
                     writer.Write((byte)unused42);
-                    Tools.SetBit(ref bitfield, true, 42);
+                    Tools.SetBit(ref bitfield, 42, true);
                 }
                 if (consumable != null) {
                     consumable.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 43);
+                    Tools.SetBit(ref bitfield, 43, true);
                 }
                 if (equipment != null) {
                     foreach (var item in equipment) {
                         item.Write(writer);
                     }
-                    Tools.SetBit(ref bitfield, true, 44);
+                    Tools.SetBit(ref bitfield, 44, true);
                 }
                 if (name != null) {
                     byte[] nameBytes = Encoding.ASCII.GetBytes(name);
                     writer.Write(nameBytes);
                     writer.Write(new byte[16 - nameBytes.Length]);
-                    Tools.SetBit(ref bitfield, true, 45);
+                    Tools.SetBit(ref bitfield, 45, true);
                 }
                 if (skillDistribution != null) {
                     skillDistribution.Write(writer);
-                    Tools.SetBit(ref bitfield, true, 46);
+                    Tools.SetBit(ref bitfield, 46, true);
                 }
                 if (manaCubes != null) {
                     writer.Write((int)manaCubes);
-                    Tools.SetBit(ref bitfield, true, 47);
+                    Tools.SetBit(ref bitfield, 47, true);
                 }
 
                 var data = stream.ToArray();
