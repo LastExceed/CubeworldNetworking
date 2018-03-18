@@ -252,199 +252,199 @@ namespace Resources.Packet {
 
                 if (position != null) {
                     position.Write(writer);
-                    Tools.SetBit(ref bitfield, 0, true);
+                    Bit.Set(ref bitfield, 0, true);
                 }
                 if (rotation != null) {
                     rotation.Write(writer);
-                    Tools.SetBit(ref bitfield, 1, true);
+                    Bit.Set(ref bitfield, 1, true);
                 }
                 if (velocity != null) {
                     velocity.Write(writer);
-                    Tools.SetBit(ref bitfield, 2, true);
+                    Bit.Set(ref bitfield, 2, true);
                 }
                 if (acceleration != null) {
                     acceleration.Write(writer);
-                    Tools.SetBit(ref bitfield, 3, true);
+                    Bit.Set(ref bitfield, 3, true);
                 }
                 if (extraVel != null) {
                     extraVel.Write(writer);
-                    Tools.SetBit(ref bitfield, 4, true);
+                    Bit.Set(ref bitfield, 4, true);
                 }
                 if (viewportPitch != null) {
                     writer.Write((float)viewportPitch);
-                    Tools.SetBit(ref bitfield, 5, true);
+                    Bit.Set(ref bitfield, 5, true);
                 }
                 if (physicsFlags != null) {
                     writer.Write((int)physicsFlags);
-                    Tools.SetBit(ref bitfield, 6, true);
+                    Bit.Set(ref bitfield, 6, true);
                 }
                 if (hostility != null) {
                     writer.Write((byte)hostility);
-                    Tools.SetBit(ref bitfield, 7, true);
+                    Bit.Set(ref bitfield, 7, true);
                 }
                 if (entityType != null) {
                     writer.Write((int)entityType);
-                    Tools.SetBit(ref bitfield, 8, true);
+                    Bit.Set(ref bitfield, 8, true);
                 }
                 if (mode != null) {
                     writer.Write((byte)mode);
-                    Tools.SetBit(ref bitfield, 9, true);
+                    Bit.Set(ref bitfield, 9, true);
                 }
                 if (modeTimer != null) {
                     writer.Write((int)modeTimer);
-                    Tools.SetBit(ref bitfield, 10, true);
+                    Bit.Set(ref bitfield, 10, true);
                 }
                 if (combo != null) {
                     writer.Write((int)combo);
-                    Tools.SetBit(ref bitfield, 11, true);
+                    Bit.Set(ref bitfield, 11, true);
                 }
                 if (lastHitTime != null) {
                     writer.Write((int)lastHitTime);
-                    Tools.SetBit(ref bitfield, 12, true);
+                    Bit.Set(ref bitfield, 12, true);
                 }
                 if (appearance != null) {
                     appearance.Write(writer);
-                    Tools.SetBit(ref bitfield, 13, true);
+                    Bit.Set(ref bitfield, 13, true);
                 }
                 if (entityFlags != null) {
                     writer.Write((short)entityFlags);
-                    Tools.SetBit(ref bitfield, 14, true);
+                    Bit.Set(ref bitfield, 14, true);
                 }
                 if (roll != null) {
                     writer.Write((int)roll);
-                    Tools.SetBit(ref bitfield, 15, true);
+                    Bit.Set(ref bitfield, 15, true);
                 }
                 if (stun != null) {
                     writer.Write((int)stun);
-                    Tools.SetBit(ref bitfield, 16, true);
+                    Bit.Set(ref bitfield, 16, true);
                 }
                 if (slow != null) {
                     writer.Write((int)slow);
-                    Tools.SetBit(ref bitfield, 17, true);
+                    Bit.Set(ref bitfield, 17, true);
                 }
                 if (ice != null) {
                     writer.Write((int)ice);
-                    Tools.SetBit(ref bitfield, 18, true);
+                    Bit.Set(ref bitfield, 18, true);
                 }
                 if (wind != null) {
                     writer.Write((int)wind);
-                    Tools.SetBit(ref bitfield, 19, true);
+                    Bit.Set(ref bitfield, 19, true);
                 }
                 if (showPatchTime != null) {
                     writer.Write((int)showPatchTime);
-                    Tools.SetBit(ref bitfield, 20, true);
+                    Bit.Set(ref bitfield, 20, true);
                 }
                 if (entityClass != null) {
                     writer.Write((byte)entityClass);
-                    Tools.SetBit(ref bitfield, 21, true);
+                    Bit.Set(ref bitfield, 21, true);
                 }
                 if (specialization != null) {
                     writer.Write((byte)specialization);
-                    Tools.SetBit(ref bitfield, 22, true);
+                    Bit.Set(ref bitfield, 22, true);
                 }
                 if (charge != null) {
                     writer.Write((float)charge);
-                    Tools.SetBit(ref bitfield, 23, true);
+                    Bit.Set(ref bitfield, 23, true);
                 }
                 if (unused24 != null) {
                     unused24.Write(writer);
-                    Tools.SetBit(ref bitfield, 24, true);
+                    Bit.Set(ref bitfield, 24, true);
                 }
                 if (unused25 != null) {
                     unused25.Write(writer);
-                    Tools.SetBit(ref bitfield, 25, true);
+                    Bit.Set(ref bitfield, 25, true);
                 }
                 if (rayHit != null) {
                     rayHit.Write(writer);
-                    Tools.SetBit(ref bitfield, 26, true);
+                    Bit.Set(ref bitfield, 26, true);
                 }
                 if (HP != null) {
                     writer.Write((float)HP);
-                    Tools.SetBit(ref bitfield, 27, true);
+                    Bit.Set(ref bitfield, 27, true);
                 }
                 if (MP != null) {
                     writer.Write((float)MP);
-                    Tools.SetBit(ref bitfield, 28, true);
+                    Bit.Set(ref bitfield, 28, true);
                 }
                 if (block != null) {
                     writer.Write((float)block);
-                    Tools.SetBit(ref bitfield, 29, true);
+                    Bit.Set(ref bitfield, 29, true);
                 }
                 if (multipliers != null) {
                     multipliers.Write(writer);
-                    Tools.SetBit(ref bitfield, 30, true);
+                    Bit.Set(ref bitfield, 30, true);
                 }
                 if (unused31 != null) {
                     writer.Write((byte)unused31);
-                    Tools.SetBit(ref bitfield, 31, true);
+                    Bit.Set(ref bitfield, 31, true);
                 }
                 if (unused32 != null) {
                     writer.Write((byte)unused32);
-                    Tools.SetBit(ref bitfield, 32, true);
+                    Bit.Set(ref bitfield, 32, true);
                 }
                 if (level != null) {
                     writer.Write((int)level);
-                    Tools.SetBit(ref bitfield, 33, true);
+                    Bit.Set(ref bitfield, 33, true);
                 }
                 if (XP != null) {
                     writer.Write((int)XP);
-                    Tools.SetBit(ref bitfield, 34, true);
+                    Bit.Set(ref bitfield, 34, true);
                 }
                 if (parentOwner != null) {
                     writer.Write((long)parentOwner);
-                    Tools.SetBit(ref bitfield, 35, true);
+                    Bit.Set(ref bitfield, 35, true);
                 }
                 if (unused36 != null) {
                     writer.Write((long)unused36);
-                    Tools.SetBit(ref bitfield, 36, true);
+                    Bit.Set(ref bitfield, 36, true);
                 }
                 if (powerBase != null) {
                     writer.Write((byte)powerBase);
-                    Tools.SetBit(ref bitfield, 37, true);
+                    Bit.Set(ref bitfield, 37, true);
                 }
                 if (unused38 != null) {
                     writer.Write((int)unused38);
-                    Tools.SetBit(ref bitfield, 38, true);
+                    Bit.Set(ref bitfield, 38, true);
                 }
                 if (unused39 != null) {
                     unused39.Write(writer);
-                    Tools.SetBit(ref bitfield, 39, true);
+                    Bit.Set(ref bitfield, 39, true);
                 }
                 if (spawnPos != null) {
                     spawnPos.Write(writer);
-                    Tools.SetBit(ref bitfield, 40, true);
+                    Bit.Set(ref bitfield, 40, true);
                 }
                 if (unused41 != null) {
                     unused41.Write(writer);
-                    Tools.SetBit(ref bitfield, 41, true);
+                    Bit.Set(ref bitfield, 41, true);
                 }
                 if (unused42 != null) {
                     writer.Write((byte)unused42);
-                    Tools.SetBit(ref bitfield, 42, true);
+                    Bit.Set(ref bitfield, 42, true);
                 }
                 if (consumable != null) {
                     consumable.Write(writer);
-                    Tools.SetBit(ref bitfield, 43, true);
+                    Bit.Set(ref bitfield, 43, true);
                 }
                 if (equipment != null) {
                     foreach (var item in equipment) {
                         item.Write(writer);
                     }
-                    Tools.SetBit(ref bitfield, 44, true);
+                    Bit.Set(ref bitfield, 44, true);
                 }
                 if (name != null) {
                     byte[] nameBytes = Encoding.ASCII.GetBytes(name);
                     writer.Write(nameBytes);
                     writer.Write(new byte[16 - nameBytes.Length]);
-                    Tools.SetBit(ref bitfield, 45, true);
+                    Bit.Set(ref bitfield, 45, true);
                 }
                 if (skillDistribution != null) {
                     skillDistribution.Write(writer);
-                    Tools.SetBit(ref bitfield, 46, true);
+                    Bit.Set(ref bitfield, 46, true);
                 }
                 if (manaCubes != null) {
                     writer.Write((int)manaCubes);
-                    Tools.SetBit(ref bitfield, 47, true);
+                    Bit.Set(ref bitfield, 47, true);
                 }
 
                 var data = stream.ToArray();
@@ -526,152 +526,152 @@ namespace Resources.Packet {
             guid = r.ReadInt64();
             var bitfield = r.ReadInt64();
 
-            if(Tools.GetBit(bitfield, 0)) {
+            if(Bit.GetBit(bitfield, 0)) {
                 position = new LongVector(r);
             }
-            if(Tools.GetBit(bitfield, 1)) {
+            if(Bit.GetBit(bitfield, 1)) {
                 rotation = new FloatVector(r);
             }
-            if(Tools.GetBit(bitfield, 2)) {
+            if(Bit.GetBit(bitfield, 2)) {
                 velocity = new FloatVector(r);
             }
-            if(Tools.GetBit(bitfield, 3)) {
+            if(Bit.GetBit(bitfield, 3)) {
                 acceleration = new FloatVector(r);
             }
-            if(Tools.GetBit(bitfield, 4)) {
+            if(Bit.GetBit(bitfield, 4)) {
                 extraVel = new FloatVector(r);
             }
-            if(Tools.GetBit(bitfield, 5)) {
+            if(Bit.GetBit(bitfield, 5)) {
                 viewportPitch = r.ReadSingle();
             }
-            if(Tools.GetBit(bitfield, 6)) {
+            if(Bit.GetBit(bitfield, 6)) {
                 physicsFlags = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 7)) {
+            if(Bit.GetBit(bitfield, 7)) {
                 hostility = (Hostility)r.ReadByte();
             }
-            if(Tools.GetBit(bitfield, 8)) {
+            if(Bit.GetBit(bitfield, 8)) {
                 entityType = (EntityType)r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 9)) {
+            if(Bit.GetBit(bitfield, 9)) {
                 mode = (Mode)r.ReadByte();
             }
-            if(Tools.GetBit(bitfield, 10)) {
+            if(Bit.GetBit(bitfield, 10)) {
                 modeTimer = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 11)) {
+            if(Bit.GetBit(bitfield, 11)) {
                 combo = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 12)) {
+            if(Bit.GetBit(bitfield, 12)) {
                 lastHitTime = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 13)) {
+            if(Bit.GetBit(bitfield, 13)) {
                 appearance = new Appearance(r);
             }
-            if(Tools.GetBit(bitfield, 14)) {
+            if(Bit.GetBit(bitfield, 14)) {
                 entityFlags = r.ReadInt16();
             }
-            if(Tools.GetBit(bitfield, 15)) {
+            if(Bit.GetBit(bitfield, 15)) {
                 roll = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 16)) {
+            if(Bit.GetBit(bitfield, 16)) {
                 stun = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 17)) {
+            if(Bit.GetBit(bitfield, 17)) {
                 slow = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 18)) {
+            if(Bit.GetBit(bitfield, 18)) {
                 ice = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 19)) {
+            if(Bit.GetBit(bitfield, 19)) {
                 wind = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 20)) {
+            if(Bit.GetBit(bitfield, 20)) {
                 showPatchTime = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 21)) {
+            if(Bit.GetBit(bitfield, 21)) {
                 entityClass = (EntityClass)r.ReadByte();
             }
-            if(Tools.GetBit(bitfield, 22)) {
+            if(Bit.GetBit(bitfield, 22)) {
                 specialization = r.ReadByte();
             }
-            if(Tools.GetBit(bitfield, 23)) {
+            if(Bit.GetBit(bitfield, 23)) {
                 charge = r.ReadSingle();
             }
-            if(Tools.GetBit(bitfield, 24)) {
+            if(Bit.GetBit(bitfield, 24)) {
                 unused24 = new FloatVector(r);
             }
-            if(Tools.GetBit(bitfield, 25)) {
+            if(Bit.GetBit(bitfield, 25)) {
                 unused25 = new FloatVector(r);
             }
-            if(Tools.GetBit(bitfield, 26)) {
+            if(Bit.GetBit(bitfield, 26)) {
                 rayHit = new FloatVector(r);
             }
-            if(Tools.GetBit(bitfield, 27)) {
+            if(Bit.GetBit(bitfield, 27)) {
                 HP = r.ReadSingle();
             }
-            if(Tools.GetBit(bitfield, 28)) {
+            if(Bit.GetBit(bitfield, 28)) {
                 MP = r.ReadSingle();
             }
-            if(Tools.GetBit(bitfield, 29)) {
+            if(Bit.GetBit(bitfield, 29)) {
                 block = r.ReadSingle();
             }
-            if(Tools.GetBit(bitfield, 30)) {
+            if(Bit.GetBit(bitfield, 30)) {
                 multipliers = new Multipliers(r);
             }
-            if(Tools.GetBit(bitfield, 31)) {
+            if(Bit.GetBit(bitfield, 31)) {
                 unused31 = r.ReadByte();
             }
-            if(Tools.GetBit(bitfield, 32)) {
+            if(Bit.GetBit(bitfield, 32)) {
                 unused32 = r.ReadByte();
             }
-            if(Tools.GetBit(bitfield, 33)) {
+            if(Bit.GetBit(bitfield, 33)) {
                 level = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 34)) {
+            if(Bit.GetBit(bitfield, 34)) {
                 XP = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 35)) {
+            if(Bit.GetBit(bitfield, 35)) {
                 parentOwner = r.ReadInt64();
             }
-            if(Tools.GetBit(bitfield, 36)) {
+            if(Bit.GetBit(bitfield, 36)) {
                 unused36 = r.ReadInt64();
             }
-            if(Tools.GetBit(bitfield, 37)) {
+            if(Bit.GetBit(bitfield, 37)) {
                 powerBase = r.ReadByte();
             }
-            if(Tools.GetBit(bitfield, 38)) {
+            if(Bit.GetBit(bitfield, 38)) {
                 unused38 = r.ReadInt32();
             }
-            if(Tools.GetBit(bitfield, 39)) {
+            if(Bit.GetBit(bitfield, 39)) {
                 unused39 = new IntVector(r);
             }
-            if(Tools.GetBit(bitfield, 40)) {
+            if(Bit.GetBit(bitfield, 40)) {
                 spawnPos = new LongVector(r);
             }
-            if(Tools.GetBit(bitfield, 41)) {
+            if(Bit.GetBit(bitfield, 41)) {
                 unused41 = new IntVector(r);
             }
-            if(Tools.GetBit(bitfield, 42)) {
+            if(Bit.GetBit(bitfield, 42)) {
                 unused42 = r.ReadByte();
             }
-            if(Tools.GetBit(bitfield, 43)) {
+            if(Bit.GetBit(bitfield, 43)) {
                 consumable = new Item(r);
             }
-            if(Tools.GetBit(bitfield, 44)) {
+            if(Bit.GetBit(bitfield, 44)) {
                 equipment = new Item[13];
                 for(int i = 0; i < 13; i++) {
                     equipment[i] = new Item(r);
                 }
             }
-            if(Tools.GetBit(bitfield, 45)) {
+            if(Bit.GetBit(bitfield, 45)) {
                 name = new string(r.ReadChars(16));
                 name = name.Substring(0, name.IndexOf("\0"));
             }
-            if(Tools.GetBit(bitfield, 46)) {
+            if(Bit.GetBit(bitfield, 46)) {
                 skillDistribution = new SkillDistribution(r);
             }
-            if(Tools.GetBit(bitfield, 47)) {
+            if(Bit.GetBit(bitfield, 47)) {
                 manaCubes = r.ReadInt32();
             }
         }
