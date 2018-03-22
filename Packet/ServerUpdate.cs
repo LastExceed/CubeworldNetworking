@@ -62,14 +62,14 @@ namespace Resources.Packet {
             }
         }
         public class Sound {
-            public IntVector position;
+            public FloatVector position;
             public SoundID soundID;
             public float pitch;
             public float volume;
 
             public Sound() { }
             public Sound(BinaryReader reader) {
-                position = new IntVector(reader);
+                position = new FloatVector(reader);
                 soundID = (SoundID)reader.ReadInt32();
                 pitch = reader.ReadSingle();
                 volume = reader.ReadSingle();
