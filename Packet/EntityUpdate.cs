@@ -526,152 +526,152 @@ namespace Resources.Packet {
             guid = r.ReadInt64();
             var bitfield = r.ReadInt64();
 
-            if(Bit.GetBit(bitfield, 0)) {
+            if(bitfield.GetBit(0)) {
                 position = new LongVector(r);
             }
-            if(Bit.GetBit(bitfield, 1)) {
+            if(bitfield.GetBit(1)) {
                 rotation = new FloatVector(r);
             }
-            if(Bit.GetBit(bitfield, 2)) {
+            if(bitfield.GetBit(2)) {
                 velocity = new FloatVector(r);
             }
-            if(Bit.GetBit(bitfield, 3)) {
+            if(bitfield.GetBit(3)) {
                 acceleration = new FloatVector(r);
             }
-            if(Bit.GetBit(bitfield, 4)) {
+            if(bitfield.GetBit(4)) {
                 extraVel = new FloatVector(r);
             }
-            if(Bit.GetBit(bitfield, 5)) {
+            if(bitfield.GetBit(5)) {
                 viewportPitch = r.ReadSingle();
             }
-            if(Bit.GetBit(bitfield, 6)) {
+            if(bitfield.GetBit(6)) {
                 physicsFlags = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 7)) {
+            if(bitfield.GetBit(7)) {
                 hostility = (Hostility)r.ReadByte();
             }
-            if(Bit.GetBit(bitfield, 8)) {
+            if(bitfield.GetBit(8)) {
                 entityType = (EntityType)r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 9)) {
+            if(bitfield.GetBit(9)) {
                 mode = (Mode)r.ReadByte();
             }
-            if(Bit.GetBit(bitfield, 10)) {
+            if(bitfield.GetBit(10)) {
                 modeTimer = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 11)) {
+            if(bitfield.GetBit(11)) {
                 combo = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 12)) {
+            if(bitfield.GetBit(12)) {
                 lastHitTime = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 13)) {
+            if(bitfield.GetBit(13)) {
                 appearance = new Appearance(r);
             }
-            if(Bit.GetBit(bitfield, 14)) {
+            if(bitfield.GetBit(14)) {
                 entityFlags = r.ReadInt16();
             }
-            if(Bit.GetBit(bitfield, 15)) {
+            if(bitfield.GetBit(15)) {
                 roll = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 16)) {
+            if(bitfield.GetBit(16)) {
                 stun = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 17)) {
+            if(bitfield.GetBit(17)) {
                 slow = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 18)) {
+            if(bitfield.GetBit(18)) {
                 ice = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 19)) {
+            if(bitfield.GetBit(19)) {
                 wind = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 20)) {
+            if(bitfield.GetBit(20)) {
                 showPatchTime = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 21)) {
+            if(bitfield.GetBit(21)) {
                 entityClass = (EntityClass)r.ReadByte();
             }
-            if(Bit.GetBit(bitfield, 22)) {
+            if(bitfield.GetBit(22)) {
                 specialization = r.ReadByte();
             }
-            if(Bit.GetBit(bitfield, 23)) {
+            if(bitfield.GetBit(23)) {
                 charge = r.ReadSingle();
             }
-            if(Bit.GetBit(bitfield, 24)) {
+            if(bitfield.GetBit(24)) {
                 unused24 = new FloatVector(r);
             }
-            if(Bit.GetBit(bitfield, 25)) {
+            if(bitfield.GetBit(25)) {
                 unused25 = new FloatVector(r);
             }
-            if(Bit.GetBit(bitfield, 26)) {
+            if(bitfield.GetBit(26)) {
                 rayHit = new FloatVector(r);
             }
-            if(Bit.GetBit(bitfield, 27)) {
+            if(bitfield.GetBit(27)) {
                 HP = r.ReadSingle();
             }
-            if(Bit.GetBit(bitfield, 28)) {
+            if(bitfield.GetBit(28)) {
                 MP = r.ReadSingle();
             }
-            if(Bit.GetBit(bitfield, 29)) {
+            if(bitfield.GetBit(29)) {
                 block = r.ReadSingle();
             }
-            if(Bit.GetBit(bitfield, 30)) {
+            if(bitfield.GetBit(30)) {
                 multipliers = new Multipliers(r);
             }
-            if(Bit.GetBit(bitfield, 31)) {
+            if(bitfield.GetBit(31)) {
                 unused31 = r.ReadByte();
             }
-            if(Bit.GetBit(bitfield, 32)) {
+            if(bitfield.GetBit(32)) {
                 unused32 = r.ReadByte();
             }
-            if(Bit.GetBit(bitfield, 33)) {
+            if(bitfield.GetBit(33)) {
                 level = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 34)) {
+            if(bitfield.GetBit(34)) {
                 XP = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 35)) {
+            if(bitfield.GetBit(35)) {
                 parentOwner = r.ReadInt64();
             }
-            if(Bit.GetBit(bitfield, 36)) {
+            if(bitfield.GetBit(36)) {
                 unused36 = r.ReadInt64();
             }
-            if(Bit.GetBit(bitfield, 37)) {
+            if(bitfield.GetBit(37)) {
                 powerBase = r.ReadByte();
             }
-            if(Bit.GetBit(bitfield, 38)) {
+            if(bitfield.GetBit(38)) {
                 unused38 = r.ReadInt32();
             }
-            if(Bit.GetBit(bitfield, 39)) {
+            if(bitfield.GetBit(39)) {
                 unused39 = new IntVector(r);
             }
-            if(Bit.GetBit(bitfield, 40)) {
+            if(bitfield.GetBit(40)) {
                 spawnPos = new LongVector(r);
             }
-            if(Bit.GetBit(bitfield, 41)) {
+            if(bitfield.GetBit(41)) {
                 unused41 = new IntVector(r);
             }
-            if(Bit.GetBit(bitfield, 42)) {
+            if(bitfield.GetBit(42)) {
                 unused42 = r.ReadByte();
             }
-            if(Bit.GetBit(bitfield, 43)) {
+            if(bitfield.GetBit(43)) {
                 consumable = new Item(r);
             }
-            if(Bit.GetBit(bitfield, 44)) {
+            if(bitfield.GetBit(44)) {
                 equipment = new Item[13];
                 for(int i = 0; i < 13; i++) {
                     equipment[i] = new Item(r);
                 }
             }
-            if(Bit.GetBit(bitfield, 45)) {
+            if(bitfield.GetBit(45)) {
                 name = new string(r.ReadChars(16));
                 name = name.Substring(0, name.IndexOf('\0'));
             }
-            if(Bit.GetBit(bitfield, 46)) {
+            if(bitfield.GetBit(46)) {
                 skillDistribution = new SkillDistribution(r);
             }
-            if(Bit.GetBit(bitfield, 47)) {
+            if(bitfield.GetBit(47)) {
                 manaCubes = r.ReadInt32();
             }
         }
