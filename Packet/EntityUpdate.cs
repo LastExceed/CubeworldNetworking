@@ -666,7 +666,7 @@ namespace Resources.Packet {
             }
             if(Bit.GetBit(bitfield, 45)) {
                 name = new string(r.ReadChars(16));
-                name = name.Substring(0, name.IndexOf("\0"));
+                name = name.Substring(0, name.IndexOf('\0'));
             }
             if(Bit.GetBit(bitfield, 46)) {
                 skillDistribution = new SkillDistribution(r);
