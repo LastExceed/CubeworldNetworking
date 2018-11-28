@@ -899,7 +899,7 @@ namespace Resources.Packet {
                 }
             }
             MP = null;
-            multipliers = null;
+            //multipliers = null;
             unused31 = null;
             unused32 = null;
             XP = null;

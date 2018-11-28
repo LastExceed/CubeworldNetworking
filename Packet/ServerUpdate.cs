@@ -4,28 +4,31 @@ using Resources.Utilities;
 
 namespace Resources.Packet {
     public class ServerUpdate : Packet {
-        public class BlockDelta {
+        public abstract class SubPacket {
+            internal abstract void Write(BinaryWriter writer);
+        }
+        public class BlockDelta : SubPacket {
             public IntVector position;
             public ByteVector color;
             public BlockType type;
             public int unknown;
 
             public BlockDelta() { }
-            public BlockDelta(BinaryReader reader) {
+            internal BlockDelta(BinaryReader reader) {
                 position = new IntVector(reader);
                 color = new ByteVector(reader);
                 type = (BlockType)reader.ReadByte();
                 unknown = reader.ReadInt32();
             }
 
-            public void Write(BinaryWriter writer) {
+            internal override void Write(BinaryWriter writer) {
                 position.Write(writer);
                 color.Write(writer);
                 writer.Write((byte)type);
                 writer.Write(unknown);
             }
         }
-        public class Particle {
+        public class Particle : SubPacket {
             public LongVector position;
             public FloatVector velocity;
             public FloatVector color;
@@ -37,7 +40,7 @@ namespace Resources.Packet {
             public int unknown;
 
             public Particle() { }
-            public Particle(BinaryReader reader) {
+            internal Particle(BinaryReader reader) {
                 position = new LongVector(reader);
                 velocity = new FloatVector(reader);
                 color = new FloatVector(reader);
@@ -49,7 +52,7 @@ namespace Resources.Packet {
                 unknown = reader.ReadInt32();
             }
 
-            public void Write(BinaryWriter writer) {
+            internal override void Write(BinaryWriter writer) {
                 position.Write(writer);
                 velocity.Write(writer);
                 color.Write(writer);
@@ -61,28 +64,28 @@ namespace Resources.Packet {
                 writer.Write(unknown);
             }
         }
-        public class Sound {
+        public class Sound : SubPacket {
             public FloatVector position;
             public SoundID soundID;
             public float pitch;
             public float volume;
 
             public Sound() { }
-            public Sound(BinaryReader reader) {
+            internal Sound(BinaryReader reader) {
                 position = new FloatVector(reader);
                 soundID = (SoundID)reader.ReadInt32();
                 pitch = reader.ReadSingle();
                 volume = reader.ReadSingle();
             }
 
-            public void Write(BinaryWriter writer) {
+            internal override void Write(BinaryWriter writer) {
                 position.Write(writer);
                 writer.Write((int)soundID);
                 writer.Write(pitch);
                 writer.Write(volume);
             }
         }
-        public class StaticEntity {
+        public class StaticEntity : SubPacket {
             public int chunkX;
             public int chunkY;
             public int id;
@@ -100,7 +103,7 @@ namespace Resources.Packet {
             public long guid; //of player who interacts with it
 
             public StaticEntity() { }
-            public StaticEntity(BinaryReader reader) {
+            internal StaticEntity(BinaryReader reader) {
                 chunkX = reader.ReadInt32();
                 chunkY = reader.ReadInt32();
                 id = reader.ReadInt32();
@@ -118,7 +121,7 @@ namespace Resources.Packet {
                 guid = reader.ReadInt64();
             }
 
-            public void Write(BinaryWriter writer) {
+            internal override void Write(BinaryWriter writer) {
                 writer.Write(chunkX);
                 writer.Write(chunkY);
                 writer.Write(id);
@@ -136,7 +139,7 @@ namespace Resources.Packet {
                 writer.Write(guid);
             }
         }
-        public class ChunkItems {
+        public class ChunkItems : SubPacket {
             public class DroppedItem {
                 public Item item;
                 public long posX;
@@ -182,7 +185,7 @@ namespace Resources.Packet {
             public List<DroppedItem> droppedItems = new List<DroppedItem>();
 
             public ChunkItems() { }
-            public ChunkItems(BinaryReader reader) {
+            internal ChunkItems(BinaryReader reader) {
                 chunkX = reader.ReadInt32();
                 chunkY = reader.ReadInt32();
                 int m = reader.ReadInt32();
@@ -191,7 +194,7 @@ namespace Resources.Packet {
                 }
             }
 
-            public void Write(BinaryWriter writer) {
+            internal override void Write(BinaryWriter writer) {
                 writer.Write(chunkX);
                 writer.Write(chunkY);
                 writer.Write(droppedItems.Count);
@@ -200,7 +203,7 @@ namespace Resources.Packet {
                 }
             }
         }
-        public class P48 {
+        public class P48 : SubPacket {
             public class SubP48 {
                 public ulong unknownA;
                 public ulong unknownB;
@@ -221,7 +224,7 @@ namespace Resources.Packet {
             public List<SubP48> subP48s = new List<SubP48>();
 
             public P48() { }
-            public P48(BinaryReader reader) {
+            internal P48(BinaryReader reader) {
                 unknown = reader.ReadUInt64();
                 int count = reader.ReadInt32();
                 for (int i = 0; i < count; i++) {
@@ -229,7 +232,7 @@ namespace Resources.Packet {
                 }
             }
 
-            public void Write(BinaryWriter writer) {
+            internal override void Write(BinaryWriter writer) {
                 writer.Write(unknown);
                 writer.Write(subP48s.Count);
                 foreach (SubP48 subP48 in subP48s) {
@@ -237,64 +240,64 @@ namespace Resources.Packet {
                 }
             }
         }
-        public class Pickup {
+        public class Pickup : SubPacket {
             public long guid;
             public Item item;
 
             public Pickup() { }
-            public Pickup(BinaryReader reader) {
+            internal Pickup(BinaryReader reader) {
                 guid = reader.ReadInt64();
                 item = new Item(reader);
             }
 
-            public void Write(BinaryWriter writer) {
+            internal override void Write(BinaryWriter writer) {
                 writer.Write(guid);
                 item.Write(writer);
             }
         }
-        public class Kill {
+        public class Kill : SubPacket {
             public long killer;
             public long victim;
             public int unknown;
             public int xp;
 
             public Kill() { }
-            public Kill(BinaryReader reader) {
+            internal Kill(BinaryReader reader) {
                 killer = reader.ReadInt64();
                 victim = reader.ReadInt64();
                 unknown = reader.ReadInt32();
                 xp = reader.ReadInt32();
             }
 
-            public void Write(BinaryWriter writer) {
+            internal override void Write(BinaryWriter writer) {
                 writer.Write(killer);
                 writer.Write(victim);
                 writer.Write(unknown);
                 writer.Write(xp);
             }
         }
-        public class Damage {
+        public class Damage : SubPacket {
             public ulong target;
             public ulong attacker;
             public float damage;
             public int unknown;
 
             public Damage() { }
-            public Damage(BinaryReader reader) {
+            internal Damage(BinaryReader reader) {
                 target = reader.ReadUInt64();
                 attacker = reader.ReadUInt64();
                 damage = reader.ReadSingle();
                 unknown = reader.ReadInt32();
             }
 
-            public void Write(BinaryWriter writer) {
+            internal override void Write(BinaryWriter writer) {
                 writer.Write(target);
                 writer.Write(attacker);
                 writer.Write(damage);
                 writer.Write(unknown);
             }
         }
-        public class Mission {
+        public class Mission : SubPacket {
             public int sectionX;
             public int sectionY;
             public int unknownA;
@@ -313,7 +316,7 @@ namespace Resources.Packet {
             public int chunkY;
 
             public Mission() { }
-            public Mission(BinaryReader reader) {
+            internal Mission(BinaryReader reader) {
                 sectionX = reader.ReadInt32();
                 sectionY = reader.ReadInt32();
                 unknownA = reader.ReadInt32();
@@ -332,7 +335,7 @@ namespace Resources.Packet {
                 chunkY = reader.ReadInt32();
             }
 
-            public void Write(BinaryWriter writer) {
+            internal override void Write(BinaryWriter writer) {
                 writer.Write(sectionX);
                 writer.Write(sectionY);
                 writer.Write(unknownA);
