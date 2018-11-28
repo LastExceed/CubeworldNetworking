@@ -369,9 +369,7 @@ namespace Resources.Packet {
         public List<PassiveProc> passiveProcs = new List<PassiveProc>();
         public List<Mission> missions = new List<Mission>();
 
-        public ServerUpdate() : base() {
-            PacketID = PacketID.ServerUpdate;
-        }
+        public ServerUpdate() : base(PacketID.ServerUpdate) { }
         public ServerUpdate(BinaryReader reader) : this() {
             byte[] uncompressed = Zlib.Decompress(reader.ReadBytes(reader.ReadInt32()));
             MemoryStream stream = new MemoryStream(uncompressed);

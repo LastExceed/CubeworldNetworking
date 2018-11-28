@@ -7,9 +7,7 @@ namespace Resources.Packet {
     class MultiEntityUpdate : Packet {
         public List<EntityUpdate> entityUpdates = new List<EntityUpdate>();
 
-        public MultiEntityUpdate() : base() {
-            PacketID = PacketID.MultiEntityUpdate;
-        }
+        public MultiEntityUpdate() : base(PacketID.MultiEntityUpdate) { }
         public MultiEntityUpdate(BinaryReader reader) : base(reader) {
             var count = reader.ReadInt32();
             for (int i = 0; i < count; i++) {

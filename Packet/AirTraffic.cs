@@ -43,9 +43,7 @@ namespace Resources.Packet {
 
         public List<Airship> airships = new List<Airship>();
 
-        public AirTraffic() : base() {
-            PacketID = PacketID.AirTraffic;
-        }
+        public AirTraffic() : base(PacketID.AirTraffic) { }
         public AirTraffic(BinaryReader reader) : base(reader) {
             var count = reader.ReadInt32();
             for (int i = 0; i < count; i++) {

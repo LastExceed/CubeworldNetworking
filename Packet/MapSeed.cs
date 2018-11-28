@@ -4,9 +4,7 @@ namespace Resources.Packet {
     public class MapSeed : Packet{
         public int seed;
 
-        public MapSeed() : base() {
-            PacketID = PacketID.MapSeed;
-        }
+        public MapSeed() : base(PacketID.MapSeed) { }
         public MapSeed(BinaryReader reader) : this() {
             seed = reader.ReadInt32();
         }

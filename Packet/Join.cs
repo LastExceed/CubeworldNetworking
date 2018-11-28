@@ -6,9 +6,7 @@ namespace Resources.Packet {
         public long guid;
         public byte[] junk;
 
-        public Join() : base() {
-            PacketID = PacketID.JoinPacket;
-        }
+        public Join() : base(PacketID.JoinPacket) { }
         public Join(BinaryReader reader) : this() {
             unknown = reader.ReadInt32();
             guid = reader.ReadInt64();

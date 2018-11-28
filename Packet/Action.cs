@@ -10,9 +10,7 @@ namespace Resources.Packet {
         public ActionType type;
         //3 pad
 
-        public EntityAction() : base() {
-            PacketID = PacketID.EntityAction;
-        }
+        public EntityAction() : base(PacketID.EntityAction) { }
         public EntityAction(BinaryReader reader) : base(reader) {
             item = new Item(reader);
             chunkX = reader.ReadInt32();

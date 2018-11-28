@@ -22,8 +22,7 @@ namespace Resources.Packet {
         public float unknownC;
         public float unknownD;
 
-        public Shoot() : base() {
-            PacketID = PacketID.Shoot;
+        public Shoot() : base(PacketID.Shoot) {
             position = new LongVector();
             unknownV = new IntVector();
             velocity = new FloatVector();

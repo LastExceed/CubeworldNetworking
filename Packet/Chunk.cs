@@ -5,9 +5,7 @@ namespace Resources.Packet {
         public int chunkX;
         public int chunkY;
 
-        public Chunk() : base(){
-            PacketID = PacketID.Chunk;
-        }
+        public Chunk() : base(PacketID.Chunk) { }
         public Chunk(BinaryReader reader) : base(reader){
             chunkX = reader.ReadInt32();
             chunkY = reader.ReadInt32();

@@ -516,9 +516,7 @@ namespace Resources.Packet {
             }
         }
 
-        public EntityUpdate() : base(){
-            PacketID = PacketID.EntityUpdate;
-        }
+        public EntityUpdate() : base(PacketID.EntityUpdate) { }
         public EntityUpdate(BinaryReader reader) : base(reader){
             byte[] uncompressed = Zlib.Decompress(reader.ReadBytes(reader.ReadInt32()));
             MemoryStream stream = new MemoryStream(uncompressed);

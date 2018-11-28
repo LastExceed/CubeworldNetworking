@@ -17,9 +17,7 @@ namespace Resources.Packet {
         public bool showlight;
         public byte paddingB;
 
-        public Hit() : base() {
-            PacketID = PacketID.Hit;
-        }
+        public Hit() : base(PacketID.Hit) { }
         public Hit(BinaryReader reader) : this() {
             attacker = reader.ReadInt64();
             target = reader.ReadInt64();
