@@ -4,7 +4,8 @@ import me.lastexceed.cubeworldnetworking.utils.*
 
 abstract class Packet(val opcode: Opcode) : CwSerializable
 
-inline class Opcode(val value: Int) {
+@JvmInline
+value class Opcode(val value: Int) {
 	companion object {
 		val CreatureUpdate = Opcode(0)
 		val MultiEntityUpdate = Opcode(1)

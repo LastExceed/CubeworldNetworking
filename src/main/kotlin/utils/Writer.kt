@@ -2,7 +2,8 @@ package me.lastexceed.cubeworldnetworking.utils
 
 import io.ktor.utils.io.*
 
-class Writer(private val inner: ByteWriteChannel) {
+@JvmInline
+value class Writer(private val inner: ByteWriteChannel) {
 	suspend fun writeByte(value: Byte) = inner.writeByte(value)
 	suspend fun writeShort(value: Short) = inner.writeShortLittleEndian(value)
 	suspend fun writeInt(value: Int) = inner.writeIntLittleEndian(value)

@@ -101,7 +101,8 @@ data class WorldEdit(
 	}
 }
 
-inline class BlockType(val value: Byte) {
+@JvmInline
+value class BlockType(val value: Byte) {
 	companion object {
 		val Air = BlockType(0)
 		val Solid = BlockType(1)
@@ -150,7 +151,8 @@ data class Particle(
 	}
 }
 
-inline class ParticleType(val value: Int) {
+@JvmInline
+value class ParticleType(val value: Int) {
 	companion object {
 		val Normal = ParticleType(0)
 		val Spark = ParticleType(1)
@@ -185,7 +187,8 @@ data class Sound(
 	}
 }
 
-inline class SoundType(val value: Int) {
+@JvmInline
+value class SoundType(val value: Int) {
 	companion object {
 		val Hit = SoundType(0)
 		val Blade1 = SoundType(1)
@@ -343,7 +346,8 @@ data class WorldObject(
 	}
 }
 
-inline class ObjectType(val value: Int) {
+@JvmInline
+value class ObjectType(val value: Int) {
 	companion object {
 		val Statue = ObjectType(0)
 		val Door = ObjectType(1)
@@ -425,7 +429,8 @@ inline class ObjectType(val value: Int) {
 	}
 }
 
-inline class Orientation(val value: Int) {
+@JvmInline
+value class Orientation(val value: Int) {
 	companion object {
 		val South = Orientation(0)
 		val East = Orientation(1)
@@ -639,7 +644,8 @@ data class Mission(
 	}
 }
 
-inline class MissionState(val value: Byte) {
+@JvmInline
+value class MissionState(val value: Byte) {
 	companion object {
 		val Ready = MissionState(0)
 		val InProgress = MissionState(1)

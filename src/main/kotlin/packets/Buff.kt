@@ -42,7 +42,8 @@ data class Buff(
 	}
 }
 
-inline class BuffType(val value: Byte) {
+@JvmInline
+value class BuffType(val value: Byte) {
 	companion object {
 		val Bulwalk = BuffType(1)
 		val WarFrenzy = BuffType(2)

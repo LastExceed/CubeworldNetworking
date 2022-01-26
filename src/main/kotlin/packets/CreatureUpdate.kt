@@ -338,7 +338,8 @@ data class CreatureUpdate(
 	}
 }
 
-inline class CreatureID(val value: Long)
+@JvmInline
+value class CreatureID(val value: Long)
 
 data class Appearance(
 	var unknownA: Byte,
@@ -581,7 +582,8 @@ data class SkillDistribution(
 	}
 }
 
-inline class PhysicsFlag(override val value: Int) : FlagSetIndex {
+@JvmInline
+value class PhysicsFlag(override val value: Int) : FlagSetIndex {
 	companion object {
 		val onGround = PhysicsFlag(0)
 		val swimming = PhysicsFlag(1)
@@ -593,7 +595,8 @@ inline class PhysicsFlag(override val value: Int) : FlagSetIndex {
 	}
 }
 
-inline class CreatureFlag(override val value: Int) : FlagSetIndex {
+@JvmInline
+value class CreatureFlag(override val value: Int) : FlagSetIndex {
 	companion object {
 		val climbing = CreatureFlag(0)
 
@@ -609,7 +612,8 @@ inline class CreatureFlag(override val value: Int) : FlagSetIndex {
 	}
 }
 
-inline class AppearanceFlag(override val value: Int) : FlagSetIndex {
+@JvmInline
+value class AppearanceFlag(override val value: Int) : FlagSetIndex {
 	companion object {
 		val fourLegged = AppearanceFlag(0)
 		val canFly = AppearanceFlag(1)
@@ -623,7 +627,8 @@ inline class AppearanceFlag(override val value: Int) : FlagSetIndex {
 	}
 }
 
-inline class Affiliation(val value: Byte) {
+@JvmInline
+value class Affiliation(val value: Byte) {
 	companion object {
 		val Player = Affiliation(0)
 		val Enemy = Affiliation(1)
@@ -635,7 +640,8 @@ inline class Affiliation(val value: Byte) {
 	}
 }
 
-inline class Race(val value: Int) {
+@JvmInline
+value class Race(val value: Int) {
 	companion object {
 		val ElfMale = Race(0)
 		val ElfFemale = Race(1)
@@ -796,7 +802,8 @@ inline class Race(val value: Int) {
 	}
 }
 
-inline class Animation(val value: Byte) {
+@JvmInline
+value class Animation(val value: Byte) {
 	companion object {
 		val Idle = Animation(0)
 		val DualWieldM1a = Animation(1)
@@ -912,7 +919,8 @@ inline class Animation(val value: Byte) {
 	}
 }
 
-inline class CombatClassMajor(val value: Byte) {
+@JvmInline
+value class CombatClassMajor(val value: Byte) {
 	companion object {
 		val Warrior = CombatClassMajor(1)
 		val Ranger = CombatClassMajor(2)
@@ -921,7 +929,8 @@ inline class CombatClassMajor(val value: Byte) {
 	}
 }
 
-inline class CombatClassMinor(val value: Byte) {
+@JvmInline
+value class CombatClassMinor(val value: Byte) {
 	object Warrior {
 		val Berserker = CombatClassMinor(0)
 		val Guardian = CombatClassMinor(1)

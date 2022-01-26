@@ -72,7 +72,8 @@ data class Airship(
 	}
 }
 
-inline class AirshipState(val value: Int) {
+@JvmInline
+value class AirshipState(val value: Int) {
 	companion object {
 		//TODO: figure out which airship states exist
 	}

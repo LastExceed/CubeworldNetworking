@@ -36,7 +36,8 @@ data class CreatureAction(
 	}
 }
 
-inline class ActionType(val value: Byte) {
+@JvmInline
+value class ActionType(val value: Byte) {
 	companion object {
 		val Bomb = ActionType(1)
 		val Talk = ActionType(2)

@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	kotlin("jvm") version "1.4.31"
+	kotlin("jvm") version "1.6.10"
 	`maven-publish`
 }
 group = "me.lastexceed"
-version = "1.0-SNAPSHOT"
+version = "1.0.1"
 
 repositories {
 	mavenCentral()
@@ -16,17 +16,7 @@ dependencies {
 		"io",
 		"utils"
 	).forEach {
-		implementation("io.ktor", "ktor-$it", "1.5.2")
-	}
-}
-
-tasks.withType<KotlinCompile>() {
-	kotlinOptions {
-		jvmTarget = "13"
-		freeCompilerArgs = listOf(
-			"-XXLanguage:+InlineClasses",
-			"-Xopt-in=kotlin.ExperimentalUnsignedTypes"
-		)
+		implementation("io.ktor", "ktor-$it", "2.0.+")
 	}
 }
 

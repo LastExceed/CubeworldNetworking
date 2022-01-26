@@ -120,7 +120,8 @@ data class Spirit(
 	}
 }
 
-inline class ItemTypeMajor(val value: Byte) {
+@JvmInline
+value class ItemTypeMajor(val value: Byte) {
 	companion object {
 		var None = ItemTypeMajor(0)
 		var Food = ItemTypeMajor(1)
@@ -151,7 +152,8 @@ inline class ItemTypeMajor(val value: Byte) {
 	}
 }
 
-inline class Rarity(val value: Byte) {
+@JvmInline
+value class Rarity(val value: Byte) {
 	operator fun compareTo(other: Rarity) = this.value.compareTo(other.value)
 
 	companion object {
@@ -164,7 +166,8 @@ inline class Rarity(val value: Byte) {
 	}
 }
 
-inline class Material(val value: Byte) {
+@JvmInline
+value class Material(val value: Byte) {
 	companion object {
 		var None = Material(0)
 		var Iron = Material(1)
@@ -204,7 +207,8 @@ inline class Material(val value: Byte) {
 	}
 }
 
-inline class ItemTypeMinor(val value: Byte) {
+@JvmInline
+value class ItemTypeMinor(val value: Byte) {
 	object Food {
 		val Cookie = ItemTypeMinor(0)
 		val LifePotion = ItemTypeMinor(1)
@@ -297,7 +301,8 @@ inline class ItemTypeMinor(val value: Byte) {
 	}
 }
 
-inline class ItemFlag(override val value: Int) : FlagSetIndex {
+@JvmInline
+value class ItemFlag(override val value: Int) : FlagSetIndex {
 	companion object {
 		val adapted = ItemFlag(0)
 	}

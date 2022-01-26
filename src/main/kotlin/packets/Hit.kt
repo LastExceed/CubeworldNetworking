@@ -51,7 +51,8 @@ data class Hit(
 	}
 }
 
-inline class DamageType(val value: Byte) {
+@JvmInline
+value class DamageType(val value: Byte) {
 	companion object {
 		val Default = DamageType(0)
 		val Block = DamageType(1)

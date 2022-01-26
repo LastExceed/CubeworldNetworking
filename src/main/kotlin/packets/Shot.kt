@@ -66,7 +66,8 @@ data class Shot(
 	}
 }
 
-inline class Projectile(val value: Int) {
+@JvmInline
+value class Projectile(val value: Int) {
 	companion object {
 		val Arrow = Projectile(1)
 		val Boomerang = Projectile(2)
