@@ -17,7 +17,7 @@ data class ServerUpdate(
 	val pickups: MutableList<Pickup> = mutableListOf(),
 	val kills: MutableList<Kill> = mutableListOf(),
 	val attacks: MutableList<Attack> = mutableListOf(),
-	val buffs: MutableList<Buff> = mutableListOf(),
+	val statusEffects: MutableList<StatusEffect> = mutableListOf(),
 	val missions: MutableList<Mission> = mutableListOf()
 ) : Packet(Opcode.ServerUpdate) {
 	override suspend fun writeTo(writer: Writer) {
@@ -36,7 +36,7 @@ data class ServerUpdate(
 			pickups,
 			kills,
 			attacks,
-			buffs,
+			statusEffects,
 			missions
 		).forEach {
 			inflatedWriter.writeInt(it.size)
@@ -69,7 +69,7 @@ data class ServerUpdate(
 				pickups = MutableList(uncompressedReader.readInt()) { Pickup.readFrom(uncompressedReader) },
 				kills = MutableList(uncompressedReader.readInt()) { Kill.readFrom(uncompressedReader) },
 				attacks = MutableList(uncompressedReader.readInt()) { Attack.readFrom(uncompressedReader) },
-				buffs = MutableList(uncompressedReader.readInt()) { Buff.readFrom(uncompressedReader) },
+				statusEffects = MutableList(uncompressedReader.readInt()) { StatusEffect.readFrom(uncompressedReader) },
 				missions = MutableList(uncompressedReader.readInt()) { Mission.readFrom(uncompressedReader) }
 			)
 		}

@@ -1,13 +1,12 @@
 package me.lastexceed.cubeworldnetworking.utils
 
 object Utils {
-	fun creatureToSoundPosition(creaturePosition: Vector3<Long>): Vector3<Float> {
-		return Vector3(
+	fun creatureToSoundPosition(creaturePosition: Vector3<Long>) =
+		Vector3(
 			(creaturePosition.x / 0x10000).toFloat(),
 			(creaturePosition.y / 0x10000).toFloat(),
 			(creaturePosition.z / 0x10000).toFloat()
 		)
-	}
 
 	//not sure what this is exactly, but its used for lots of things
 	fun levelScalingFactor(level: Float) = 1f / (0.05f * (level - 1f) + 1f)

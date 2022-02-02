@@ -5,20 +5,16 @@ import me.lastexceed.cubeworldnetworking.utils.*
 data class Buff(
 	val source: CreatureID,
 	val target: CreatureID,
-	val type: BuffType,
-	val unknownA: Byte,
-	val unknownB: Short,
+	val type: Type,
 	val modifier: Float,
 	val duration: Int,
 	val unknownC: Int,
 	val creatureID3: CreatureID
-) : Packet(Opcode.Buff), SubPacket {
+) : Packet(Opcode.StatusEffect), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(source.value)
 		writer.writeLong(target.value)
-		writer.writeByte(type.value)
-		writer.writeByte(unknownA)
-		writer.writeShort(unknownB)
+		writer.writeInt(type.value)
 		writer.writeFloat(modifier)
 		writer.writeInt(duration)
 		writer.writeInt(unknownC)
@@ -26,36 +22,56 @@ data class Buff(
 	}
 
 	companion object : CwDeserializer<Buff> {
-		override suspend fun readFrom(reader: Reader): Buff {
-			return Buff(
+		override suspend fun readFrom(reader: Reader) =
+			Buff(
 				source = CreatureID(reader.readLong()),
 				target = CreatureID(reader.readLong()),
-				type = BuffType(reader.readByte()),
-				unknownA = reader.readByte(),
-				unknownB = reader.readShort(),
+				type = Type(reader.readInt()),
 				modifier = reader.readFloat(),
 				duration = reader.readInt(),
 				unknownC = reader.readInt(),
 				creatureID3 = CreatureID(reader.readLong())
 			)
+	}
+
+	@JvmInline
+	value class Type(val value: Int) {
+		companion object {
+			val Bulwalk = Type(1)
+			val WarFrenzy = Type(2)
+			val Camouflage = Type(3)
+			val Poison = Type(4)
+			val UnknownA = Type(5)
+			val ManaShield = Type(6)
+			val UnknownB = Type(7)
+			val UnknownC = Type(8)
+			val FireSpark = Type(9) //fire passive (free insta cast)
+			val Intuition = Type(10) //scout passive (insta charge)
+			val Elusiveness = Type(11) //ninja passive (25MP + next hit crits
+			val Swiftness = Type(12)
 		}
 	}
-}
 
-@JvmInline
-value class BuffType(val value: Byte) {
-	companion object {
-		val Bulwalk = BuffType(1)
-		val WarFrenzy = BuffType(2)
-		val Camouflage = BuffType(3)
-		val Poison = BuffType(4)
-		val UnknownA = BuffType(5)
-		val ManaShield = BuffType(6)
-		val UnknownB = BuffType(7)
-		val UnknownC = BuffType(8)
-		val FireSpark = BuffType(9) //fire passive (free insta cast)
-		val Intuition = BuffType(10) //scout passive (insta charge)
-		val Elusiveness = BuffType(11) //ninja passive (25MP + next hit crits
-		val Swiftness = BuffType(12)
-	}
+//	enum class E : CwSerializable {
+//		Bulwalk,
+//		WarFrenzy,
+//		Camouflage,
+//		Poison,
+//		UnknownA,
+//		ManaShield,
+//		UnknownB,
+//		UnknownC,
+//		FireSpark,
+//		Intuition,
+//		Elusiveness,
+//		Swiftness;
+//
+//		override suspend fun writeTo(writer: Writer) =
+//			writer.writeInt(values().indexOf(this))
+//
+//		companion object : CwDeserializer<E> {
+//			override suspend fun readFrom(reader: Reader) =
+//				values()[reader.readInt()]
+//		}
+//	}
 }

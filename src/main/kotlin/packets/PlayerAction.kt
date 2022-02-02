@@ -22,8 +22,8 @@ data class CreatureAction(
 	}
 
 	companion object : CwDeserializer<CreatureAction> {
-		override suspend fun readFrom(reader: Reader): CreatureAction {
-			return CreatureAction(
+		override suspend fun readFrom(reader: Reader) =
+			CreatureAction(
 				item = Item.readFrom(reader),
 				chunk = reader.readVector2Int(),
 				index = reader.readInt(),
@@ -32,7 +32,6 @@ data class CreatureAction(
 				unknownB = reader.readByte(),
 				unknownC = reader.readShort()
 			)
-		}
 	}
 }
 

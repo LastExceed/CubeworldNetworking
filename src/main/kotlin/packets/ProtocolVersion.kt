@@ -10,8 +10,6 @@ data class ProtocolVersion(
 	}
 
 	companion object : CwDeserializer<ProtocolVersion> {
-		override suspend fun readFrom(reader: Reader): ProtocolVersion {
-			return ProtocolVersion(reader.readInt())
-		}
+		override suspend fun readFrom(reader: Reader) = ProtocolVersion(reader.readInt())
 	}
 }

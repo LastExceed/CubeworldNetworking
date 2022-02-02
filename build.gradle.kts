@@ -5,13 +5,14 @@ plugins {
 	`maven-publish`
 }
 group = "me.lastexceed"
-version = "1.0.1"
+version = "1.0.3"
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
+	implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.0")
 	setOf(
 		"io",
 		"utils"

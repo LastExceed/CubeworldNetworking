@@ -14,12 +14,11 @@ class Join(
 	}
 
 	companion object : CwDeserializer<Join> {
-		override suspend fun readFrom(reader: Reader): Join {
-			return Join(
+		override suspend fun readFrom(reader: Reader) =
+			Join(
 				unknown = reader.readInt(),
 				assignedID = CreatureID(reader.readLong()),
 				junk = reader.readByteArray(0x1168)
 			)
-		}
 	}
 }

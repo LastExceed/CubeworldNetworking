@@ -42,8 +42,8 @@ data class Shot(
 	}
 
 	companion object : CwDeserializer<Shot> {
-		override suspend fun readFrom(reader: Reader): Shot {
-			return Shot(
+		override suspend fun readFrom(reader: Reader) =
+			Shot(
 				attacker = reader.readLong(),
 				chunk = reader.readVector2Int(),
 				unknownA = reader.readInt(),
@@ -62,7 +62,6 @@ data class Shot(
 				unknownC = reader.readFloat(),
 				unknownD = reader.readFloat()
 			)
-		}
 	}
 }
 

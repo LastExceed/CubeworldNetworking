@@ -32,8 +32,8 @@ data class Hit(
 	}
 
 	companion object : CwDeserializer<Hit> {
-		override suspend fun readFrom(reader: Reader): Hit {
-			return Hit(
+		override suspend fun readFrom(reader: Reader) =
+			Hit(
 				attacker = CreatureID(reader.readLong()),
 				target = CreatureID(reader.readLong()),
 				damage = reader.readFloat(),
@@ -47,7 +47,6 @@ data class Hit(
 				flash = reader.readBoolean(),
 				paddingB = reader.readByte()
 			)
-		}
 	}
 }
 

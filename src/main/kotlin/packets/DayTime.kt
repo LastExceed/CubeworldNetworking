@@ -12,11 +12,10 @@ data class DayTime(
 	}
 
 	companion object : CwDeserializer<DayTime> {
-		override suspend fun readFrom(reader: Reader): DayTime {
-			return DayTime(
+		override suspend fun readFrom(reader: Reader) =
+			DayTime(
 				day = reader.readInt(),
 				time = reader.readInt()
 			)
-		}
 	}
 }

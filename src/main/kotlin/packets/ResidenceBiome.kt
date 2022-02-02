@@ -10,8 +10,6 @@ data class ResidenceBiome(
 	}
 
 	companion object : CwDeserializer<ResidenceBiome> {
-		override suspend fun readFrom(reader: Reader): ResidenceBiome {
-			return ResidenceBiome(reader.readVector2Int())
-		}
+		override suspend fun readFrom(reader: Reader) = ResidenceBiome(reader.readVector2Int())
 	}
 }

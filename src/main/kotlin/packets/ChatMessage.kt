@@ -15,11 +15,10 @@ data class ChatMessage(
 	}
 
 	companion object { //TODO: CwDeserializer<ChatMessage>
-		suspend fun readFrom(reader: Reader, readSender: Boolean): ChatMessage {
-			return ChatMessage(
+		suspend fun readFrom(reader: Reader, readSender: Boolean) =
+			ChatMessage(
 				sender = if (readSender) CreatureID(reader.readLong()) else null,
 				text = String(reader.readByteArray(reader.readInt() * 2), Charsets.UTF_16LE)
 			)
-		}
 	}
 }

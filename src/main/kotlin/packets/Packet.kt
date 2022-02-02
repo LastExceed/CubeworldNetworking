@@ -15,7 +15,7 @@ value class Opcode(val value: Int) {
 		val Time = Opcode(5)
 		val CreatureAction = Opcode(6)
 		val Hit = Opcode(7)
-		val Buff = Opcode(8)
+		val StatusEffect = Opcode(8)
 		val Shot = Opcode(9)
 		val ChatMessage = Opcode(10)
 		val ChunkDiscovery = Opcode(11)
@@ -28,6 +28,8 @@ value class Opcode(val value: Int) {
 		val ServerFull = Opcode(18)
 	}
 }
+
+interface SubPacket : CwSerializable
 
 interface CwSerializable {
 	suspend fun writeTo(writer: Writer)

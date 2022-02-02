@@ -415,8 +415,8 @@ data class Appearance(
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): Appearance {
-			return Appearance(
+		internal suspend fun readFrom(reader: Reader) =
+			Appearance(
 				unknownA = reader.readByte(),
 				unknownB = reader.readByte(),
 				hairColor = reader.readVector3Byte(),
@@ -452,7 +452,6 @@ data class Appearance(
 				tailOffset = reader.readVector3Float(),
 				wingOffset = reader.readVector3Float()
 			)
-		}
 	}
 }
 
@@ -472,15 +471,14 @@ data class Multipliers(
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): Multipliers {
-			return Multipliers(
+		internal suspend fun readFrom(reader: Reader) =
+			Multipliers(
 				health = reader.readFloat(),
 				attackSpeed = reader.readFloat(),
 				damage = reader.readFloat(),
 				armor = reader.readFloat(),
 				resi = reader.readFloat()
 			)
-		}
 	}
 }
 
@@ -516,8 +514,8 @@ data class Equipment(
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): Equipment {
-			return Equipment(
+		internal suspend fun readFrom(reader: Reader) =
+			Equipment(
 				unknown = Item.readFrom(reader),
 				neck = Item.readFrom(reader),
 				chest = Item.readFrom(reader),
@@ -532,7 +530,6 @@ data class Equipment(
 				special = Item.readFrom(reader),
 				pet = Item.readFrom(reader)
 			)
-		}
 	}
 }
 
@@ -564,8 +561,8 @@ data class SkillDistribution(
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): SkillDistribution {
-			return SkillDistribution(
+		internal suspend fun readFrom(reader: Reader) =
+			SkillDistribution(
 				petMaster = reader.readInt(),
 				petRiding = reader.readInt(),
 				sailing = reader.readInt(),
@@ -578,7 +575,6 @@ data class SkillDistribution(
 				ability4 = reader.readInt(),
 				ability5 = reader.readInt()
 			)
-		}
 	}
 }
 

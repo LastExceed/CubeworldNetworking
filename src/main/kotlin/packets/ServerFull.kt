@@ -7,8 +7,6 @@ class ServerFull() : Packet(Opcode.ServerFull) {
 
 
 	companion object : CwDeserializer<ServerFull> {
-		override suspend fun readFrom(reader: Reader): ServerFull {
-			return ServerFull()
-		}
+		override suspend fun readFrom(reader: Reader) = ServerFull()
 	}
 }

@@ -3,7 +3,7 @@ package me.lastexceed.cubeworldnetworking.utils
 import io.ktor.utils.io.*
 
 @JvmInline
-value class Reader(val inner: ByteReadChannel) {
+value class Reader(private val inner: ByteReadChannel) {
 	constructor(data: ByteArray) : this(ByteReadChannel(data))
 
 	suspend fun readByte(): Byte = inner.readByte()
@@ -11,12 +11,13 @@ value class Reader(val inner: ByteReadChannel) {
 	suspend fun readInt(): Int = inner.readIntLittleEndian()
 	suspend fun readFloat(): Float = inner.readFloatLittleEndian()
 	suspend fun readLong(): Long = inner.readLongLittleEndian()
-	suspend fun readByteArray(count: Int): ByteArray {
-		val data = ByteArray(count)
-		inner.readFully(data, 0, count)
-		return data
-	}
-
 	suspend fun readBoolean(): Boolean = inner.readBoolean()
-	suspend fun readChar(): Char = inner.readByte().toChar()
+	suspend fun readByteArray(count: Int) =
+		ByteArray(count).apply {
+			inner.readFully(this, 0, count)
+		}
+
+	suspend fun skip(count: Int) {
+		inner.discard()
+	}
 }

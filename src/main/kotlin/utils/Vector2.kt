@@ -1,12 +1,17 @@
 package me.lastexceed.cubeworldnetworking.utils
 
-data class Vector2<TT>(var x: TT, var y: TT)
+data class Vector2<NumericType : Number>(
+	val x: NumericType,
+	val y: NumericType
+)
 
-internal suspend fun Reader.readVector2Int(): Vector2<Int> {
-	return Vector2<Int>(this.readInt(), this.readInt())
-}
+internal suspend fun Reader.readVector2Int() =
+	Vector2(
+		readInt(),
+		readInt()
+	)
 
 internal suspend fun Writer.writeVector2Int(vector: Vector2<Int>) {
-	this.writeInt(vector.x)
-	this.writeInt(vector.y)
+	writeInt(vector.x)
+	writeInt(vector.y)
 }

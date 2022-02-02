@@ -10,8 +10,6 @@ class MapSeed(
 	}
 
 	companion object : CwDeserializer<MapSeed> {
-		override suspend fun readFrom(reader: Reader): MapSeed {
-			return MapSeed(reader.readInt())
-		}
+		override suspend fun readFrom(reader: Reader) = MapSeed(reader.readInt())
 	}
 }

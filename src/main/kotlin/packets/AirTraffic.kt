@@ -13,13 +13,12 @@ data class AirTraffic(
 	}
 
 	companion object : CwDeserializer<AirTraffic> {
-		override suspend fun readFrom(reader: Reader): AirTraffic {
-			val airTraffic = AirTraffic()
-			repeat(reader.readInt()) {
-				airTraffic.airships.add(Airship.readFrom(reader))
+		override suspend fun readFrom(reader: Reader) =
+			AirTraffic().apply {
+				repeat(reader.readInt()) {
+					airships.add(Airship.readFrom(reader))
+				}
 			}
-			return airTraffic
-		}
 	}
 }
 
@@ -53,8 +52,8 @@ data class Airship(
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): Airship {
-			return Airship(
+		internal suspend fun readFrom(reader: Reader): Airship =
+			Airship(
 				id = reader.readLong(),
 				unknownA = reader.readInt(),
 				unknownB = reader.readInt(),
@@ -68,7 +67,6 @@ data class Airship(
 				state = AirshipState(reader.readInt()),
 				unknownD = reader.readInt()
 			)
-		}
 	}
 }
 
