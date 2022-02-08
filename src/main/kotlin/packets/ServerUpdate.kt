@@ -1,9 +1,9 @@
-package me.lastexceed.cubeworldnetworking.packets
+package com.github.lastexceed.cubeworldnetworking.packets
 
 import io.ktor.util.toByteArray
 import io.ktor.utils.io.ByteChannel
 import io.ktor.utils.io.close
-import me.lastexceed.cubeworldnetworking.utils.*
+import com.github.lastexceed.cubeworldnetworking.utils.*
 
 data class ServerUpdate(
 	val worldEdits: List<WorldEdit> = emptyList(),

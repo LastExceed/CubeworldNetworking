@@ -1,4 +1,4 @@
-package me.lastexceed.cubeworldnetworking.utils
+package com.github.lastexceed.cubeworldnetworking.utils
 
 object Utils {
 	fun creatureToSoundPosition(creaturePosition: Vector3<Long>) =

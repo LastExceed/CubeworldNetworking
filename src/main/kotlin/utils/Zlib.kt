@@ -1,4 +1,4 @@
-package me.lastexceed.cubeworldnetworking.utils
+package com.github.lastexceed.cubeworldnetworking.utils
 
 import java.util.zip.Deflater
 import java.util.zip.Inflater

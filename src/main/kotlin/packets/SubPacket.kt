@@ -1,2 +1,2 @@
-package me.lastexceed.cubeworldnetworking.packets
+package com.github.lastexceed.cubeworldnetworking.packets
 

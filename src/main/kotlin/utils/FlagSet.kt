@@ -1,4 +1,4 @@
-package me.lastexceed.cubeworldnetworking.utils
+package com.github.lastexceed.cubeworldnetworking.utils
 
 class FlagSet<IndexType : FlagSetIndex>(internal val inner: BooleanArray) {
 	operator fun get(index: IndexType) = inner[index.value]

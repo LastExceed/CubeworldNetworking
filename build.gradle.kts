@@ -1,11 +1,9 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
 	kotlin("jvm") version "1.6.10"
 	`maven-publish`
 }
-group = "me.lastexceed"
-version = "1.0.3"
+group = "com.github.lastexceed"
+version = "1.1.0"
 
 repositories {
 	mavenCentral()

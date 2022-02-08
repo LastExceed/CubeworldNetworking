@@ -1,6 +1,6 @@
-package me.lastexceed.cubeworldnetworking.packets
+package com.github.lastexceed.cubeworldnetworking.packets
 
-import me.lastexceed.cubeworldnetworking.utils.*
+import com.github.lastexceed.cubeworldnetworking.utils.*
 
 data class ResidenceChunk(
 	val chunk: Vector2<Int>

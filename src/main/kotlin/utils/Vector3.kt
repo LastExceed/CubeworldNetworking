@@ -1,4 +1,4 @@
-package me.lastexceed.cubeworldnetworking.utils
+package com.github.lastexceed.cubeworldnetworking.utils
 
 data class Vector3<NumericType : Number>(
 	val x: NumericType,
