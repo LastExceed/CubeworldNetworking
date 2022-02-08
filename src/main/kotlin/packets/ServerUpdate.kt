@@ -6,19 +6,19 @@ import io.ktor.utils.io.close
 import me.lastexceed.cubeworldnetworking.utils.*
 
 data class ServerUpdate(
-	val worldEdits: MutableList<WorldEdit> = mutableListOf(),
-	val hits: MutableList<Hit> = mutableListOf(),
-	val particles: MutableList<Particle> = mutableListOf(),
-	val sounds: MutableList<Sound> = mutableListOf(),
-	val shots: MutableList<Shot> = mutableListOf(),
-	val worldObjects: MutableList<WorldObject> = mutableListOf(),
-	val chunkLoots: MutableList<ChunkLoot> = mutableListOf(),
-	val p48s: MutableList<P48> = mutableListOf(),
-	val pickups: MutableList<Pickup> = mutableListOf(),
-	val kills: MutableList<Kill> = mutableListOf(),
-	val attacks: MutableList<Attack> = mutableListOf(),
-	val statusEffects: MutableList<StatusEffect> = mutableListOf(),
-	val missions: MutableList<Mission> = mutableListOf()
+	val worldEdits: List<WorldEdit> = emptyList(),
+	val hits: List<Hit> = emptyList(),
+	val particles: List<Particle> = emptyList(),
+	val sounds: List<Sound> = emptyList(),
+	val shots: List<Shot> = emptyList(),
+	val worldObjects: List<WorldObject> = emptyList(),
+	val chunkLoots: List<ChunkLoot> = emptyList(),
+	val p48s: List<P48> = emptyList(),
+	val pickups: List<Pickup> = emptyList(),
+	val kills: List<Kill> = emptyList(),
+	val attacks: List<Attack> = emptyList(),
+	val statusEffects: List<StatusEffect> = emptyList(),
+	val missions: List<Mission> = emptyList()
 ) : Packet(Opcode.ServerUpdate) {
 	override suspend fun writeTo(writer: Writer) {
 		val inflatedChannel = ByteChannel(true)
@@ -58,19 +58,19 @@ data class ServerUpdate(
 			val uncompressedReader = Reader(uncompressed)
 
 			return ServerUpdate(
-				worldEdits = MutableList(uncompressedReader.readInt()) { WorldEdit.readFrom(uncompressedReader) },
-				hits = MutableList(uncompressedReader.readInt()) { Hit.readFrom(uncompressedReader) },
-				particles = MutableList(uncompressedReader.readInt()) { Particle.readFrom(uncompressedReader) },
-				sounds = MutableList(uncompressedReader.readInt()) { Sound.readFrom(uncompressedReader) },
-				shots = MutableList(uncompressedReader.readInt()) { Shot.readFrom(uncompressedReader) },
-				worldObjects = MutableList(uncompressedReader.readInt()) { WorldObject.readFrom(uncompressedReader) },
-				chunkLoots = MutableList(uncompressedReader.readInt()) { ChunkLoot.readFrom(uncompressedReader) },
-				p48s = MutableList(uncompressedReader.readInt()) { P48.readFrom(uncompressedReader) },
-				pickups = MutableList(uncompressedReader.readInt()) { Pickup.readFrom(uncompressedReader) },
-				kills = MutableList(uncompressedReader.readInt()) { Kill.readFrom(uncompressedReader) },
-				attacks = MutableList(uncompressedReader.readInt()) { Attack.readFrom(uncompressedReader) },
-				statusEffects = MutableList(uncompressedReader.readInt()) { StatusEffect.readFrom(uncompressedReader) },
-				missions = MutableList(uncompressedReader.readInt()) { Mission.readFrom(uncompressedReader) }
+				worldEdits = List(uncompressedReader.readInt()) { WorldEdit.readFrom(uncompressedReader) },
+				hits = List(uncompressedReader.readInt()) { Hit.readFrom(uncompressedReader) },
+				particles = List(uncompressedReader.readInt()) { Particle.readFrom(uncompressedReader) },
+				sounds = List(uncompressedReader.readInt()) { Sound.readFrom(uncompressedReader) },
+				shots = List(uncompressedReader.readInt()) { Shot.readFrom(uncompressedReader) },
+				worldObjects = List(uncompressedReader.readInt()) { WorldObject.readFrom(uncompressedReader) },
+				chunkLoots = List(uncompressedReader.readInt()) { ChunkLoot.readFrom(uncompressedReader) },
+				p48s = List(uncompressedReader.readInt()) { P48.readFrom(uncompressedReader) },
+				pickups = List(uncompressedReader.readInt()) { Pickup.readFrom(uncompressedReader) },
+				kills = List(uncompressedReader.readInt()) { Kill.readFrom(uncompressedReader) },
+				attacks = List(uncompressedReader.readInt()) { Attack.readFrom(uncompressedReader) },
+				statusEffects = List(uncompressedReader.readInt()) { StatusEffect.readFrom(uncompressedReader) },
+				missions = List(uncompressedReader.readInt()) { Mission.readFrom(uncompressedReader) }
 			)
 		}
 	}
@@ -441,7 +441,7 @@ value class Orientation(val value: Int) {
 
 data class ChunkLoot(
 	val chunk: Vector2<Int>,
-	val drops: MutableList<Drop> = mutableListOf()
+	val drops: List<Drop> = listOf()
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector2Int(chunk)
@@ -455,7 +455,7 @@ data class ChunkLoot(
 		internal suspend fun readFrom(reader: Reader): ChunkLoot {
 			return ChunkLoot(
 				chunk = reader.readVector2Int(),
-				drops = MutableList(reader.readInt()) { Drop.readFrom(reader)}
+				drops = List(reader.readInt()) { Drop.readFrom(reader) }
 			)
 		}
 	}
@@ -500,7 +500,7 @@ data class Drop(
 
 data class P48(
 	val chunk: Vector2<Int>,
-	val subPackets: MutableList<ByteArray> = mutableListOf()
+	val subPackets: List<ByteArray> = listOf()
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector2Int(chunk)
@@ -514,7 +514,7 @@ data class P48(
 		internal suspend fun readFrom(reader: Reader): P48 {
 			return P48(
 				chunk = reader.readVector2Int(),
-				subPackets = MutableList(reader.readInt()) { reader.readByteArray(16) }
+				subPackets = List(reader.readInt()) { reader.readByteArray(16) }
 			)
 		}
 	}

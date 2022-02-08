@@ -3,7 +3,7 @@ package me.lastexceed.cubeworldnetworking.packets
 import me.lastexceed.cubeworldnetworking.utils.*
 
 data class AirTraffic(
-	val airships: MutableList<Airship> = mutableListOf()
+	val airships: List<Airship> = emptyList()
 ) : Packet(Opcode.AirTraffic) {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeInt(airships.size)
@@ -14,11 +14,11 @@ data class AirTraffic(
 
 	companion object : CwDeserializer<AirTraffic> {
 		override suspend fun readFrom(reader: Reader) =
-			AirTraffic().apply {
-				repeat(reader.readInt()) {
-					airships.add(Airship.readFrom(reader))
+			AirTraffic(
+				List(reader.readInt()) {
+					Airship.readFrom(reader)
 				}
-			}
+			)
 	}
 }
 
