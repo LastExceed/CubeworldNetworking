@@ -2,7 +2,7 @@ package me.lastexceed.cubeworldnetworking.packets
 
 import me.lastexceed.cubeworldnetworking.utils.*
 
-data class Buff(
+data class StatusEffect(
 	val source: CreatureID,
 	val target: CreatureID,
 	val type: Type,
@@ -21,9 +21,9 @@ data class Buff(
 		writer.writeLong(creatureID3.value)
 	}
 
-	companion object : CwDeserializer<Buff> {
+	companion object : CwDeserializer<StatusEffect> {
 		override suspend fun readFrom(reader: Reader) =
-			Buff(
+			StatusEffect(
 				source = CreatureID(reader.readLong()),
 				target = CreatureID(reader.readLong()),
 				type = Type(reader.readInt()),
