@@ -6,7 +6,7 @@ class Join(
 	val unknown: Int,
 	val assignedID: CreatureID,
 	val junk: ByteArray
-) : Packet(Opcode.Join) {
+) : Packet(PacketId.Join) {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeInt(unknown)
 		writer.writeLong(assignedID.value)

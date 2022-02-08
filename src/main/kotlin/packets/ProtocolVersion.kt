@@ -4,7 +4,7 @@ import me.lastexceed.cubeworldnetworking.utils.*
 
 data class ProtocolVersion(
 	val version: Int
-) : Packet(Opcode.ProtocolVersion) {
+) : Packet(PacketId.ProtocolVersion) {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeInt(version)
 	}

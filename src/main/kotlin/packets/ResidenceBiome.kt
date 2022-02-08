@@ -4,7 +4,7 @@ import me.lastexceed.cubeworldnetworking.utils.*
 
 data class ResidenceBiome(
 	val sector: Vector2<Int>
-) : Packet(Opcode.ChunkDiscovery) {
+) : Packet(PacketId.ChunkDiscovery) {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector2Int(sector)
 	}

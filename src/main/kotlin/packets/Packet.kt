@@ -2,30 +2,30 @@ package me.lastexceed.cubeworldnetworking.packets
 
 import me.lastexceed.cubeworldnetworking.utils.*
 
-abstract class Packet(val opcode: Opcode) : CwSerializable
+abstract class Packet(val packetId: PacketId) : CwSerializable
 
 @JvmInline
-value class Opcode(val value: Int) {
+value class PacketId(val value: Int) {
 	companion object {
-		val CreatureUpdate = Opcode(0)
-		val MultiEntityUpdate = Opcode(1)
-		val WaveClear = Opcode(2)
-		val AirTraffic = Opcode(3)
-		val ServerUpdate = Opcode(4)
-		val Time = Opcode(5)
-		val CreatureAction = Opcode(6)
-		val Hit = Opcode(7)
-		val StatusEffect = Opcode(8)
-		val Shot = Opcode(9)
-		val ChatMessage = Opcode(10)
-		val ChunkDiscovery = Opcode(11)
-		val SectorDiscovery = Opcode(12)
-		val Unknown13 = Opcode(13)
-		val Unknown14 = Opcode(14)
-		val MapSeed = Opcode(15)
-		val Join = Opcode(16)
-		val ProtocolVersion = Opcode(17)
-		val ServerFull = Opcode(18)
+		val CreatureUpdate = PacketId(0)
+		val MultiEntityUpdate = PacketId(1)
+		val WaveClear = PacketId(2)
+		val AirTraffic = PacketId(3)
+		val ServerUpdate = PacketId(4)
+		val Time = PacketId(5)
+		val CreatureAction = PacketId(6)
+		val Hit = PacketId(7)
+		val StatusEffect = PacketId(8)
+		val Shot = PacketId(9)
+		val ChatMessage = PacketId(10)
+		val ChunkDiscovery = PacketId(11)
+		val SectorDiscovery = PacketId(12)
+		val Unknown13 = PacketId(13)
+		val Unknown14 = PacketId(14)
+		val MapSeed = PacketId(15)
+		val Join = PacketId(16)
+		val ProtocolVersion = PacketId(17)
+		val ServerFull = PacketId(18)
 	}
 }
 

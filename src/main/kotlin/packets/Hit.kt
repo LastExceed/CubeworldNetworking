@@ -15,7 +15,7 @@ data class Hit(
 	val damageType: DamageType,
 	val flash: Boolean,
 	val paddingB: Byte
-) : Packet(Opcode.Hit), SubPacket {
+) : Packet(PacketId.Hit), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(attacker.value)
 		writer.writeLong(target.value)

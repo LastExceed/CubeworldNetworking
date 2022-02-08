@@ -4,7 +4,7 @@ import me.lastexceed.cubeworldnetworking.utils.*
 
 data class AirTraffic(
 	val airships: List<Airship> = emptyList()
-) : Packet(Opcode.AirTraffic) {
+) : Packet(PacketId.AirTraffic) {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeInt(airships.size)
 		airships.forEach {

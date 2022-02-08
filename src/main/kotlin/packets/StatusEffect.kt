@@ -10,7 +10,7 @@ data class StatusEffect(
 	val duration: Int,
 	val unknownC: Int,
 	val creatureID3: CreatureID
-) : Packet(Opcode.StatusEffect), SubPacket {
+) : Packet(PacketId.StatusEffect), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(source.value)
 		writer.writeLong(target.value)

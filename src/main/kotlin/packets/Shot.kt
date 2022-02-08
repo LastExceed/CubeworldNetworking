@@ -20,7 +20,7 @@ data class Shot(
 	val paddingB: Int,
 	val unknownC: Float,
 	val unknownD: Float
-) : Packet(Opcode.Shot), SubPacket {
+) : Packet(PacketId.Shot), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(attacker)
 		writer.writeVector2Int(chunk)

@@ -55,7 +55,7 @@ data class CreatureUpdate(
 	val name: String? = null,
 	val skillPointDistribution: SkillDistribution? = null,
 	val manaCubes: Int? = null
-) : Packet(Opcode.CreatureUpdate) {
+) : Packet(PacketId.CreatureUpdate) {
 	override suspend fun writeTo(writer: Writer) {
 		val optionalChannel = ByteChannel(true)
 		val optionalDataWriter = Writer(optionalChannel)

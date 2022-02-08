@@ -5,7 +5,7 @@ import me.lastexceed.cubeworldnetworking.utils.*
 data class ChatMessage(
 	val sender: CreatureID?,
 	val text: String
-) : Packet(Opcode.ChatMessage) {
+) : Packet(PacketId.ChatMessage) {
 	override suspend fun writeTo(writer: Writer) {
 		if (sender != null) {
 			writer.writeLong(sender.value)

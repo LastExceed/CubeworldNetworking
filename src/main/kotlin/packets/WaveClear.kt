@@ -2,7 +2,7 @@ package me.lastexceed.cubeworldnetworking.packets
 
 import me.lastexceed.cubeworldnetworking.utils.*
 
-class WaveClear() : Packet(Opcode.WaveClear) {
+class WaveClear() : Packet(PacketId.WaveClear) {
 	override suspend fun writeTo(writer: Writer) {}
 
 	companion object : CwDeserializer<WaveClear> {

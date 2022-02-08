@@ -10,7 +10,7 @@ data class CreatureAction(
 	val type: ActionType,
 	val unknownB: Byte,
 	val unknownC: Short
-) : Packet(Opcode.CreatureAction) {
+) : Packet(PacketId.CreatureAction) {
 	override suspend fun writeTo(writer: Writer) {
 		item.writeTo(writer)
 		writer.writeVector2Int(chunk)

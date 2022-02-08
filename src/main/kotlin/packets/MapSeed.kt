@@ -4,7 +4,7 @@ import me.lastexceed.cubeworldnetworking.utils.*
 
 class MapSeed(
 	val seed: Int
-) : Packet(Opcode.MapSeed) {
+) : Packet(PacketId.MapSeed) {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeInt(seed)
 	}

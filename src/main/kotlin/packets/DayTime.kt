@@ -5,7 +5,7 @@ import me.lastexceed.cubeworldnetworking.utils.*
 data class DayTime(
 	val day: Int,
 	val time: Int
-) : Packet(Opcode.Time) {
+) : Packet(PacketId.Time) {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeInt(day)
 		writer.writeInt(time)

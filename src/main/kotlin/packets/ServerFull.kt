@@ -2,7 +2,7 @@ package me.lastexceed.cubeworldnetworking.packets
 
 import me.lastexceed.cubeworldnetworking.utils.*
 
-class ServerFull() : Packet(Opcode.ServerFull) {
+class ServerFull() : Packet(PacketId.ServerFull) {
 	override suspend fun writeTo(writer: Writer) {}
 
 

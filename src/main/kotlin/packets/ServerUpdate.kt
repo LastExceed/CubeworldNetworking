@@ -19,7 +19,7 @@ data class ServerUpdate(
 	val attacks: List<Attack> = emptyList(),
 	val statusEffects: List<StatusEffect> = emptyList(),
 	val missions: List<Mission> = emptyList()
-) : Packet(Opcode.ServerUpdate) {
+) : Packet(PacketId.ServerUpdate) {
 	override suspend fun writeTo(writer: Writer) {
 		val inflatedChannel = ByteChannel(true)
 		val inflatedWriter = Writer(inflatedChannel)
