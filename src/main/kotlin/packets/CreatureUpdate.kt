@@ -89,16 +89,16 @@ data class CreatureUpdate(
 			optionalDataWriter.writeInt(it.inner.toInt())
 			mask[6] = true
 		}
-		affiliation?.let {
-			optionalDataWriter.writeByte(it.value)
+		affiliation?.run {
+			writeTo(optionalDataWriter)
 			mask[7] = true
 		}
-		race?.let {
-			optionalDataWriter.writeInt(it.value)
+		race?.run {
+			writeTo(optionalDataWriter)
 			mask[8] = true
 		}
-		animation?.let {
-			optionalDataWriter.writeByte(it.value)
+		animation?.run {
+			writeTo(optionalDataWriter)
 			mask[9] = true
 		}
 		animationTime?.let {
@@ -145,12 +145,12 @@ data class CreatureUpdate(
 			optionalDataWriter.writeInt(it)
 			mask[20] = true
 		}
-		combatClassMajor?.let {
-			optionalDataWriter.writeByte(it.value)
+		combatClassMajor?.run {
+			writeTo(optionalDataWriter)
 			mask[21] = true
 		}
-		combatClassMinor?.let {
-			optionalDataWriter.writeByte(it.value)
+		combatClassMinor?.run {
+			writeTo(optionalDataWriter)
 			mask[22] = true
 		}
 		manaCharge?.let {
@@ -292,9 +292,9 @@ data class CreatureUpdate(
 				velocityExtra = if (mask[4]) inflatedReader.readVector3Float() else null,
 				climbAnimationState = if (mask[5]) inflatedReader.readFloat() else null,
 				flagsPhysics = if (mask[6]) FlagSet(inflatedReader.readInt().toBooleanArray()) else null,
-				affiliation = if (mask[7]) Affiliation(inflatedReader.readByte()) else null,
-				race = if (mask[8]) Race(inflatedReader.readInt()) else null,
-				animation = if (mask[9]) Animation(inflatedReader.readByte()) else null,
+				affiliation = if (mask[7]) Affiliation.readFrom(inflatedReader) else null,
+				race = if (mask[8]) Race.readFrom(inflatedReader) else null,
+				animation = if (mask[9]) Animation.readFrom(inflatedReader) else null,
 				animationTime = if (mask[10]) inflatedReader.readInt() else null,
 				combo = if (mask[11]) inflatedReader.readInt() else null,
 				hitTimeOut = if (mask[12]) inflatedReader.readInt() else null,
@@ -306,8 +306,8 @@ data class CreatureUpdate(
 				effectTimeIce = if (mask[18]) inflatedReader.readInt() else null,
 				effectTimeWind = if (mask[19]) inflatedReader.readInt() else null,
 				showPatchTime = if (mask[20]) inflatedReader.readInt() else null,
-				combatClassMajor = if (mask[21]) CombatClassMajor(inflatedReader.readByte()) else null,
-				combatClassMinor = if (mask[22]) CombatClassMinor(inflatedReader.readByte())else null,
+				combatClassMajor = if (mask[21]) CombatClassMajor.readFrom(inflatedReader) else null,
+				combatClassMinor = if (mask[22]) CombatClassMinor.readFrom(inflatedReader)else null,
 				manaCharge = if (mask[23]) inflatedReader.readFloat() else null,
 				unused24 = if (mask[24]) inflatedReader.readVector3Float() else null,
 				unused25 = if (mask[25]) inflatedReader.readVector3Float() else null,
@@ -578,372 +578,379 @@ data class SkillDistribution(
 	}
 }
 
-@JvmInline
-value class PhysicsFlag(override val value: Int) : FlagSetIndex {
-	companion object {
-		val onGround = PhysicsFlag(0)
-		val swimming = PhysicsFlag(1)
-		val touchingWall = PhysicsFlag(2)
+enum class PhysicsFlag : FlagSetIndex {
+	OnGround,
+	Swimming,
+	TouchingWall,
+	Unknown3,
+	Unknown4,
+	PushingWall,
+	PushingObject
+}
 
+enum class CreatureFlag : FlagSetIndex {
+	Climbing,
+	Unknown1,
+	Aiming,
+	Unknown3,
+	Gliding,
+	FriendlyFire,
+	Sprinting,
+	Unknown7,
+	Unknown8,
+	Lamp,
+	Sniping
+}
 
-		val pushingWall = PhysicsFlag(5)
-		val pushingObject = PhysicsFlag(6)
+enum class AppearanceFlag : FlagSetIndex {
+	FourLegged,
+	CanFly,
+	Unknown2,
+	Unknown3,
+	Unknown4,
+	Unknown5,
+	Unknown6,
+	Unknown7,
+	LockedInPlace, //used by dummies
+	BossGlow,
+	Unknown10,
+	Unknown11,
+	Unknown12,
+	Invincible //used by dummies
+}
+
+enum class Affiliation : CwSerializableEnumByte {
+	Player,
+	Enemy,
+	Unknown2,
+	NPC,
+	Unknown4,
+	Pet,
+	Neutral;
+
+	companion object : CwEnumByteDeserializer<Affiliation> {
+		override val values = values()
 	}
 }
 
-@JvmInline
-value class CreatureFlag(override val value: Int) : FlagSetIndex {
-	companion object {
-		val climbing = CreatureFlag(0)
+enum class Race : CwSerializableEnumInt {
+	ElfMale,
+	ElfFemale,
+	HumanMale,
+	HumanFemale,
+	GoblinMale,
+	GoblinFemale,
+	TerrierBull,
+	LizardmanMale,
+	LizardmanFemale,
+	DwarfMale,
+	DwarfFemale,
+	OrcMale,
+	OrcFemale,
+	FrogmanMale,
+	FrogmanFemale,
+	UndeadMale,
+	UndeadFemale,
+	Skeleton,
+	OldMan,
+	Collie,
+	ShepherdDog,
+	SkullBull,
+	Alpaca,
+	AlpacaBrown,
+	Egg,
+	Turtle,
+	Terrier,
+	TerrierScottish,
+	Wolf,
+	Panther,
+	Cat,
+	CatBrown,
+	CatWhite,
+	Pig,
+	Sheep,
+	Bunny,
+	Porcupine,
+	SlimeGreen,
+	SlimePink,
+	SlimeYellow,
+	SlimeBlue,
+	Frightener,
+	Sandhorror,
+	Wizard,
+	Bandit,
+	Witch,
+	Ogre,
+	Rockling,
+	Gnoll,
+	GnollPolar,
+	Monkey,
+	Gnobold,
+	Insectoid,
+	Hornet,
+	InsectGuard,
+	Crow,
+	Chicken,
+	Seagull,
+	Parrot,
+	Bat,
+	Fly,
+	Midge,
+	Mosquito,
+	RunnerPlain,
+	RunnerLeaf,
+	RunnerSnow,
+	RunnerDesert,
+	Peacock,
+	Frog,
+	CreaturePlant,
+	CreatureRadish,
+	Onionling,
+	OnionlingDesert,
+	Devourer,
+	Duckbill,
+	Crocodile,
+	CreatureSpike,
+	Anubis,
+	Horus,
+	Jester,
+	Spectrino,
+	Djinn,
+	Minotaur,
+	NomadMale,
+	NomadFemale,
+	Imp,
+	Spitter,
+	Mole,
+	Biter,
+	Koala,
+	Squirrel,
+	Raccoon,
+	Owl,
+	Penguin,
+	Werewolf,
+	Santa,
+	Zombie,
+	Vampire,
+	Horse,
+	Camel,
+	Cow,
+	Dragon,
+	BeetleDark,
+	BeetleFire,
+	BeetleSnout,
+	BeetleLemon,
+	Crab,
+	CrabSea,
+	Troll,
+	TrollDark,
+	Helldemon,
+	Golem,
+	GolemEmber,
+	GolemSnow,
+	Yeti,
+	Cyclops,
+	Mammoth,
+	Lich,
+	Runegiant,
+	Saurian,
+	Bush,
+	BushSnow,
+	BushSnowberry,
+	PlantCotton,
+	Scrub,
+	ScrubCobweg,
+	ScrubFire,
+	Ginseng,
+	Cactus,
+	ChristmasTree,
+	Thorntree,
+	DepositGold,
+	DepositIron,
+	DepositSilver,
+	DepositSandstone,
+	DepositEmerald,
+	DepositSapphire,
+	DepositRuby,
+	DepositDiamond,
+	DepositIcecrystal,
+	Scarecrow,
+	Aim,
+	Dummy,
+	Vase,
+	Bomb,
+	FishSapphire,
+	FishLemon,
+	Seahorse,
+	Mermaid,
+	Merman,
+	Shark,
+	Bumblebee,
+	Lanternfish,
+	Mawfish,
+	Piranha,
+	Blowfish;
 
-		val aiming = CreatureFlag(2)
-
-		val gliding = CreatureFlag(4)
-		val friendlyFire = CreatureFlag(5)
-		val sprinting = CreatureFlag(6)
-
-
-		val lamp = CreatureFlag(9)
-		val sniping = CreatureFlag(10)
+	companion object : CwEnumIntDeserializer<Race> {
+		override val values = values()
 	}
 }
 
-@JvmInline
-value class AppearanceFlag(override val value: Int) : FlagSetIndex {
-	companion object {
-		val fourLegged = AppearanceFlag(0)
-		val canFly = AppearanceFlag(1)
+enum class Animation : CwSerializableEnumByte {
+	Idle,
+	DualWieldM1a,
+	DualWieldM1b,
+	Unknown_003, //like daggers
+	Unknown_004,
+	LongswordM2,
+	UnarmedM1a, //fists use these
+	UnarmedM1b,
+	ShieldM2Charging,
+	ShieldM1a,
+	ShieldM1b,
+	UnarmedM2,
+	Unknown_012, //swords rip apart
+	LongswordM1a,
+	LongswordM1b,
+	Unknown_015, //probably for greatweapon A1
+	Unknown_016, //same as 17
+	DaggersM2,
+	DaggersM1a,
+	DaggersM1b,
+	FistsM2,
+	Kick, //same as 20
+	ShootArrow,
+	CrossbowM2,
+	CrossbowM2Charging,
+	BowM2Charging,
+	BoomerangM1,
+	BoomerangM2Charging,
+	BeamDraining,
+	Unknown_029, //nothing
+	StaffFireM1,
+	StaffFireM2,
+	StaffWaterM1,
+	StaffWaterM2,
+	HealingStream,
+	Unknown035, //summon animation
+	Unknown036, //wand charging?
+	BraceletFireM2,
+	WandFireM1,
+	BraceletsFireM1a,
+	BraceletsFireM1b,
+	BraceletsWaterM1a,
+	BraceletsWaterM1b,
+	BraceletWaterM2,
+	WandWaterM1,
+	WandWaterM2,
+	WandFireM2,
+	Unknown_047, //same as 54
+	Intercept,
+	Teleport,
+	Unknown_050,
+	Unknown_051, //mob attack?
+	Unknown_052, //nothing, immediately switches to 0
+	Unknown_053, //nothing
+	Smash,
+	BowM2,
+	Unknown_056, //nothing, causes rotation lock
+	GreatweaponM1a,
+	GreatweaponM1c,
+	GreatweaponM2Charging,
+	GreatweaponM2Berserker,
+	GreatweaponM2Guardian,
+	Unknown_062, //probably for greatweapon A2
+	UnarmedM2Charging,
+	DualWieldM2Charging,
+	Unknown_065, //probably for greatweapon B1
+	Unknown_066, //probably for greatweapon B2
+	GreatweaponM1b,
+	BossCharge1,
+	BossCharge2,
+	BossSpinkick,
+	BossBlock,
+	BossSpin,
+	BossCry,
+	BossStomp,
+	BossKick,
+	BossKnockdownForward,
+	BossKnockdownLeft,
+	BossKnockdownRight,
+	Stealth,
+	Drinking,
+	Eating,
+	PetFoodPresent,
+	Sitting,
+	Sleeping,
+	Unknown_085, //nothing
+	Cyclone,
+	FireExplosionLong,
+	FireExplosionShort,
+	Lava,
+	Splash,
+	EarthQuake,
+	Clone,
+	Unknown_093, //same as 48
+	FireBeam,
+	FireRay,
+	Shuriken,
+	Unknown_097, //nothing, rotation lock
+	Unknown_098, //parry? causes blocking
+	Unknwon_099, //nothing, rotation lock
+	Unknown_100, //nothing
+	SuperBulwalk, //casues bulwalk
+	Unknown_102, //nothing
+	SuperManaShield, //causes manashield
+	ShieldM2,
+	TeleportToCity,
+	Riding,
+	Boat,
+	Boulder,
+	ManaCubePickup,
+	Unknown_110; //mob attack?
 
-
-		val stuck = AppearanceFlag(8) //used by dummies
-		val bossBuff = AppearanceFlag(9)
-
-
-		val invincible = AppearanceFlag(13) //used by dummies
+	companion object : CwEnumByteDeserializer<Animation> {
+		override val values = values()
 	}
 }
 
-@JvmInline
-value class Affiliation(val value: Byte) {
-	companion object {
-		val Player = Affiliation(0)
-		val Enemy = Affiliation(1)
-		val Unknown2 = Affiliation(2)
-		val NPC = Affiliation(3)
-		val Unknown4 = Affiliation(4)
-		val Pet = Affiliation(5)
-		val Neutral = Affiliation(6)
+enum class CombatClassMajor : CwSerializableEnumByte {
+	None,
+	Warrior,
+	Ranger,
+	Mage,
+	Rogue;
+
+	companion object : CwEnumByteDeserializer<CombatClassMajor> {
+		override val values = values()
 	}
 }
 
-@JvmInline
-value class Race(val value: Int) {
-	companion object {
-		val ElfMale = Race(0)
-		val ElfFemale = Race(1)
-		val HumanMale = Race(2)
-		val HumanFemale = Race(3)
-		val GoblinMale = Race(4)
-		val GoblinFemale = Race(5)
-		val TerrierBull = Race(6)
-		val LizardmanMale = Race(7)
-		val LizardmanFemale = Race(8)
-		val DwarfMale = Race(9)
-		val DwarfFemale = Race(10)
-		val OrcMale = Race(11)
-		val OrcFemale = Race(12)
-		val FrogmanMale = Race(13)
-		val FrogmanFemale = Race(14)
-		val UndeadMale = Race(15)
-		val UndeadFemale = Race(16)
-		val Skeleton = Race(17)
-		val OldMan = Race(18)
-		val Collie = Race(19)
-		val ShepherdDog = Race(20)
-		val SkullBull = Race(21)
-		val Alpaca = Race(22)
-		val AlpacaBrown = Race(23)
-		val Egg = Race(24)
-		val Turtle = Race(25)
-		val Terrier = Race(26)
-		val TerrierScottish = Race(27)
-		val Wolf = Race(28)
-		val Panther = Race(29)
-		val Cat = Race(30)
-		val CatBrown = Race(31)
-		val CatWhite = Race(32)
-		val Pig = Race(33)
-		val Sheep = Race(34)
-		val Bunny = Race(35)
-		val Porcupine = Race(36)
-		val SlimeGreen = Race(37)
-		val SlimePink = Race(38)
-		val SlimeYellow = Race(39)
-		val SlimeBlue = Race(40)
-		val Frightener = Race(41)
-		val Sandhorror = Race(42)
-		val Wizard = Race(43)
-		val Bandit = Race(44)
-		val Witch = Race(45)
-		val Ogre = Race(46)
-		val Rockling = Race(47)
-		val Gnoll = Race(48)
-		val GnollPolar = Race(49)
-		val Monkey = Race(50)
-		val Gnobold = Race(51)
-		val Insectoid = Race(52)
-		val Hornet = Race(53)
-		val InsectGuard = Race(54)
-		val Crow = Race(55)
-		val Chicken = Race(56)
-		val Seagull = Race(57)
-		val Parrot = Race(58)
-		val Bat = Race(59)
-		val Fly = Race(60)
-		val Midge = Race(61)
-		val Mosquito = Race(62)
-		val RunnerPlain = Race(63)
-		val RunnerLeaf = Race(64)
-		val RunnerSnow = Race(65)
-		val RunnerDesert = Race(66)
-		val Peacock = Race(67)
-		val Frog = Race(68)
-		val CreaturePlant = Race(69)
-		val CreatureRadish = Race(70)
-		val Onionling = Race(71)
-		val OnionlingDesert = Race(72)
-		val Devourer = Race(73)
-		val Duckbill = Race(74)
-		val Crocodile = Race(75)
-		val CreatureSpike = Race(76)
-		val Anubis = Race(77)
-		val Horus = Race(78)
-		val Jester = Race(79)
-		val Spectrino = Race(80)
-		val Djinn = Race(81)
-		val Minotaur = Race(82)
-		val NomadMale = Race(83)
-		val NomadFemale = Race(84)
-		val Imp = Race(85)
-		val Spitter = Race(86)
-		val Mole = Race(87)
-		val Biter = Race(88)
-		val Koala = Race(89)
-		val Squirrel = Race(90)
-		val Raccoon = Race(91)
-		val Owl = Race(92)
-		val Penguin = Race(93)
-		val Werewolf = Race(94)
-		val Santa = Race(95)
-		val Zombie = Race(96)
-		val Vampire = Race(97)
-		val Horse = Race(98)
-		val Camel = Race(99)
-		val Cow = Race(100)
-		val Dragon = Race(101)
-		val BeetleDark = Race(102)
-		val BeetleFire = Race(103)
-		val BeetleSnout = Race(104)
-		val BeetleLemon = Race(105)
-		val Crab = Race(106)
-		val CrabSea = Race(107)
-		val Troll = Race(108)
-		val TrollDark = Race(109)
-		val Helldemon = Race(110)
-		val Golem = Race(111)
-		val GolemEmber = Race(112)
-		val GolemSnow = Race(113)
-		val Yeti = Race(114)
-		val Cyclops = Race(115)
-		val Mammoth = Race(116)
-		val Lich = Race(117)
-		val Runegiant = Race(118)
-		val Saurian = Race(119)
-		val Bush = Race(120)
-		val BushSnow = Race(121)
-		val BushSnowberry = Race(122)
-		val PlantCotton = Race(123)
-		val Scrub = Race(124)
-		val ScrubCobweg = Race(125)
-		val ScrubFire = Race(126)
-		val Ginseng = Race(127)
-		val Cactus = Race(128)
-		val ChristmasTree = Race(129)
-		val Thorntree = Race(130)
-		val DepositGold = Race(131)
-		val DepositIron = Race(132)
-		val DepositSilver = Race(133)
-		val DepositSandstone = Race(134)
-		val DepositEmerald = Race(135)
-		val DepositSapphire = Race(136)
-		val DepositRuby = Race(137)
-		val DepositDiamond = Race(138)
-		val DepositIcecrystal = Race(139)
-		val Scarecrow = Race(140)
-		val Aim = Race(141)
-		val Dummy = Race(142)
-		val Vase = Race(143)
-		val Bomb = Race(144)
-		val FishSapphire = Race(145)
-		val FishLemon = Race(146)
-		val Seahorse = Race(147)
-		val Mermaid = Race(148)
-		val Merman = Race(149)
-		val Shark = Race(150)
-		val Bumblebee = Race(151)
-		val Lanternfish = Race(152)
-		val Mawfish = Race(153)
-		val Piranha = Race(154)
-		val Blowfish = Race(155)
-	}
-}
+enum class CombatClassMinor : CwSerializableEnumByte {
+	Default,
+	Alternative;
 
-@JvmInline
-value class Animation(val value: Byte) {
-	companion object {
-		val Idle = Animation(0)
-		val DualWieldM1a = Animation(1)
-		val DualWieldM1b = Animation(2)
-		val Unknown_003 = Animation(3) //like daggers
-		val Unknown_004 = Animation(4)
-		val LongswordM2 = Animation(5)
-		val UnarmedM1a = Animation(6) //fists use these
-		val UnarmedM1b = Animation(7)
-		val ShieldM2Charging = Animation(8)
-		val ShieldM1a = Animation(9)
-		val ShieldM1b = Animation(10)
-		val UnarmedM2 = Animation(11)
-		val Unknown_012 = Animation(12) //swords rip apart
-		val LongswordM1a = Animation(13)
-		val LongswordM1b = Animation(14)
-		val Unknown_015 = Animation(15) //probably for greatweapon A1
-		val Unknown_016 = Animation(16) //same as 17
-		val DaggersM2 = Animation(17)
-		val DaggersM1a = Animation(18)
-		val DaggersM1b = Animation(19)
-		val FistsM2 = Animation(20)
-		val Kick = Animation(21) //same as 20
-		val ShootArrow = Animation(22)
-		val CrossbowM2 = Animation(23)
-		val CrossbowM2Charging = Animation(24)
-		val BowM2Charging = Animation(25)
-		val BoomerangM1 = Animation(26)
-		val BoomerangM2Charging = Animation(27)
-		val BeamDraining = Animation(28)
-		val Unknown_029 = Animation(29) //nothing
-		val StaffFireM1 = Animation(30)
-		val StaffFireM2 = Animation(31)
-		val StaffWaterM1 = Animation(32)
-		val StaffWaterM2 = Animation(33)
-		val HealingStream = Animation(34)
-		val Unknown035 = Animation(35) //summon animation
-		val Unknown036 = Animation(36) //wand charging?
-		val BraceletFireM2 = Animation(37)
-		val WandFireM1 = Animation(38)
-		val BraceletsFireM1a = Animation(39)
-		val BraceletsFireM1b = Animation(40)
-		val BraceletsWaterM1a = Animation(41)
-		val BraceletsWaterM1b = Animation(42)
-		val BraceletWaterM2 = Animation(43)
-		val WandWaterM1 = Animation(44)
-		val WandWaterM2 = Animation(45)
-		val WandFireM2 = Animation(46)
-		val Unknown_047 = Animation(47) //same as 54
-		val Intercept = Animation(48)
-		val Teleport = Animation(49)
-		val Unknown_050 = Animation(50)
-		val Unknown_051 = Animation(51) //mob attack?
-		val Unknown_052 = Animation(52) //nothing, immediately switches to 0
-		val Unknown_053 = Animation(53) //nothing
-		val Smash = Animation(54)
-		val BowM2 = Animation(55)
-		val Unknown_056 = Animation(56) //nothing, causes rotation lock
-		val GreatweaponM1a = Animation(57)
-		val GreatweaponM1c = Animation(58)
-		val GreatweaponM2Charging = Animation(59)
-		val GreatweaponM2Berserker = Animation(60)
-		val GreatweaponM2Guardian = Animation(61)
-		val Unknown_062 = Animation(62) //probably for greatweapon A2
-		val UnarmedM2Charging = Animation(63)
-		val DualWieldM2Charging = Animation(64)
-		val Unknown_065 = Animation(65) //probably for greatweapon B1
-		val Unknown_066 = Animation(66) //probably for greatweapon B2
-		val GreatweaponM1b = Animation(67)
-		val BossCharge1 = Animation(68)
-		val BossCharge2 = Animation(69)
-		val BossSpinkick = Animation(70)
-		val BossBlock = Animation(71)
-		val BossSpin = Animation(72)
-		val BossCry = Animation(73)
-		val BossStomp = Animation(74)
-		val BossKick = Animation(75)
-		val BossKnockdownForward = Animation(76)
-		val BossKnockdownLeft = Animation(77)
-		val BossKnockdownRight = Animation(78)
-		val Stealth = Animation(79)
-		val Drinking = Animation(80)
-		val Eating = Animation(81)
-		val PetFoodPresent = Animation(82)
-		val Sitting = Animation(83)
-		val Sleeping = Animation(84)
-		val Unknown_085 = Animation(85) //nothing
-		val Cyclone = Animation(86)
-		val FireExplosionLong = Animation(87)
-		val FireExplosionShort = Animation(88)
-		val Lava = Animation(89)
-		val Splash = Animation(90)
-		val EarthQuake = Animation(91)
-		val Clone = Animation(92)
-		val Unknown_093 = Animation(93) //same as 48
-		val FireBeam = Animation(94)
-		val FireRay = Animation(95)
-		val Shuriken = Animation(96)
-		val Unknown_097 = Animation(97) //nothing, rotation lock
-		val Unknown_098 = Animation(98) //parry? causes blocking
-		val Unknwon_099 = Animation(99) //nothing, rotation lock
-		val Unknown_100 = Animation(100) //nothing
-		val SuperBulwalk = Animation(101) //casues bulwalk
-		val Unknown_102 = Animation(102) //nothing
-		val SuperManaShield = Animation(103) //causes manashield
-		val ShieldM2 = Animation(104)
-		val TeleportToCity = Animation(105)
-		val Riding = Animation(106)
-		val Boat = Animation(107)
-		val Boulder = Animation(108)
-		val ManaCubePickup = Animation(109)
-		val Unknown_110 = Animation(110) //mob attack?
+	companion object : CwEnumByteDeserializer<CombatClassMinor> {
+		override val values = values()
 	}
-}
 
-@JvmInline
-value class CombatClassMajor(val value: Byte) {
-	companion object {
-		val Warrior = CombatClassMajor(1)
-		val Ranger = CombatClassMajor(2)
-		val Mage = CombatClassMajor(3)
-		val Rogue = CombatClassMajor(4)
-	}
-}
-
-@JvmInline
-value class CombatClassMinor(val value: Byte) {
 	object Warrior {
-		val Berserker = CombatClassMinor(0)
-		val Guardian = CombatClassMinor(1)
+		val Berserker = Default
+		val Guardian = Alternative
 	}
 
 	object Ranger {
-		val Sniper = CombatClassMinor(0)
-		val Scout = CombatClassMinor(1)
+		val Sniper = Default
+		val Scout = Alternative
 	}
 
 	object Mage {
-		val Fire = CombatClassMinor(0)
-		val Water = CombatClassMinor(1)
+		val Fire = Default
+		val Water = Alternative
 	}
 
 	object Rogue {
-		val Assassin = CombatClassMinor(0)
-		val Ninja = CombatClassMinor(1)
+		val Assassin = Default
+		val Ninja = Alternative
 	}
 }

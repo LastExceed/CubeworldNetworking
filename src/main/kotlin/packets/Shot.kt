@@ -35,7 +35,7 @@ data class Shot(
 		writer.writeFloat(mana)
 		writer.writeFloat(particles)
 		writer.writeInt(skill)
-		writer.writeInt(projectile.value)
+		projectile.writeTo(writer)
 		writer.writeInt(paddingB)
 		writer.writeFloat(unknownC)
 		writer.writeFloat(unknownD)
@@ -57,20 +57,22 @@ data class Shot(
 				mana = reader.readFloat(),
 				particles = reader.readFloat(),
 				skill = reader.readInt(),
-				projectile = Projectile(reader.readInt()),
+				projectile = Projectile.readFrom(reader),
 				paddingB = reader.readInt(),
 				unknownC = reader.readFloat(),
 				unknownD = reader.readFloat()
 			)
 	}
-}
 
-@JvmInline
-value class Projectile(val value: Int) {
-	companion object {
-		val Arrow = Projectile(1)
-		val Boomerang = Projectile(2)
-		val Unknown = Projectile(3)
-		val Boulder = Projectile(4)
+	enum class Projectile : CwSerializableEnumInt {
+		Zero,
+		Arrow,
+		Boomerang,
+		Unknown,
+		Boulder;
+
+		companion object : CwEnumIntDeserializer<Projectile> {
+			override val values = values()
+		}
 	}
 }

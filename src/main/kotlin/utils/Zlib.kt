@@ -3,7 +3,7 @@ package com.github.lastexceed.cubeworldnetworking.utils
 import java.util.zip.Deflater
 import java.util.zip.Inflater
 
-object Zlib {//todo: don't reinstantiate everything every time
+object Zlib {
 	fun deflate(data: ByteArray) =
 		Deflater().run {
 			setInput(data)

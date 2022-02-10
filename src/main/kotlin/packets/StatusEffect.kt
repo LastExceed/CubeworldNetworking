@@ -14,7 +14,7 @@ data class StatusEffect(
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(source.value)
 		writer.writeLong(target.value)
-		writer.writeInt(type.value)
+		type.writeTo(writer)
 		writer.writeFloat(modifier)
 		writer.writeInt(duration)
 		writer.writeInt(unknownC)
@@ -26,7 +26,7 @@ data class StatusEffect(
 			StatusEffect(
 				source = CreatureID(reader.readLong()),
 				target = CreatureID(reader.readLong()),
-				type = Type(reader.readInt()),
+				type = Type.readFrom(reader),
 				modifier = reader.readFloat(),
 				duration = reader.readInt(),
 				unknownC = reader.readInt(),
@@ -34,44 +34,23 @@ data class StatusEffect(
 			)
 	}
 
-	@JvmInline
-	value class Type(val value: Int) {
-		companion object {
-			val Bulwalk = Type(1)
-			val WarFrenzy = Type(2)
-			val Camouflage = Type(3)
-			val Poison = Type(4)
-			val UnknownA = Type(5)
-			val ManaShield = Type(6)
-			val UnknownB = Type(7)
-			val UnknownC = Type(8)
-			val FireSpark = Type(9) //fire passive (free insta cast)
-			val Intuition = Type(10) //scout passive (insta charge)
-			val Elusiveness = Type(11) //ninja passive (25MP + next hit crits
-			val Swiftness = Type(12)
+	enum class Type : CwSerializableEnumInt {
+		Zero,
+		Bulwalk,
+		WarFrenzy,
+		Camouflage,
+		Poison,
+		Unknown5,
+		ManaShield,
+		Unknown7,
+		Unknown8,
+		FireSpark,
+		Intuition,
+		Elusiveness,
+		Swiftness;
+
+		companion object : CwEnumIntDeserializer<Type> {
+			override val values = values()
 		}
 	}
-
-//	enum class E : CwSerializable {
-//		Bulwalk,
-//		WarFrenzy,
-//		Camouflage,
-//		Poison,
-//		UnknownA,
-//		ManaShield,
-//		UnknownB,
-//		UnknownC,
-//		FireSpark,
-//		Intuition,
-//		Elusiveness,
-//		Swiftness;
-//
-//		override suspend fun writeTo(writer: Writer) =
-//			writer.writeInt(values().indexOf(this))
-//
-//		companion object : CwDeserializer<E> {
-//			override suspend fun readFrom(reader: Reader) =
-//				values()[reader.readInt()]
-//		}
-//	}
 }

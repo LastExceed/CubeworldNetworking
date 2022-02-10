@@ -51,28 +51,24 @@ data class ServerUpdate(
 	}
 
 	companion object : CwDeserializer<ServerUpdate> {
-		override suspend fun readFrom(reader: Reader): ServerUpdate {
-			val length = reader.readInt()
-			val compressed = reader.readByteArray(length)
-			val uncompressed = Zlib.inflate(compressed)
-			val uncompressedReader = Reader(uncompressed)
-
-			return ServerUpdate(
-				worldEdits = List(uncompressedReader.readInt()) { WorldEdit.readFrom(uncompressedReader) },
-				hits = List(uncompressedReader.readInt()) { Hit.readFrom(uncompressedReader) },
-				particles = List(uncompressedReader.readInt()) { Particle.readFrom(uncompressedReader) },
-				sounds = List(uncompressedReader.readInt()) { Sound.readFrom(uncompressedReader) },
-				shots = List(uncompressedReader.readInt()) { Shot.readFrom(uncompressedReader) },
-				worldObjects = List(uncompressedReader.readInt()) { WorldObject.readFrom(uncompressedReader) },
-				chunkLoots = List(uncompressedReader.readInt()) { ChunkLoot.readFrom(uncompressedReader) },
-				p48s = List(uncompressedReader.readInt()) { P48.readFrom(uncompressedReader) },
-				pickups = List(uncompressedReader.readInt()) { Pickup.readFrom(uncompressedReader) },
-				kills = List(uncompressedReader.readInt()) { Kill.readFrom(uncompressedReader) },
-				attacks = List(uncompressedReader.readInt()) { Attack.readFrom(uncompressedReader) },
-				statusEffects = List(uncompressedReader.readInt()) { StatusEffect.readFrom(uncompressedReader) },
-				missions = List(uncompressedReader.readInt()) { Mission.readFrom(uncompressedReader) }
-			)
-		}
+		override suspend fun readFrom(reader: Reader) =
+			Reader(Zlib.inflate(reader.readByteArray(reader.readInt()))).run {
+				ServerUpdate(
+					worldEdits = List(readInt()) { WorldEdit.readFrom(this) },
+					hits = List(readInt()) { Hit.readFrom(this) },
+					particles = List(readInt()) { Particle.readFrom(this) },
+					sounds = List(readInt()) { Sound.readFrom(this) },
+					shots = List(readInt()) { Shot.readFrom(this) },
+					worldObjects = List(readInt()) { WorldObject.readFrom(this) },
+					chunkLoots = List(readInt()) { ChunkLoot.readFrom(this) },
+					p48s = List(readInt()) { P48.readFrom(this) },
+					pickups = List(readInt()) { Pickup.readFrom(this) },
+					kills = List(readInt()) { Kill.readFrom(this) },
+					attacks = List(readInt()) { Attack.readFrom(this) },
+					statusEffects = List(readInt()) { StatusEffect.readFrom(this) },
+					missions = List(readInt()) { Mission.readFrom(this) }
+				)
+			}
 	}
 }
 
@@ -85,29 +81,29 @@ data class WorldEdit(
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector3Int(position)
 		writer.writeVector3Byte(color)
-		writer.writeByte(blockType.value)
+		blockType.writeTo(writer)
 		writer.writeInt(unknown)
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): WorldEdit {
-			return WorldEdit(
+		internal suspend fun readFrom(reader: Reader) =
+			WorldEdit(
 				position = reader.readVector3Int(),
 				color = reader.readVector3Byte(),
-				blockType = BlockType(reader.readByte()),
+				blockType = BlockType.readFrom(reader),
 				unknown = reader.readInt()
 			)
-		}
 	}
-}
 
-@JvmInline
-value class BlockType(val value: Byte) {
-	companion object {
-		val Air = BlockType(0)
-		val Solid = BlockType(1)
-		val Liquid = BlockType(2)
-		val Wet = BlockType(3)
+	enum class BlockType : CwSerializableEnumByte {
+		Air,
+		Solid,
+		Liquid,
+		Wet;
+
+		companion object : CwEnumByteDeserializer<BlockType> {
+			override val values = values()
+		}
 	}
 }
 
@@ -118,7 +114,7 @@ data class Particle(
 	val alpha: Float,
 	val size: Float,
 	val count: Int,
-	val particleType: ParticleType,
+	val type: Type,
 	val spread: Float,
 	val unknown: Int
 ) : SubPacket {
@@ -129,168 +125,168 @@ data class Particle(
 		writer.writeFloat(alpha)
 		writer.writeFloat(size)
 		writer.writeInt(count)
-		writer.writeInt(particleType.value)
+		type.writeTo(writer)
 		writer.writeFloat(spread)
 		writer.writeInt(unknown)
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): Particle {
-			return Particle(
+		internal suspend fun readFrom(reader: Reader) =
+			Particle(
 				position = reader.readVector3Long(),
 				velocity = reader.readVector3Float(),
 				color = reader.readVector3Float(),
 				alpha = reader.readFloat(),
 				size = reader.readFloat(),
 				count = reader.readInt(),
-				particleType = ParticleType(reader.readInt()),
+				type = Type.readFrom(reader),
 				spread = reader.readFloat(),
 				unknown = reader.readInt()
 			)
-		}
 	}
-}
 
-@JvmInline
-value class ParticleType(val value: Int) {
-	companion object {
-		val Normal = ParticleType(0)
-		val Spark = ParticleType(1)
-		val Unknown = ParticleType(2)
-		val NoSpreadNoRotation = ParticleType(3)
-		val NoGravity = ParticleType(4)
+	enum class Type : CwSerializableEnumInt {
+		Normal,
+		Spark,
+		Unknown,
+		NoSpreadNoRotation,
+		NoGravity;
+
+		companion object : CwEnumIntDeserializer<Type> {
+			override val values = values()
+		}
 	}
 }
 
 data class Sound(
 	val position: Vector3<Float>,
-	val soundType: SoundType,
+	val type: Type,
 	val pitch: Float = 1f,
 	val volume: Float = 1f
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector3Float(position)
-		writer.writeInt(soundType.value)
+		type.writeTo(writer)
 		writer.writeFloat(pitch)
 		writer.writeFloat(volume)
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): Sound {
-			return Sound(
+		internal suspend fun readFrom(reader: Reader) =
+			Sound(
 				position = reader.readVector3Float(),
-				soundType = SoundType(reader.readInt()),
+				type = Type.readFrom(reader),
 				pitch = reader.readFloat(),
 				volume = reader.readFloat()
 			)
-		}
 	}
-}
 
-@JvmInline
-value class SoundType(val value: Int) {
-	companion object {
-		val Hit = SoundType(0)
-		val Blade1 = SoundType(1)
-		val Blade2 = SoundType(2)
-		val LongBlade1 = SoundType(3)
-		val LongBlade2 = SoundType(4)
-		val Hit1 = SoundType(5)
-		val Hit2 = SoundType(6)
-		val Punch1 = SoundType(7)
-		val Punch2 = SoundType(8)
-		val HitArrow = SoundType(9)
-		val HitArrowCritical = SoundType(10)
-		val Smash1 = SoundType(11)
-		val SlamGround = SoundType(12)
-		val SmashHit2 = SoundType(13)
-		val SmashJump = SoundType(14)
-		val Swing = SoundType(15)
-		val ShieldSwing = SoundType(16)
-		val SwingSlow = SoundType(17)
-		val SwingSlow2 = SoundType(18)
-		val ArrowDestroy = SoundType(19)
-		val Blade3 = SoundType(20)
-		val Punch3 = SoundType(21)
-		val Salvo2 = SoundType(22)
-		val SwordHit03 = SoundType(23)
-		val Block = SoundType(24)
-		val ShieldSlam = SoundType(25)
-		val Roll = SoundType(26)
-		val Destroy2 = SoundType(27)
-		val Cry = SoundType(28)
-		val Levelup2 = SoundType(29)
-		val Missioncomplete = SoundType(30)
-		val Watersplash01 = SoundType(31)
-		val Step2 = SoundType(32)
-		val StepWater = SoundType(33)
-		val StepWater2 = SoundType(34)
-		val StepWater3 = SoundType(35)
-		val Channel2 = SoundType(36)
-		val ChannelHit = SoundType(37)
-		val Fireball = SoundType(38)
-		val FireHit = SoundType(39)
-		val Magic01 = SoundType(40)
-		val Watersplash = SoundType(41)
-		val WatersplashHit = SoundType(42)
-		val LichScream = SoundType(43)
-		val Drink2 = SoundType(44)
-		val Pickup = SoundType(45)
-		val Disenchant2 = SoundType(46)
-		val Upgrade2 = SoundType(47)
-		val Swirl = SoundType(48)
-		val HumanVoice01 = SoundType(49)
-		val HumanVoice02 = SoundType(50)
-		val Gate = SoundType(51)
-		val SpikeTrap = SoundType(52)
-		val FireTrap = SoundType(53)
-		val Lever = SoundType(54)
-		val Charge2 = SoundType(55)
-		val Magic02 = SoundType(56)
-		val Drop = SoundType(57)
-		val DropCoin = SoundType(58)
-		val DropItem = SoundType(59)
-		val MaleGroan = SoundType(60)
-		val FemaleGroan = SoundType(61)
-		val MaleGroan2 = SoundType(62)
-		val FemaleGroan2 = SoundType(63)
-		val GoblinMaleGroan = SoundType(64)
-		val GoblinFemaleGroan = SoundType(65)
-		val LizardMaleGroan = SoundType(66)
-		val LizardFemaleGroan = SoundType(67)
-		val DwarfMaleGroan = SoundType(68)
-		val DwarfFemaleGroan = SoundType(69)
-		val OrcMaleGroan = SoundType(70)
-		val OrcFemaleGroan = SoundType(71)
-		val UndeadMaleGroan = SoundType(72)
-		val UndeadFemaleGroan = SoundType(73)
-		val FrogmanMaleGroan = SoundType(74)
-		val FrogmanFemaleGroan = SoundType(75)
-		val MonsterGroan = SoundType(76)
-		val TrollGroan = SoundType(77)
-		val MoleGroan = SoundType(78)
-		val SlimeGroan = SoundType(79)
-		val ZombieGroan = SoundType(80)
-		val Explosion = SoundType(81)
-		val Punch4 = SoundType(82)
-		val MenuOpen2 = SoundType(83)
-		val MenuClose2 = SoundType(84)
-		val MenuSelect = SoundType(85)
-		val MenuTab = SoundType(86)
-		val MenuGrabItem = SoundType(87)
-		val MenuDropItem = SoundType(88)
-		val Craft = SoundType(89)
-		val CraftProc = SoundType(90)
-		val Absorb = SoundType(91)
-		val Manashield = SoundType(92)
-		val Bulwark = SoundType(93)
-		val Bird1 = SoundType(94)
-		val Bird2 = SoundType(95)
-		val Bird3 = SoundType(96)
-		val Cricket1 = SoundType(97)
-		val Cricket2 = SoundType(98)
-		val Owl1 = SoundType(99)
-		val Owl2 = SoundType(100)
+	enum class Type : CwSerializableEnumInt {
+		Hit,
+		Blade1,
+		Blade2,
+		LongBlade1,
+		LongBlade2,
+		Hit1,
+		Hit2,
+		Punch1,
+		Punch2,
+		HitArrow,
+		HitArrowCritical,
+		Smash1,
+		SlamGround,
+		SmashHit2,
+		SmashJump,
+		Swing,
+		ShieldSwing,
+		SwingSlow,
+		SwingSlow2,
+		ArrowDestroy,
+		Blade3,
+		Punch3,
+		Salvo2,
+		SwordHit03,
+		Block,
+		ShieldSlam,
+		Roll,
+		Destroy2,
+		Cry,
+		Levelup2,
+		Missioncomplete,
+		Watersplash01,
+		Step2,
+		StepWater,
+		StepWater2,
+		StepWater3,
+		Channel2,
+		ChannelHit,
+		Fireball,
+		FireHit,
+		Magic01,
+		Watersplash,
+		WatersplashHit,
+		LichScream,
+		Drink2,
+		Pickup,
+		Disenchant2,
+		Upgrade2,
+		Swirl,
+		HumanVoice01,
+		HumanVoice02,
+		Gate,
+		SpikeTrap,
+		FireTrap,
+		Lever,
+		Charge2,
+		Magic02,
+		Drop,
+		DropCoin,
+		DropItem,
+		MaleGroan,
+		FemaleGroan,
+		MaleGroan2,
+		FemaleGroan2,
+		GoblinMaleGroan,
+		GoblinFemaleGroan,
+		LizardMaleGroan,
+		LizardFemaleGroan,
+		DwarfMaleGroan,
+		DwarfFemaleGroan,
+		OrcMaleGroan,
+		OrcFemaleGroan,
+		UndeadMaleGroan,
+		UndeadFemaleGroan,
+		FrogmanMaleGroan,
+		FrogmanFemaleGroan,
+		MonsterGroan,
+		TrollGroan,
+		MoleGroan,
+		SlimeGroan,
+		ZombieGroan,
+		Explosion,
+		Punch4,
+		MenuOpen2,
+		MenuClose2,
+		MenuSelect,
+		MenuTab,
+		MenuGrabItem,
+		MenuDropItem,
+		Craft,
+		CraftProc,
+		Absorb,
+		Manashield,
+		Bulwark,
+		Bird1,
+		Bird2,
+		Bird3,
+		Cricket1,
+		Cricket2,
+		Owl1,
+		Owl2;
+
+		companion object : CwEnumIntDeserializer<Type> {
+			override val values = values()
+		}
 	}
 }
 
@@ -313,10 +309,10 @@ data class WorldObject(
 		writer.writeVector2Int(chunk)
 		writer.writeInt(objectID)
 		writer.writeInt(paddingA)
-		writer.writeInt(objectType.value)
+		objectType.writeTo(writer)
 		writer.writeInt(paddingB)
 		writer.writeVector3Long(position)
-		writer.writeInt(orientation.value)
+		orientation.writeTo(writer)
 		writer.writeVector3Float(size)
 		writer.writeBoolean(isClosed); writer.pad(3)
 		writer.writeInt(transformTime)
@@ -326,15 +322,15 @@ data class WorldObject(
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): WorldObject {
-			return WorldObject(
+		internal suspend fun readFrom(reader: Reader) =
+			WorldObject(
 				chunk = reader.readVector2Int(),
 				objectID = reader.readInt(),
 				paddingA = reader.readInt(),
-				objectType = ObjectType(reader.readInt()),
+				objectType = ObjectType.readFrom(reader),
 				paddingB = reader.readInt(),
 				position = reader.readVector3Long(),
-				orientation = Orientation(reader.readInt()),
+				orientation = Orientation.readFrom(reader),
 				size = reader.readVector3Float(),
 				isClosed = reader.readInt() > 0,
 				transformTime = reader.readInt(),
@@ -342,100 +338,101 @@ data class WorldObject(
 				paddingC = reader.readInt(),
 				interactor = reader.readLong()
 			)
+	}
+
+	enum class ObjectType : CwSerializableEnumInt {
+		Statue,
+		Door,
+		BigDoor,
+		Window,
+		CastleWindow,
+		Gate,
+		FireTrap,
+		SpikeTrap,
+		StompTrap,
+		Lever,
+		Chest,
+		ChestTop02,
+		Table1,
+		Table2,
+		Table3,
+		Stool1,
+		Stool2,
+		Stool3,
+		Bench,
+		Bed,
+		BedTable,
+		MarketStand1,
+		MarketStand2,
+		MarketStand3,
+		Barrel,
+		Crate,
+		OpenCrate,
+		Sack,
+		Shelter,
+		Cupboard,
+		Desktop,
+		Counter,
+		Shelf1,
+		Shelf2,
+		Shelf3,
+		CastleShelf1,
+		CastleShelf2,
+		CastleShelf3,
+		StoneShelf1,
+		StoneShelf2,
+		StoneShelf3,
+		SandstoneShelf1,
+		SandstoneShelf2,
+		SandstoneShelf3,
+		Corpse,
+		RuneStone,
+		Artifact,
+		FlowerBox1,
+		FlowerBox2,
+		FlowerBox3,
+		StreetLight,
+		FireStreetLight,
+		Fence1,
+		Fence2,
+		Fence3,
+		Fence4,
+		Vase1,
+		Vase2,
+		Vase3,
+		Vase4,
+		Vase5,
+		Vase6,
+		Vase7,
+		Vase8,
+		Vase9,
+		Campfire,
+		Tent,
+		BeachUmbrella,
+		BeachTowel,
+		SleepingMat,
+		Furnace,
+		Anvil,
+		SpinningWheel,
+		Loom,
+		SawBench,
+		Workbench,
+		CustomizationBench;
+
+		companion object : CwEnumIntDeserializer<ObjectType> {
+			override val values = values()
 		}
 	}
-}
 
-@JvmInline
-value class ObjectType(val value: Int) {
-	companion object {
-		val Statue = ObjectType(0)
-		val Door = ObjectType(1)
-		val BigDoor = ObjectType(2)
-		val Window = ObjectType(3)
-		val CastleWindow = ObjectType(4)
-		val Gate = ObjectType(5)
-		val FireTrap = ObjectType(6)
-		val SpikeTrap = ObjectType(7)
-		val StompTrap = ObjectType(8)
-		val Lever = ObjectType(9)
-		val Chest = ObjectType(10)
-		val ChestTop02 = ObjectType(11)
-		val Table1 = ObjectType(12)
-		val Table2 = ObjectType(13)
-		val Table3 = ObjectType(14)
-		val Stool1 = ObjectType(15)
-		val Stool2 = ObjectType(16)
-		val Stool3 = ObjectType(17)
-		val Bench = ObjectType(18)
-		val Bed = ObjectType(19)
-		val BedTable = ObjectType(20)
-		val MarketStand1 = ObjectType(21)
-		val MarketStand2 = ObjectType(22)
-		val MarketStand3 = ObjectType(23)
-		val Barrel = ObjectType(24)
-		val Crate = ObjectType(25)
-		val OpenCrate = ObjectType(26)
-		val Sack = ObjectType(27)
-		val Shelter = ObjectType(28)
-		val Cupboard = ObjectType(29)
-		val Desktop = ObjectType(30)
-		val Counter = ObjectType(31)
-		val Shelf1 = ObjectType(32)
-		val Shelf2 = ObjectType(33)
-		val Shelf3 = ObjectType(34)
-		val CastleShelf1 = ObjectType(35)
-		val CastleShelf2 = ObjectType(36)
-		val CastleShelf3 = ObjectType(37)
-		val StoneShelf1 = ObjectType(38)
-		val StoneShelf2 = ObjectType(39)
-		val StoneShelf3 = ObjectType(40)
-		val SandstoneShelf1 = ObjectType(41)
-		val SandstoneShelf2 = ObjectType(42)
-		val SandstoneShelf3 = ObjectType(43)
-		val Corpse = ObjectType(44)
-		val RuneStone = ObjectType(45)
-		val Artifact = ObjectType(46)
-		val FlowerBox1 = ObjectType(47)
-		val FlowerBox2 = ObjectType(48)
-		val FlowerBox3 = ObjectType(49)
-		val StreetLight = ObjectType(50)
-		val FireStreetLight = ObjectType(51)
-		val Fence1 = ObjectType(52)
-		val Fence2 = ObjectType(53)
-		val Fence3 = ObjectType(54)
-		val Fence4 = ObjectType(55)
-		val Vase1 = ObjectType(56)
-		val Vase2 = ObjectType(57)
-		val Vase3 = ObjectType(58)
-		val Vase4 = ObjectType(59)
-		val Vase5 = ObjectType(60)
-		val Vase6 = ObjectType(61)
-		val Vase7 = ObjectType(62)
-		val Vase8 = ObjectType(63)
-		val Vase9 = ObjectType(64)
-		val Campfire = ObjectType(65)
-		val Tent = ObjectType(66)
-		val BeachUmbrella = ObjectType(67)
-		val BeachTowel = ObjectType(68)
-		val SleepingMat = ObjectType(69)
-		val Furnace = ObjectType(70)
-		val Anvil = ObjectType(71)
-		val SpinningWheel = ObjectType(72)
-		val Loom = ObjectType(73)
-		val SawBench = ObjectType(74)
-		val Workbench = ObjectType(75)
-		val CustomizationBench = ObjectType(76)
-	}
-}
+	enum class Orientation : CwSerializableEnumInt {
+		South,
+		East,
+		North,
+		West;
 
-@JvmInline
-value class Orientation(val value: Int) {
-	companion object {
-		val South = Orientation(0)
-		val East = Orientation(1)
-		val North = Orientation(2)
-		val West = Orientation(3)
+		companion object : CwEnumIntDeserializer<Orientation> {
+			override val values = values()
+		}
 	}
 }
 
@@ -446,18 +443,15 @@ data class ChunkLoot(
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector2Int(chunk)
 		writer.writeInt(drops.size)
-		drops.forEach {
-			it.writeTo(writer)
-		}
+		drops.forEach { it.writeTo(writer) }
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): ChunkLoot {
-			return ChunkLoot(
+		internal suspend fun readFrom(reader: Reader) =
+			ChunkLoot(
 				chunk = reader.readVector2Int(),
 				drops = List(reader.readInt()) { Drop.readFrom(reader) }
 			)
-		}
 	}
 }
 
@@ -483,8 +477,8 @@ data class Drop(
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): Drop {
-			return Drop(
+		internal suspend fun readFrom(reader: Reader) =
+			Drop(
 				item = Item.readFrom(reader),
 				position = reader.readVector3Long(),
 				rotation = reader.readFloat(),
@@ -494,7 +488,6 @@ data class Drop(
 				unknownB = reader.readInt(),
 				unknownC = reader.readInt()
 			)
-		}
 	}
 }
 
@@ -511,12 +504,11 @@ data class P48(
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): P48 {
-			return P48(
+		internal suspend fun readFrom(reader: Reader) =
+			P48(
 				chunk = reader.readVector2Int(),
 				subPackets = List(reader.readInt()) { reader.readByteArray(16) }
 			)
-		}
 	}
 }
 
@@ -530,12 +522,11 @@ data class Pickup(
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): Pickup {
-			return Pickup(
+		internal suspend fun readFrom(reader: Reader) =
+			Pickup(
 				interactor = CreatureID(reader.readLong()),
 				item = Item.readFrom(reader)
 			)
-		}
 	}
 }
 
@@ -553,14 +544,13 @@ data class Kill(
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): Kill {
-			return Kill(
+		internal suspend fun readFrom(reader: Reader) =
+			Kill(
 				killer = reader.readLong(),
 				victim = reader.readLong(),
 				unknown = reader.readInt(),
 				xp = reader.readInt()
 			)
-		}
 	}
 }
 
@@ -578,14 +568,13 @@ data class Attack(
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): Attack {
-			return Attack(
+		internal suspend fun readFrom(reader: Reader) =
+			Attack(
 				target = reader.readLong(),
 				attacker = reader.readLong(),
 				damage = reader.readFloat(),
 				unknown = reader.readInt()
 			)
-		}
 	}
 }
 
@@ -599,7 +588,7 @@ data class Mission(
 	val boss: Race,
 	val level: Int,
 	val unknownE: Byte,
-	val state: MissionState,
+	val state: State,
 	val padding: Short,
 	val currentHP: Int,
 	val maxHP: Int,
@@ -612,10 +601,10 @@ data class Mission(
 		writer.writeInt(unknownC)
 		writer.writeInt(id)
 		writer.writeInt(type)
-		writer.writeInt(boss.value)
+		boss.writeTo(writer)
 		writer.writeInt(level)
 		writer.writeByte(unknownE)
-		writer.writeByte(state.value)
+		state.writeTo(writer)
 		writer.writeShort(padding)
 		writer.writeInt(currentHP)
 		writer.writeInt(maxHP)
@@ -623,32 +612,32 @@ data class Mission(
 	}
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader): Mission {
-			return Mission(
+		internal suspend fun readFrom(reader: Reader) =
+			Mission(
 				sector = reader.readVector2Int(),
 				unknownA = reader.readInt(),
 				unknownB = reader.readInt(),
 				unknownC = reader.readInt(),
 				id = reader.readInt(),
 				type = reader.readInt(),
-				boss = Race(reader.readInt()),
+				boss = Race.readFrom(reader),
 				level = reader.readInt(),
 				unknownE = reader.readByte(),
-				state = MissionState(reader.readByte()),
+				state = State.readFrom(reader),
 				padding = reader.readShort(),
 				currentHP = reader.readInt(),
 				maxHP = reader.readInt(),
 				chunk = reader.readVector2Int()
 			)
-		}
 	}
-}
 
-@JvmInline
-value class MissionState(val value: Byte) {
-	companion object {
-		val Ready = MissionState(0)
-		val InProgress = MissionState(1)
-		val Finished = MissionState(2)
+	enum class State : CwSerializableEnumByte {
+		Ready,
+		InProgress,
+		Finished;
+
+		companion object : CwEnumByteDeserializer<State> {
+			override val values = values()
+		}
 	}
 }

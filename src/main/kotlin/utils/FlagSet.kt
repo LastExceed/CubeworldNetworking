@@ -1,10 +1,10 @@
 package com.github.lastexceed.cubeworldnetworking.utils
 
-class FlagSet<IndexType : FlagSetIndex>(internal val inner: BooleanArray) {
-	operator fun get(index: IndexType) = inner[index.value]
+class FlagSet<IndexType : FlagSetIndex>(internal val inner: BooleanArray) {//todo: implement CwSerializable
+	operator fun get(index: IndexType) = inner[index.ordinal]
 
 	operator fun set(index: IndexType, value: Boolean) {
-		inner[index.value] = value
+		inner[index.ordinal] = value
 	}
 
 	override fun equals(other: Any?) =
@@ -18,7 +18,7 @@ class FlagSet<IndexType : FlagSetIndex>(internal val inner: BooleanArray) {
 }
 
 interface FlagSetIndex {
-	val value: Int
+	val ordinal: Int
 }
 
 

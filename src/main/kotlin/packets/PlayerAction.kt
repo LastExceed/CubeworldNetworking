@@ -7,7 +7,7 @@ data class CreatureAction(
 	val chunk: Vector2<Int>,
 	val index: Int,
 	val unknownA: Int,
-	val type: ActionType,
+	val type: Type,
 	val unknownB: Byte,
 	val unknownC: Short
 ) : Packet(PacketId.CreatureAction) {
@@ -16,7 +16,7 @@ data class CreatureAction(
 		writer.writeVector2Int(chunk)
 		writer.writeInt(index)
 		writer.writeInt(unknownA)
-		writer.writeByte(type.value)
+		type.writeTo(writer)
 		writer.writeByte(unknownB)
 		writer.writeShort(unknownC)
 	}
@@ -28,23 +28,25 @@ data class CreatureAction(
 				chunk = reader.readVector2Int(),
 				index = reader.readInt(),
 				unknownA = reader.readInt(),
-				type = ActionType(reader.readByte()),
+				type = Type.readFrom(reader),
 				unknownB = reader.readByte(),
 				unknownC = reader.readShort()
 			)
 	}
-}
 
-@JvmInline
-value class ActionType(val value: Byte) {
-	companion object {
-		val Bomb = ActionType(1)
-		val Talk = ActionType(2)
-		val ObjectInteraction = ActionType(3)
-		val Unknown4 = ActionType(4)
-		val PickUp = ActionType(5)
-		val Drop = ActionType(6)
-		val Unknown7 = ActionType(7)
-		val CallPet = ActionType(8)
+	enum class Type : CwSerializableEnumByte {
+		Zero,
+		Bomb,
+		Talk,
+		ObjectInteraction,
+		Unknown4,
+		PickUp,
+		Drop,
+		Unknown7,
+		CallPet;
+
+		companion object : CwEnumByteDeserializer<Type> {
+			override val values = values()
+		}
 	}
 }

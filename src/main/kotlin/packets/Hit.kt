@@ -12,7 +12,7 @@ data class Hit(
 	val position: Vector3<Long>,
 	val direction: Vector3<Float>,
 	val isYellow: Boolean,
-	val damageType: DamageType,
+	val type: Type,
 	val flash: Boolean,
 	val paddingB: Byte
 ) : Packet(PacketId.Hit), SubPacket {
@@ -26,7 +26,7 @@ data class Hit(
 		writer.writeVector3Long(position)
 		writer.writeVector3Float(direction)
 		writer.writeBoolean(isYellow)
-		writer.writeByte(damageType.value)
+		type.writeTo(writer)
 		writer.writeBoolean(flash)
 		writer.writeByte(paddingB)
 	}
@@ -43,22 +43,23 @@ data class Hit(
 				position = reader.readVector3Long(),
 				direction = reader.readVector3Float(),
 				isYellow = reader.readBoolean(),
-				damageType = DamageType(reader.readByte()),
+				type = Type.readFrom(reader),
 				flash = reader.readBoolean(),
 				paddingB = reader.readByte()
 			)
 	}
-}
 
-@JvmInline
-value class DamageType(val value: Byte) {
-	companion object {
-		val Default = DamageType(0)
-		val Block = DamageType(1)
-		val Unknown = DamageType(2)
-		val Miss = DamageType(3)
-		val Dodge = DamageType(4)
-		val Absorb = DamageType(5)
-		val Invisible2 = DamageType(6)
+	enum class Type : CwSerializableEnumByte {
+		Default,
+		Block,
+		Unknown,
+		Miss,
+		Dodge,
+		Absorb,
+		Invisible;
+
+		companion object : CwEnumByteDeserializer<Type> {
+			override val values = values()
+		}
 	}
 }

@@ -33,7 +33,7 @@ data class Airship(
 	val pathRotation: Float,
 	val unknownC: Int,
 	val destination: Vector3<Long>,
-	val state: AirshipState,
+	val state: State,
 	val unknownD: Int
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
@@ -47,7 +47,7 @@ data class Airship(
 		writer.writeFloat(pathRotation)
 		writer.writeInt(unknownC)
 		writer.writeVector3Long(destination)
-		writer.writeInt(state.value)
+		state.writeTo(writer)
 		writer.writeInt(unknownD)
 	}
 
@@ -64,15 +64,16 @@ data class Airship(
 				pathRotation = reader.readFloat(),
 				unknownC = reader.readInt(),
 				destination = reader.readVector3Long(),
-				state = AirshipState(reader.readInt()),
+				state = State.readFrom(reader),
 				unknownD = reader.readInt()
 			)
 	}
-}
 
-@JvmInline
-value class AirshipState(val value: Int) {
-	companion object {
-		//TODO: figure out which airship states exist
+	enum class State : CwSerializableEnumInt {
+		;//TODO: figure out which airship states exist
+
+		companion object : CwEnumIntDeserializer<State> {
+			override val values = values()
+		}
 	}
 }
