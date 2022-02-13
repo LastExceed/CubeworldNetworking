@@ -6,6 +6,8 @@ data class StatusEffect(
 	val source: CreatureID,
 	val target: CreatureID,
 	val type: Type,
+	val unknownA: Byte,
+	val unknownB: Short,//most likely padding, content seems to be garbage data
 	val modifier: Float,
 	val duration: Int,
 	val unknownC: Int,
@@ -27,6 +29,8 @@ data class StatusEffect(
 				source = CreatureID(reader.readLong()),
 				target = CreatureID(reader.readLong()),
 				type = Type.readFrom(reader),
+				unknownA = reader.readByte(),
+				unknownB = reader.readShort(),
 				modifier = reader.readFloat(),
 				duration = reader.readInt(),
 				unknownC = reader.readInt(),
@@ -34,7 +38,7 @@ data class StatusEffect(
 			)
 	}
 
-	enum class Type : CwSerializableEnumInt {
+	enum class Type : CwSerializableEnumByte {
 		Zero,
 		Bulwalk,
 		WarFrenzy,
@@ -49,7 +53,7 @@ data class StatusEffect(
 		Elusiveness,
 		Swiftness;
 
-		companion object : CwEnumIntDeserializer<Type> {
+		companion object : CwEnumByteDeserializer<Type> {
 			override val values = values()
 		}
 	}
