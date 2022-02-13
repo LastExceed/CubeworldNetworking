@@ -9,5 +9,5 @@ maven("https://jitpack.io")
 ```
 and this to your dependencies:
 ```kotlin
-implementation("com.github.lastexceed", "CubeworldNetworking", "1.2.0")
+implementation("com.github.lastexceed", "CubeworldNetworking", "1.2.1")
 ```
