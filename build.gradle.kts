@@ -10,13 +10,10 @@ repositories {
 }
 
 dependencies {
-	implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.0")
-	setOf(
-		"io",
-		"utils"
-	).forEach {
-		implementation("io.ktor", "ktor-$it", "2.0.+")
-	}
+	api("io.ktor", "ktor-network", "2.0.+")
+	//technically only need to expose ktor-io, and use ktor-utils internally
+	//but consuming this library without ktor-network makes little sense
+	//so might as well just expose that since it depends on the other two
 }
 
 publishing {
