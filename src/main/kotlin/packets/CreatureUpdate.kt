@@ -923,12 +923,16 @@ enum class CombatClassMajor : CwSerializableEnumByte {
 
 	companion object : CwEnumByteDeserializer<CombatClassMajor> {
 		override val values = values()
+
+		override suspend fun readFrom(reader: Reader) =
+			values.getOrElse(reader.readByte().toInt()) { None }//todo: NPCs use this to indicate shopkeeper, trainer, identifier, etc
 	}
 }
 
 enum class CombatClassMinor : CwSerializableEnumByte {
 	Default,
-	Alternative;
+	Alternative,
+	Witch; //witch NPCs on vanilla server use this
 
 	companion object : CwEnumByteDeserializer<CombatClassMinor> {
 		override val values = values()
