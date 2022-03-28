@@ -369,7 +369,7 @@ data class Appearance(
 	var handRotation: Vector3<Float>,
 	var feetRotation: Float,
 	var wingRotation: Float,
-	var tail_rotation: Float,
+	var tailRotation: Float,
 	var bodyOffset: Vector3<Float>,
 	var headOffset: Vector3<Float>,
 	var handOffset: Vector3<Float>,
@@ -405,7 +405,7 @@ data class Appearance(
 		writer.writeVector3Float(handRotation)
 		writer.writeFloat(feetRotation)
 		writer.writeFloat(wingRotation)
-		writer.writeFloat(tail_rotation)
+		writer.writeFloat(tailRotation)
 		writer.writeVector3Float(bodyOffset)
 		writer.writeVector3Float(headOffset)
 		writer.writeVector3Float(handOffset)
@@ -444,7 +444,7 @@ data class Appearance(
 				handRotation = reader.readVector3Float(),
 				feetRotation = reader.readFloat(),
 				wingRotation = reader.readFloat(),
-				tail_rotation = reader.readFloat(),
+				tailRotation = reader.readFloat(),
 				bodyOffset = reader.readVector3Float(),
 				headOffset = reader.readVector3Float(),
 				handOffset = reader.readVector3Float(),
