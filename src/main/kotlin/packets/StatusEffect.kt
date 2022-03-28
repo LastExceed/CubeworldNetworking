@@ -17,6 +17,8 @@ data class StatusEffect(
 		writer.writeLong(source.value)
 		writer.writeLong(target.value)
 		type.writeTo(writer)
+		writer.writeByte(unknownA)
+		writer.writeShort(unknownB)
 		writer.writeFloat(modifier)
 		writer.writeInt(duration)
 		writer.writeInt(unknownC)
