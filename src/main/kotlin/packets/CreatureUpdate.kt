@@ -585,7 +585,8 @@ enum class PhysicsFlag : FlagSetIndex {
 	Unknown3,
 	Unknown4,
 	PushingWall,
-	PushingObject
+	PushingObject,
+	Unknown7
 }
 
 enum class CreatureFlag : FlagSetIndex {
@@ -599,7 +600,12 @@ enum class CreatureFlag : FlagSetIndex {
 	Unknown7,
 	Unknown8,
 	Lamp,
-	Sniping
+	Sniping,
+	Unknown11,
+	Unknown12,
+	Unknown13,
+	Unknown14,
+	Unknown15,
 }
 
 enum class AppearanceFlag : FlagSetIndex {
@@ -616,7 +622,9 @@ enum class AppearanceFlag : FlagSetIndex {
 	Unknown10,
 	Unknown11,
 	Unknown12,
-	Invincible //used by dummies
+	Invincible, //used by dummies
+	Unknown14,
+	Unknown15,
 }
 
 enum class Affiliation : CwSerializableEnumByte {
