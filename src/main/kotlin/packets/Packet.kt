@@ -41,8 +41,11 @@ interface CwSerializableEnum : CwSerializable {
 }
 
 interface CwSerializableEnumByte : CwSerializableEnum {
+	val serialized: Byte
+		get() = ordinal.toByte()
+
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeByte(ordinal.toByte())
+		writer.writeByte(serialized)
 	}
 }
 
@@ -62,7 +65,10 @@ interface CwEnumDeserializer<T : CwSerializableEnum> : CwDeserializer<T> {
 
 interface CwEnumByteDeserializer<T : CwSerializableEnumByte> : CwEnumDeserializer<T> {
 	override suspend fun readFrom(reader: Reader) =
-		values[reader.readByte().toInt()]
+		reader.readByte().let { foo ->
+			values.find { it.serialized == foo } ?: error("unknown enum value $foo")
+		}
+
 }
 
 interface CwEnumIntDeserializer<T : CwSerializableEnumInt> : CwEnumDeserializer<T> {

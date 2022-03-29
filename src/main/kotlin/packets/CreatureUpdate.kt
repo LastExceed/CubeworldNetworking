@@ -922,18 +922,26 @@ enum class Animation : CwSerializableEnumByte {
 	}
 }
 
-enum class CombatClassMajor : CwSerializableEnumByte {
-	None,
-	Warrior,
-	Ranger,
-	Mage,
-	Rogue;
+enum class CombatClassMajor(override val serialized: Byte) : CwSerializableEnumByte {
+	None(0),
+	Warrior(1),
+	Ranger(2),
+	Mage(3),
+	Rogue(4),
+
+	GeneralShopkeep(-128),
+	WeaponShopkeep(-127),
+	ArmorShopkeep(-126),
+	Identifier(-125),
+	Innkeep(-124),
+	Blacksmith(-123),//no function
+	Woodworker(-122),//no function
+	Weaver(-121),//no function
+	Villager(-120),
+	Adapter(-119);
 
 	companion object : CwEnumByteDeserializer<CombatClassMajor> {
 		override val values = values()
-
-		override suspend fun readFrom(reader: Reader) =
-			values.getOrElse(reader.readByte().toInt()) { None }//todo: NPCs use this to indicate shopkeeper, trainer, identifier, etc
 	}
 }
 

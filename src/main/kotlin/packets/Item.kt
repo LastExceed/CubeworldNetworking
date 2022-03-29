@@ -254,7 +254,7 @@ data class Item(
 		}
 	}
 
-	enum class Material(val serialized: Byte) : CwSerializableEnumByte {
+	enum class Material(override val serialized: Byte) : CwSerializableEnumByte {
 		None(0),
 		Iron(1),
 		Wood(2),
@@ -289,17 +289,8 @@ data class Item(
 		IceSpirit(-126),
 		Wind(-125);
 
-		override suspend fun writeTo(writer: Writer) {
-			writer.writeByte(serialized)
-		}
-
 		companion object : CwEnumByteDeserializer<Material> {
 			override val values = values()
-
-			override suspend fun readFrom(reader: Reader) =
-				reader.readByte().let { serialized ->
-					values.find { it.serialized == serialized } ?: None //todo: find a way to deal with invalid numbers
-				}
 		}
 	}
 
