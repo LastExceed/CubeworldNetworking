@@ -33,29 +33,29 @@ data class CreatureUpdate(
 	val combatClassMajor: CombatClassMajor? = null,
 	val combatClassMinor: CombatClassMinor? = null,
 	val manaCharge: Float? = null,
-	val unused24: Vector3<Float>? = null,
-	val unused25: Vector3<Float>? = null,
+	val unknown24: Vector3<Float>? = null,
+	val unknown25: Vector3<Float>? = null,
 	/**coordinates of the location this creature is aiming at, relative to its own position*/
 	val aimDisplacement: Vector3<Float>? = null,
 	val health: Float? = null,
 	val mana: Float? = null,
 	val blockingGauge: Float? = null,
 	val multipliers: Multipliers? = null,
-	val unused31: Byte? = null,
-	val unused32: Byte? = null,
+	val unknown31: Byte? = null,
+	val unknown32: Byte? = null,
 	val level: Int? = null,
 	val experience: Int? = null,
 	/**for pets this is the [CreatureID] of their owner*/
 	val master: CreatureID? = null,
-	val unused36: Long? = null,
+	val unknown36: Long? = null,
 	/**this is the '+#' that monsters in some dungeons have next to their [race]*/
 	val powerBase: Byte? = null,
-	val unused38: Int? = null,
-	val unused39: Vector3<Int>? = null,
+	val unknown38: Int? = null,
+	val unknown39: Vector3<Int>? = null,
 	val home: Vector3<Long>? = null,
 	/**players within ±2 [level] of the dungeon at these coordinates see a green speech bubble above this creature's head and can get that chunk revealed on the map by talking to this creature*/
 	val chunkToReveal: Vector3<Int>? = null,
-	val unused42: Byte? = null,
+	val unknown42: Byte? = null,//0 3 4 for villages - 3 = dialog about pet food
 	val consumable: Item? = null,
 	val equipment: Equipment? = null,
 	val name: String? = null,
@@ -163,11 +163,11 @@ data class CreatureUpdate(
 			optionalDataWriter.writeFloat(it)
 			mask[23] = true
 		}
-		unused24?.let {
+		unknown24?.let {
 			optionalDataWriter.writeVector3Float(it)
 			mask[24] = true
 		}
-		unused25?.let {
+		unknown25?.let {
 			optionalDataWriter.writeVector3Float(it)
 			mask[25] = true
 		}
@@ -191,11 +191,11 @@ data class CreatureUpdate(
 			it.writeTo(optionalDataWriter)
 			mask[30] = true
 		}
-		unused31?.let {
+		unknown31?.let {
 			optionalDataWriter.writeByte(it)
 			mask[31] = true
 		}
-		unused32?.let {
+		unknown32?.let {
 			optionalDataWriter.writeByte(it)
 			mask[32] = true
 		}
@@ -211,7 +211,7 @@ data class CreatureUpdate(
 			optionalDataWriter.writeLong(it.value)
 			mask[35] = true
 		}
-		unused36?.let {
+		unknown36?.let {
 			optionalDataWriter.writeLong(it)
 			mask[36] = true
 		}
@@ -219,11 +219,11 @@ data class CreatureUpdate(
 			optionalDataWriter.writeByte(it)
 			mask[37] = true
 		}
-		unused38?.let {
+		unknown38?.let {
 			optionalDataWriter.writeInt(it)
 			mask[38] = true
 		}
-		unused39?.let {
+		unknown39?.let {
 			optionalDataWriter.writeVector3Int(it)
 			mask[39] = true
 		}
@@ -235,7 +235,7 @@ data class CreatureUpdate(
 			optionalDataWriter.writeVector3Int(it)
 			mask[41] = true
 		}
-		unused42?.let {
+		unknown42?.let {
 			optionalDataWriter.writeByte(it)
 			mask[42] = true
 		}
@@ -315,25 +315,25 @@ data class CreatureUpdate(
 				combatClassMajor = if (mask[21]) CombatClassMajor.readFrom(inflatedReader) else null,
 				combatClassMinor = if (mask[22]) CombatClassMinor.readFrom(inflatedReader)else null,
 				manaCharge = if (mask[23]) inflatedReader.readFloat() else null,
-				unused24 = if (mask[24]) inflatedReader.readVector3Float() else null,
-				unused25 = if (mask[25]) inflatedReader.readVector3Float() else null,
+				unknown24 = if (mask[24]) inflatedReader.readVector3Float() else null,
+				unknown25 = if (mask[25]) inflatedReader.readVector3Float() else null,
 				aimDisplacement = if (mask[26]) inflatedReader.readVector3Float() else null,
 				health = if (mask[27]) inflatedReader.readFloat() else null,
 				mana = if (mask[28]) inflatedReader.readFloat() else null,
 				blockingGauge = if (mask[29]) inflatedReader.readFloat() else null,
 				multipliers = if (mask[30]) Multipliers.readFrom(inflatedReader) else null,
-				unused31 = if (mask[31]) inflatedReader.readByte() else null,
-				unused32 = if (mask[32]) inflatedReader.readByte() else null,
+				unknown31 = if (mask[31]) inflatedReader.readByte() else null,
+				unknown32 = if (mask[32]) inflatedReader.readByte() else null,
 				level = if (mask[33]) inflatedReader.readInt() else null,
 				experience = if (mask[34]) inflatedReader.readInt() else null,
 				master = if (mask[35]) CreatureID(inflatedReader.readLong()) else null,
-				unused36 = if (mask[36]) inflatedReader.readLong() else null,
+				unknown36 = if (mask[36]) inflatedReader.readLong() else null,
 				powerBase = if (mask[37]) inflatedReader.readByte() else null,
-				unused38 = if (mask[38]) inflatedReader.readInt() else null,
-				unused39 = if (mask[39]) inflatedReader.readVector3Int() else null,
+				unknown38 = if (mask[38]) inflatedReader.readInt() else null,
+				unknown39 = if (mask[39]) inflatedReader.readVector3Int() else null,
 				home = if (mask[40]) inflatedReader.readVector3Long() else null,
 				chunkToReveal = if (mask[41]) inflatedReader.readVector3Int() else null,
-				unused42 = if (mask[42]) inflatedReader.readByte() else null,
+				unknown42 = if (mask[42]) inflatedReader.readByte() else null,
 				consumable = if (mask[43]) Item.readFrom(inflatedReader) else null,
 				equipment = if (mask[44]) Equipment.readFrom(inflatedReader) else null,
 				name = if (mask[45]) inflatedReader.readByteArray(16).toString(Charsets.UTF_8).trimEnd(Char.MIN_VALUE) else null,
@@ -814,8 +814,8 @@ enum class Animation : CwSerializableEnumByte {
 	Idle,
 	DualWieldM1a,
 	DualWieldM1b,
-	Unknown_003, //like daggers
-	Unknown_004,
+	Unknown003, //like daggers
+	Unknown004,
 	LongswordM2,
 	UnarmedM1a, //fists use these
 	UnarmedM1b,
@@ -823,11 +823,11 @@ enum class Animation : CwSerializableEnumByte {
 	ShieldM1a,
 	ShieldM1b,
 	UnarmedM2,
-	Unknown_012, //swords rip apart
+	Unknown012, //swords rip apart
 	LongswordM1a,
 	LongswordM1b,
-	Unknown_015, //probably for greatweapon A1
-	Unknown_016, //same as 17
+	Unknown015, //probably for greatweapon A1
+	Unknown016, //same as 17
 	DaggersM2,
 	DaggersM1a,
 	DaggersM1b,
@@ -840,7 +840,7 @@ enum class Animation : CwSerializableEnumByte {
 	BoomerangM1,
 	BoomerangM2Charging,
 	BeamDraining,
-	Unknown_029, //nothing
+	Unknown029, //nothing
 	StaffFireM1,
 	StaffFireM2,
 	StaffWaterM1,
@@ -858,26 +858,26 @@ enum class Animation : CwSerializableEnumByte {
 	WandWaterM1,
 	WandWaterM2,
 	WandFireM2,
-	Unknown_047, //same as 54
+	Unknown047, //same as 54
 	Intercept,
 	Teleport,
-	Unknown_050,
-	Unknown_051, //mob attack?
-	Unknown_052, //nothing, immediately switches to 0
-	Unknown_053, //nothing
+	Unknown050,
+	Unknown051, //mob attack?
+	Unknown052, //nothing, immediately switches to 0
+	Unknown053, //nothing
 	Smash,
 	BowM2,
-	Unknown_056, //nothing, causes rotation lock
+	Unknown056, //nothing, causes rotation lock
 	GreatweaponM1a,
 	GreatweaponM1c,
 	GreatweaponM2Charging,
 	GreatweaponM2Berserker,
 	GreatweaponM2Guardian,
-	Unknown_062, //probably for greatweapon A2
+	Unknown062, //probably for greatweapon A2
 	UnarmedM2Charging,
 	DualWieldM2Charging,
-	Unknown_065, //probably for greatweapon B1
-	Unknown_066, //probably for greatweapon B2
+	Unknown065, //probably for greatweapon B1
+	Unknown066, //probably for greatweapon B2
 	GreatweaponM1b,
 	BossCharge1,
 	BossCharge2,
@@ -896,7 +896,7 @@ enum class Animation : CwSerializableEnumByte {
 	PetFoodPresent,
 	Sitting,
 	Sleeping,
-	Unknown_085, //nothing
+	Unknown085, //nothing
 	Cyclone,
 	FireExplosionLong,
 	FireExplosionShort,
@@ -904,16 +904,16 @@ enum class Animation : CwSerializableEnumByte {
 	Splash,
 	EarthQuake,
 	Clone,
-	Unknown_093, //same as 48
+	Unknown093, //same as 48
 	FireBeam,
 	FireRay,
 	Shuriken,
-	Unknown_097, //nothing, rotation lock
-	Unknown_098, //parry? causes blocking
-	Unknwon_099, //nothing, rotation lock
-	Unknown_100, //nothing
+	Unknown097, //nothing, rotation lock
+	Unknown098, //parry? causes blocking
+	Unknown099, //nothing, rotation lock
+	Unknown100, //nothing
 	SuperBulwalk, //casues bulwalk
-	Unknown_102, //nothing
+	Unknown102, //nothing
 	SuperManaShield, //causes manashield
 	ShieldM2,
 	TeleportToCity,
@@ -921,7 +921,7 @@ enum class Animation : CwSerializableEnumByte {
 	Boat,
 	Boulder,
 	ManaCubePickup,
-	Unknown_110; //mob attack?
+	Unknown110; //mob attack?
 
 	companion object : CwEnumByteDeserializer<Animation> {
 		override val values = values()
