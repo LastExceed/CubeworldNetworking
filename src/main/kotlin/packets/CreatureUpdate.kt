@@ -53,7 +53,8 @@ data class CreatureUpdate(
 	val unused38: Int? = null,
 	val unused39: Vector3<Int>? = null,
 	val home: Vector3<Long>? = null,
-	val unused41: Vector3<Int>? = null,
+	/**players within ±2 [level] of the dungeon at these coordinates see a green speech bubble above this creature's head and can get that chunk revealed on the map by talking to this creature*/
+	val chunkToReveal: Vector3<Int>? = null,
 	val unused42: Byte? = null,
 	val consumable: Item? = null,
 	val equipment: Equipment? = null,
@@ -230,7 +231,7 @@ data class CreatureUpdate(
 			optionalDataWriter.writeVector3Long(it)
 			mask[40] = true
 		}
-		unused41?.let {
+		chunkToReveal?.let {
 			optionalDataWriter.writeVector3Int(it)
 			mask[41] = true
 		}
@@ -331,7 +332,7 @@ data class CreatureUpdate(
 				unused38 = if (mask[38]) inflatedReader.readInt() else null,
 				unused39 = if (mask[39]) inflatedReader.readVector3Int() else null,
 				home = if (mask[40]) inflatedReader.readVector3Long() else null,
-				unused41 = if (mask[41]) inflatedReader.readVector3Int() else null,
+				chunkToReveal = if (mask[41]) inflatedReader.readVector3Int() else null,
 				unused42 = if (mask[42]) inflatedReader.readByte() else null,
 				consumable = if (mask[43]) Item.readFrom(inflatedReader) else null,
 				equipment = if (mask[44]) Equipment.readFrom(inflatedReader) else null,
