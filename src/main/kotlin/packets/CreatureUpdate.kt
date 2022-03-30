@@ -11,6 +11,7 @@ data class CreatureUpdate(
 	val rotation: Vector3<Float>? = null,
 	val velocity: Vector3<Float>? = null,
 	val acceleration: Vector3<Float>? = null,
+	/**used by the 'retreat' ability*/
 	val velocityExtra: Vector3<Float>? = null,
 	val climbAnimationState: Float? = null,
 	val flagsPhysics: FlagSet<PhysicsFlag>? = null,
@@ -27,12 +28,14 @@ data class CreatureUpdate(
 	val effectTimeFear: Int? = null,
 	val effectTimeIce: Int? = null,
 	val effectTimeWind: Int? = null,
+	/**unknown purpose, name adopted from cuwo*/
 	val showPatchTime: Int? = null,
 	val combatClassMajor: CombatClassMajor? = null,
 	val combatClassMinor: CombatClassMinor? = null,
 	val manaCharge: Float? = null,
 	val unused24: Vector3<Float>? = null,
 	val unused25: Vector3<Float>? = null,
+	/**coordinates of the location this creature is aiming at, relative to its own position*/
 	val aimDisplacement: Vector3<Float>? = null,
 	val health: Float? = null,
 	val mana: Float? = null,
@@ -42,8 +45,10 @@ data class CreatureUpdate(
 	val unused32: Byte? = null,
 	val level: Int? = null,
 	val experience: Int? = null,
+	/**for pets this is the [CreatureID] of their owner*/
 	val master: CreatureID? = null,
 	val unused36: Long? = null,
+	/**this is the '+#' that monsters in some dungeons have next to their [race]*/
 	val powerBase: Byte? = null,
 	val unused38: Int? = null,
 	val unused39: Vector3<Int>? = null,
