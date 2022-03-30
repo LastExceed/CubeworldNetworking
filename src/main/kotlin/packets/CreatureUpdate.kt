@@ -36,7 +36,7 @@ data class CreatureUpdate(
 	val aimDisplacement: Vector3<Float>? = null,
 	val health: Float? = null,
 	val mana: Float? = null,
-	val blockMeter: Float? = null,
+	val blockingGauge: Float? = null,
 	val multipliers: Multipliers? = null,
 	val unused31: Byte? = null,
 	val unused32: Byte? = null,
@@ -177,7 +177,7 @@ data class CreatureUpdate(
 			optionalDataWriter.writeFloat(it)
 			mask[28] = true
 		}
-		blockMeter?.let {
+		blockingGauge?.let {
 			optionalDataWriter.writeFloat(it)
 			mask[29] = true
 		}
@@ -314,7 +314,7 @@ data class CreatureUpdate(
 				aimDisplacement = if (mask[26]) inflatedReader.readVector3Float() else null,
 				health = if (mask[27]) inflatedReader.readFloat() else null,
 				mana = if (mask[28]) inflatedReader.readFloat() else null,
-				blockMeter = if (mask[29]) inflatedReader.readFloat() else null,
+				blockingGauge = if (mask[29]) inflatedReader.readFloat() else null,
 				multipliers = if (mask[30]) Multipliers.readFrom(inflatedReader) else null,
 				unused31 = if (mask[31]) inflatedReader.readByte() else null,
 				unused32 = if (mask[32]) inflatedReader.readByte() else null,
