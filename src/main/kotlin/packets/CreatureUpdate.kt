@@ -583,7 +583,7 @@ enum class PhysicsFlag : FlagSetIndex {
 	Swimming,
 	TouchingWall,
 	Unknown3,
-	Unknown4,
+	Unknown4, //always true
 	PushingWall,
 	PushingObject,
 	Unknown7
@@ -621,7 +621,7 @@ enum class AppearanceFlag : FlagSetIndex {
 	BossGlow,
 	Unknown10,
 	Unknown11,
-	Unknown12,
+	Unknown12, //used by bosses
 	Invincible, //used by dummies
 	Unknown14,
 	Unknown15,
