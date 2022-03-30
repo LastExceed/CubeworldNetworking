@@ -51,7 +51,7 @@ data class CreatureUpdate(
 	/**this is the '+#' that monsters in some dungeons have next to their [race]*/
 	val powerBase: Byte? = null,
 	val unknown38: Int? = null,
-	val unknown39: Vector3<Int>? = null,
+	val homeChunk: Vector3<Int>? = null,
 	val home: Vector3<Long>? = null,
 	/**players within ±2 [level] of the dungeon at these coordinates see a green speech bubble above this creature's head and can get that chunk revealed on the map by talking to this creature*/
 	val chunkToReveal: Vector3<Int>? = null,
@@ -223,7 +223,7 @@ data class CreatureUpdate(
 			optionalDataWriter.writeInt(it)
 			mask[38] = true
 		}
-		unknown39?.let {
+		homeChunk?.let {
 			optionalDataWriter.writeVector3Int(it)
 			mask[39] = true
 		}
@@ -330,7 +330,7 @@ data class CreatureUpdate(
 				unknown36 = if (mask[36]) inflatedReader.readLong() else null,
 				powerBase = if (mask[37]) inflatedReader.readByte() else null,
 				unknown38 = if (mask[38]) inflatedReader.readInt() else null,
-				unknown39 = if (mask[39]) inflatedReader.readVector3Int() else null,
+				homeChunk = if (mask[39]) inflatedReader.readVector3Int() else null,
 				home = if (mask[40]) inflatedReader.readVector3Long() else null,
 				chunkToReveal = if (mask[41]) inflatedReader.readVector3Int() else null,
 				unknown42 = if (mask[42]) inflatedReader.readByte() else null,
