@@ -265,7 +265,7 @@ data class Item(
 		Bone(7),
 
 
-
+		Copper(10),
 		Gold(11),
 		Silver(12),
 		Emerald(13),
