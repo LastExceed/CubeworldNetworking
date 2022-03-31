@@ -3,7 +3,7 @@ package com.github.lastexceed.cubeworldnetworking.packets
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
 data class Shot(
-	val attacker: Long,
+	val attacker: CreatureId,
 	val chunk: Vector2<Int>,
 	val unknownA: Int,
 	val paddingA: Int,
@@ -22,7 +22,7 @@ data class Shot(
 	val unknownD: Float
 ) : Packet(PacketId.Shot), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeLong(attacker)
+		writer.writeLong(attacker.value)
 		writer.writeVector2Int(chunk)
 		writer.writeInt(unknownA)
 		writer.writeInt(paddingA)
@@ -44,7 +44,7 @@ data class Shot(
 	companion object : CwDeserializer<Shot> {
 		override suspend fun readFrom(reader: Reader) =
 			Shot(
-				attacker = reader.readLong(),
+				attacker = CreatureId(reader.readLong()),
 				chunk = reader.readVector2Int(),
 				unknownA = reader.readInt(),
 				paddingA = reader.readInt(),
