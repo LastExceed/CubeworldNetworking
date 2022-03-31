@@ -3,7 +3,7 @@ package com.github.lastexceed.cubeworldnetworking.packets
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
 data class ChatMessage(
-	val sender: CreatureID?,
+	val sender: CreatureId?,
 	val text: String
 ) : Packet(PacketId.ChatMessage) {
 	override suspend fun writeTo(writer: Writer) {
@@ -17,7 +17,7 @@ data class ChatMessage(
 	companion object { //TODO: CwDeserializer<ChatMessage>
 		suspend fun readFrom(reader: Reader, readSender: Boolean) =
 			ChatMessage(
-				sender = if (readSender) CreatureID(reader.readLong()) else null,
+				sender = if (readSender) CreatureId(reader.readLong()) else null,
 				text = String(reader.readByteArray(reader.readInt() * 2), Charsets.UTF_16LE)
 			)
 	}

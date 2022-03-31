@@ -6,7 +6,7 @@ import io.ktor.utils.io.close
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
 data class CreatureUpdate(
-	val id: CreatureID,
+	val id: CreatureId,
 	val position: Vector3<Long>? = null,
 	val rotation: Vector3<Float>? = null,
 	val velocity: Vector3<Float>? = null,
@@ -45,8 +45,8 @@ data class CreatureUpdate(
 	val unknown32: Byte? = null,
 	val level: Int? = null,
 	val experience: Int? = null,
-	/**for pets this is the [CreatureID] of their owner*/
-	val master: CreatureID? = null,
+	/**for pets this is the [CreatureId] of their owner*/
+	val master: CreatureId? = null,
 	val unknown36: Long? = null,
 	/**this is the '+#' that monsters in some dungeons have next to their [race]*/
 	val powerBase: Byte? = null,
@@ -286,7 +286,7 @@ data class CreatureUpdate(
 			val inflated = Zlib.inflate(deflated)
 			val inflatedReader = Reader(inflated)
 
-			val id = CreatureID(inflatedReader.readLong())
+			val id = CreatureId(inflatedReader.readLong())
 			val mask = inflatedReader.readLong().toBooleanArray()
 
 			return CreatureUpdate(
@@ -326,7 +326,7 @@ data class CreatureUpdate(
 				unknown32 = if (mask[32]) inflatedReader.readByte() else null,
 				level = if (mask[33]) inflatedReader.readInt() else null,
 				experience = if (mask[34]) inflatedReader.readInt() else null,
-				master = if (mask[35]) CreatureID(inflatedReader.readLong()) else null,
+				master = if (mask[35]) CreatureId(inflatedReader.readLong()) else null,
 				unknown36 = if (mask[36]) inflatedReader.readLong() else null,
 				powerBase = if (mask[37]) inflatedReader.readByte() else null,
 				unknown38 = if (mask[38]) inflatedReader.readInt() else null,
@@ -345,7 +345,7 @@ data class CreatureUpdate(
 }
 
 @JvmInline
-value class CreatureID(val value: Long)
+value class CreatureId(val value: Long)
 
 data class Appearance(
 	var unknownA: Byte,

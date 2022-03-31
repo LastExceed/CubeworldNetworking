@@ -3,8 +3,8 @@ package com.github.lastexceed.cubeworldnetworking.packets
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
 data class Hit(
-	val attacker: CreatureID,
-	val target: CreatureID,
+	val attacker: CreatureId,
+	val target: CreatureId,
 	val damage: Float,
 	val critical: Boolean,
 	val stuntime: Int,
@@ -34,8 +34,8 @@ data class Hit(
 	companion object : CwDeserializer<Hit> {
 		override suspend fun readFrom(reader: Reader) =
 			Hit(
-				attacker = CreatureID(reader.readLong()),
-				target = CreatureID(reader.readLong()),
+				attacker = CreatureId(reader.readLong()),
+				target = CreatureId(reader.readLong()),
 				damage = reader.readFloat(),
 				critical = reader.readInt() > 0,
 				stuntime = reader.readInt(),

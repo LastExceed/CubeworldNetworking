@@ -513,7 +513,7 @@ data class P48(
 }
 
 data class Pickup(
-	val interactor: CreatureID,
+	val interactor: CreatureId,
 	val item: Item
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
@@ -524,7 +524,7 @@ data class Pickup(
 	companion object {
 		internal suspend fun readFrom(reader: Reader) =
 			Pickup(
-				interactor = CreatureID(reader.readLong()),
+				interactor = CreatureId(reader.readLong()),
 				item = Item.readFrom(reader)
 			)
 	}

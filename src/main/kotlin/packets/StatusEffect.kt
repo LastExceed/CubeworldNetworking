@@ -3,15 +3,15 @@ package com.github.lastexceed.cubeworldnetworking.packets
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
 data class StatusEffect(
-	val source: CreatureID,
-	val target: CreatureID,
+	val source: CreatureId,
+	val target: CreatureId,
 	val type: Type,
 	val unknownA: Byte,
 	val unknownB: Short,//most likely padding, content seems to be garbage data
 	val modifier: Float,
 	val duration: Int,
 	val unknownC: Int,
-	val creatureID3: CreatureID
+	val creatureId3: CreatureId
 ) : Packet(PacketId.StatusEffect), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(source.value)
@@ -22,21 +22,21 @@ data class StatusEffect(
 		writer.writeFloat(modifier)
 		writer.writeInt(duration)
 		writer.writeInt(unknownC)
-		writer.writeLong(creatureID3.value)
+		writer.writeLong(creatureId3.value)
 	}
 
 	companion object : CwDeserializer<StatusEffect> {
 		override suspend fun readFrom(reader: Reader) =
 			StatusEffect(
-				source = CreatureID(reader.readLong()),
-				target = CreatureID(reader.readLong()),
+				source = CreatureId(reader.readLong()),
+				target = CreatureId(reader.readLong()),
 				type = Type.readFrom(reader),
 				unknownA = reader.readByte(),
 				unknownB = reader.readShort(),
 				modifier = reader.readFloat(),
 				duration = reader.readInt(),
 				unknownC = reader.readInt(),
-				creatureID3 = CreatureID(reader.readLong())
+				creatureId3 = CreatureId(reader.readLong())
 			)
 	}
 
