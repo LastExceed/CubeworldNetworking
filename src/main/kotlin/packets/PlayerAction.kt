@@ -5,7 +5,7 @@ import com.github.lastexceed.cubeworldnetworking.utils.*
 data class CreatureAction(
 	val item: Item,
 	val chunk: Vector2<Int>,
-	val index: Int,
+	val chunkItemIndex: Int,
 	val unknownA: Int,
 	val type: Type,
 	val unknownB: Byte,
@@ -14,7 +14,7 @@ data class CreatureAction(
 	override suspend fun writeTo(writer: Writer) {
 		item.writeTo(writer)
 		writer.writeVector2Int(chunk)
-		writer.writeInt(index)
+		writer.writeInt(chunkItemIndex)
 		writer.writeInt(unknownA)
 		type.writeTo(writer)
 		writer.writeByte(unknownB)
@@ -26,7 +26,7 @@ data class CreatureAction(
 			CreatureAction(
 				item = Item.readFrom(reader),
 				chunk = reader.readVector2Int(),
-				index = reader.readInt(),
+				chunkItemIndex = reader.readInt(),
 				unknownA = reader.readInt(),
 				type = Type.readFrom(reader),
 				unknownB = reader.readByte(),
