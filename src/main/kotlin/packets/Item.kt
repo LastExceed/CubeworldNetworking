@@ -38,34 +38,26 @@ data class Item(
 		writer.writeInt(spiritCounter)
 	}
 
-	val hp: Float
-		get() {
-			if (typeMajor.ordinal !in 3..7) return 0f //todo: don't use ordinal here
-
-			val multiplierTypeMajor = if (typeMajor == Type.Major.Chest) 1f else 0.5f
-
-			val hp_mod = (8U * randomSeed.toUInt() % 21U).toInt()
-			val multiplierRandom = 2f - (hp_mod / 20f) + when (material) {
-				Material.Iron -> 1f
-				Material.Linen -> 0.5f
-				Material.Cotton -> 0.75f
+	val healthPoints =
+		listOf(
+			5f,
+			2f.pow(rarity.ordinal * 0.25f),
+			2f.pow((1f - Utils.levelScalingFactor(level + spiritCounter * 0.1f)) * 3f),
+			when (typeMajor) {
+				Type.Major.Chest -> 1f
+				Type.Major.Weapon,
+				Type.Major.Gloves,
+				Type.Major.Boots,
+				Type.Major.Shoulder -> 0.5f
 				else -> 0f
-			}
-
-			val multiplierRarity = 2f.pow(rarity.ordinal * 0.25f)
-
-			val lvl = level + spiritCounter * 0.1f
-			val multiplierLevel = 2f.pow((1f - Utils.levelScalingFactor(lvl)) * 3f)
-
-			return listOf(
-				multiplierLevel,
-				multiplierRandom,
-				multiplierRarity,
-				multiplierTypeMajor
-			).fold(5f) { accumulator, multiplier ->
-				accumulator * multiplier
-			}
-		}
+			},
+			when (material) {
+				Material.Iron -> 3f
+				Material.Linen -> 2.5f
+				Material.Cotton -> 2.75f
+				else -> 2f
+			} - ((8U * randomSeed.toUInt() % 21U).toInt() / 20f)
+		).reduce { accumulator, value -> accumulator * value }
 
 	companion object {
 		internal suspend fun readFrom(reader: Reader) =
@@ -147,19 +139,20 @@ data class Item(
 		}
 
 		@JvmInline
-		value class Minor(val value: Byte) {//todo: enum?
-		object Food {
-			val Cookie = Minor(0)
-			val LifePotion = Minor(1)
-			val CactusPotion = Minor(2)
-			val ManaPotion = Minor(3)
-			val GinsengSoup = Minor(4)
-			val SnowberryMash = Minor(5)
-			val MushroomSpit = Minor(6)
-			val Bomb = Minor(7)
-			val PineappleSlice = Minor(8)
-			val PumpkinMuffin = Minor(9)
-		}
+		value class Minor(val value: Byte) {
+			//todo: enum?
+			object Food {
+				val Cookie = Minor(0)
+				val LifePotion = Minor(1)
+				val CactusPotion = Minor(2)
+				val ManaPotion = Minor(3)
+				val GinsengSoup = Minor(4)
+				val SnowberryMash = Minor(5)
+				val MushroomSpit = Minor(6)
+				val Bomb = Minor(7)
+				val PineappleSlice = Minor(8)
+				val PumpkinMuffin = Minor(9)
+			}
 
 			object Weapon {
 				val Sword = Minor(0)
