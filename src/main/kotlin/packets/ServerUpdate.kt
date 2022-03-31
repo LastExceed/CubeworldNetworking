@@ -531,14 +531,14 @@ data class Pickup(
 }
 
 data class Kill(
-	val killer: Long,
-	val victim: Long,
+	val killer: CreatureId,
+	val victim: CreatureId,
 	val unknown: Int,
 	val xp: Int
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeLong(killer)
-		writer.writeLong(victim)
+		writer.writeLong(killer.value)
+		writer.writeLong(victim.value)
 		writer.writeInt(unknown)
 		writer.writeInt(xp)
 	}
@@ -546,8 +546,8 @@ data class Kill(
 	companion object {
 		internal suspend fun readFrom(reader: Reader) =
 			Kill(
-				killer = reader.readLong(),
-				victim = reader.readLong(),
+				killer = CreatureId(reader.readLong()),
+				victim = CreatureId(reader.readLong()),
 				unknown = reader.readInt(),
 				xp = reader.readInt()
 			)
