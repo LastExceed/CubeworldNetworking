@@ -19,7 +19,7 @@ data class Miscellaneous(
 	val attacks: List<Attack> = emptyList(),
 	val statusEffects: List<StatusEffect> = emptyList(),
 	val missions: List<Mission> = emptyList()
-) : Packet(PacketId.ServerUpdate) {
+) : Packet(PacketId.Miscellaneous) {
 	override suspend fun writeTo(writer: Writer) {
 		val inflatedChannel = ByteChannel(true)
 		val inflatedWriter = Writer(inflatedChannel)

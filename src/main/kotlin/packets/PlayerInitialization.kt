@@ -6,7 +6,7 @@ class PlayerInitialization(
 	val unknown: Int = 0,
 	val assignedId: CreatureId,
 	val borkedCreatureData: ByteArray = ByteArray(0x1168)
-) : Packet(PacketId.Join) {
+) : Packet(PacketId.PlayerInitialization) {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeInt(unknown)
 		writer.writeLong(assignedId.value)

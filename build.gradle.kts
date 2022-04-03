@@ -3,7 +3,7 @@ plugins {
 	`maven-publish`
 }
 group = "com.github.lastexceed"
-version = "1.3.0"
+version = "1.3.1"
 
 repositories {
 	mavenCentral()
