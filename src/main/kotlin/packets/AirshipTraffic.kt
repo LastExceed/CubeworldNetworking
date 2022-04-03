@@ -2,7 +2,7 @@ package com.github.lastexceed.cubeworldnetworking.packets
 
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
-data class AirTraffic(
+data class AirshipTraffic(
 	val airships: List<Airship> = emptyList()
 ) : Packet(PacketId.AirTraffic) {
 	override suspend fun writeTo(writer: Writer) {
@@ -12,9 +12,9 @@ data class AirTraffic(
 		}
 	}
 
-	companion object : CwDeserializer<AirTraffic> {
+	companion object : CwDeserializer<AirshipTraffic> {
 		override suspend fun readFrom(reader: Reader) =
-			AirTraffic(
+			AirshipTraffic(
 				List(reader.readInt()) {
 					Airship.readFrom(reader)
 				}

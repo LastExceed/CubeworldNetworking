@@ -5,7 +5,7 @@ import io.ktor.utils.io.ByteChannel
 import io.ktor.utils.io.close
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
-data class ServerUpdate(
+data class Miscellaneous(
 	val worldEdits: List<WorldEdit> = emptyList(),
 	val hits: List<Hit> = emptyList(),
 	val particles: List<Particle> = emptyList(),
@@ -50,10 +50,10 @@ data class ServerUpdate(
 		writer.writeByteArray(deflated)
 	}
 
-	companion object : CwDeserializer<ServerUpdate> {
+	companion object : CwDeserializer<Miscellaneous> {
 		override suspend fun readFrom(reader: Reader) =
 			Reader(Zlib.inflate(reader.readByteArray(reader.readInt()))).run {
-				ServerUpdate(
+				Miscellaneous(
 					worldEdits = List(readInt()) { WorldEdit.readFrom(this) },
 					hits = List(readInt()) { Hit.readFrom(this) },
 					particles = List(readInt()) { Particle.readFrom(this) },

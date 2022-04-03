@@ -4,21 +4,21 @@ import com.github.lastexceed.cubeworldnetworking.utils.*
 
 class PlayerInitialization(
 	val unknown: Int = 0,
-	val assignedID: CreatureId,
-	val junk: ByteArray
+	val assignedId: CreatureId,
+	val borkedCreatureData: ByteArray = ByteArray(0x1168)
 ) : Packet(PacketId.Join) {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeInt(unknown)
-		writer.writeLong(assignedID.value)
-		writer.writeByteArray(junk)
+		writer.writeLong(assignedId.value)
+		writer.writeByteArray(borkedCreatureData)
 	}
 
 	companion object : CwDeserializer<PlayerInitialization> {
 		override suspend fun readFrom(reader: Reader) =
 			PlayerInitialization(
 				unknown = reader.readInt(),
-				assignedID = CreatureId(reader.readLong()),
-				junk = reader.readByteArray(0x1168)
+				assignedId = CreatureId(reader.readLong()),
+				borkedCreatureData = reader.readByteArray(0x1168)
 			)
 	}
 }
