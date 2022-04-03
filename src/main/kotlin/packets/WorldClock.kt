@@ -2,7 +2,7 @@ package com.github.lastexceed.cubeworldnetworking.packets
 
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
-data class DayTime(
+data class WorldClock(
 	val day: Int,
 	val time: Int
 ) : Packet(PacketId.Time) {
@@ -11,9 +11,9 @@ data class DayTime(
 		writer.writeInt(time)
 	}
 
-	companion object : CwDeserializer<DayTime> {
+	companion object : CwDeserializer<WorldClock> {
 		override suspend fun readFrom(reader: Reader) =
-			DayTime(
+			WorldClock(
 				day = reader.readInt(),
 				time = reader.readInt()
 			)

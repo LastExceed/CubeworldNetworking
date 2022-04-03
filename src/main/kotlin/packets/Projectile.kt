@@ -2,7 +2,7 @@ package com.github.lastexceed.cubeworldnetworking.packets
 
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
-data class Shot(
+data class Projectile(
 	val attacker: CreatureId,
 	val chunk: Vector2<Int>,
 	val unknownA: Int = 0,
@@ -18,7 +18,7 @@ data class Shot(
 	val skill: Byte,
 	val paddingB: Byte = 0,
 	val paddingC: Short = 0,
-	val projectile: Projectile,
+	val type: Type,
 	val unknownC: Byte = 0,
 	val paddingD: Byte = 0,
 	val paddingE: Short = 0,
@@ -41,7 +41,7 @@ data class Shot(
 		writer.writeByte(skill)
 		writer.writeByte(paddingB)
 		writer.writeShort(paddingC)
-		projectile.writeTo(writer)
+		type.writeTo(writer)
 		writer.writeByte(unknownC)
 		writer.writeByte(paddingD)
 		writer.writeShort(paddingE)
@@ -49,9 +49,9 @@ data class Shot(
 		writer.writeFloat(unknownE)
 	}
 
-	companion object : CwDeserializer<Shot> {
+	companion object : CwDeserializer<Projectile> {
 		override suspend fun readFrom(reader: Reader) =
-			Shot(
+			Projectile(
 				attacker = CreatureId(reader.readLong()),
 				chunk = reader.readVector2Int(),
 				unknownA = reader.readInt(),
@@ -67,7 +67,7 @@ data class Shot(
 				skill = reader.readByte(),
 				paddingB = reader.readByte(),
 				paddingC = reader.readShort(),
-				projectile = Projectile.readFrom(reader),
+				type = Type.readFrom(reader),
 				unknownC = reader.readByte(),
 				paddingD = reader.readByte(),
 				paddingE = reader.readShort(),
@@ -76,14 +76,14 @@ data class Shot(
 			)
 	}
 
-	enum class Projectile : CwSerializableEnumInt {
+	enum class Type : CwSerializableEnumInt {
 		Zero,
 		Arrow,
 		Boomerang,
 		Unknown,
 		Boulder;
 
-		companion object : CwEnumIntDeserializer<Projectile> {
+		companion object : CwEnumIntDeserializer<Type> {
 			override val values = values()
 		}
 	}

@@ -2,7 +2,7 @@ package com.github.lastexceed.cubeworldnetworking.packets
 
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
-class Join(
+class PlayerInitialization(
 	val unknown: Int = 0,
 	val assignedID: CreatureId,
 	val junk: ByteArray
@@ -13,9 +13,9 @@ class Join(
 		writer.writeByteArray(junk)
 	}
 
-	companion object : CwDeserializer<Join> {
+	companion object : CwDeserializer<PlayerInitialization> {
 		override suspend fun readFrom(reader: Reader) =
-			Join(
+			PlayerInitialization(
 				unknown = reader.readInt(),
 				assignedID = CreatureId(reader.readLong()),
 				junk = reader.readByteArray(0x1168)
