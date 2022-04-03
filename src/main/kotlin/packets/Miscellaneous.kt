@@ -306,7 +306,7 @@ data class WorldObject(
 	val chunk: Vector2<Int>,
 	val objectID: Int,
 	val paddingA: Int = 0,//todo: cuwo doesnt have this ??
-	val objectType: ObjectType,
+	val type: Type,
 	val paddingB: Byte = 0,
 	val paddingC: Short = 0,
 	val paddingD: Int = 0,
@@ -327,7 +327,7 @@ data class WorldObject(
 		writer.writeVector2Int(chunk)
 		writer.writeInt(objectID)
 		writer.writeInt(paddingA)
-		objectType.writeTo(writer)
+		type.writeTo(writer)
 		writer.writeByte(paddingB)
 		writer.writeShort(paddingC)
 		writer.writeInt(paddingD)
@@ -351,7 +351,7 @@ data class WorldObject(
 				chunk = reader.readVector2Int(),
 				objectID = reader.readInt(),
 				paddingA = reader.readInt(),
-				objectType = ObjectType.readFrom(reader),
+				type = Type.readFrom(reader),
 				paddingB = reader.readByte(),
 				paddingC = reader.readShort(),
 				paddingD = reader.readInt(),
@@ -370,7 +370,7 @@ data class WorldObject(
 			)
 	}
 
-	enum class ObjectType : CwSerializableEnumByte {
+	enum class Type : CwSerializableEnumByte {
 		Statue,
 		Door,
 		BigDoor,
@@ -449,7 +449,7 @@ data class WorldObject(
 		Workbench,
 		CustomizationBench;
 
-		companion object : CwEnumByteDeserializer<ObjectType> {
+		companion object : CwEnumByteDeserializer<Type> {
 			override val values = values()
 		}
 	}
