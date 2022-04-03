@@ -18,6 +18,6 @@ value class Reader(private val inner: ByteReadChannel) {
 		}
 
 	suspend fun skip(count: Int) {
-		inner.discard()
+		inner.discard(count.toLong())
 	}
 }
