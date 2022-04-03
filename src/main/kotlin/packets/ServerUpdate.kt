@@ -76,13 +76,13 @@ data class WorldEdit(
 	val position: Vector3<Int>,
 	val color: Vector3<Byte>,
 	val blockType: BlockType,
-	val unknown: Int
+	val padding: Int
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector3Int(position)
 		writer.writeVector3Byte(color)
 		blockType.writeTo(writer)
-		writer.writeInt(unknown)
+		writer.writeInt(padding)
 	}
 
 	companion object {
@@ -91,7 +91,7 @@ data class WorldEdit(
 				position = reader.readVector3Int(),
 				color = reader.readVector3Byte(),
 				blockType = BlockType.readFrom(reader),
-				unknown = reader.readInt()
+				padding = reader.readInt()
 			)
 	}
 
@@ -115,8 +115,10 @@ data class Particle(
 	val size: Float,
 	val count: Int,
 	val type: Type,
+	val paddingA: Byte,
+	val paddingB: Short,
 	val spread: Float,
-	val unknown: Int
+	val paddingC: Int
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector3Long(position)
@@ -126,8 +128,10 @@ data class Particle(
 		writer.writeFloat(size)
 		writer.writeInt(count)
 		type.writeTo(writer)
+		writer.writeByte(paddingA)
+		writer.writeShort(paddingB)
 		writer.writeFloat(spread)
-		writer.writeInt(unknown)
+		writer.writeInt(paddingC)
 	}
 
 	companion object {
@@ -140,19 +144,21 @@ data class Particle(
 				size = reader.readFloat(),
 				count = reader.readInt(),
 				type = Type.readFrom(reader),
+				paddingA = reader.readByte(),
+				paddingB = reader.readShort(),
 				spread = reader.readFloat(),
-				unknown = reader.readInt()
+				paddingC = reader.readInt()
 			)
 	}
 
-	enum class Type : CwSerializableEnumInt {
+	enum class Type : CwSerializableEnumByte {
 		Normal,
 		Spark,
 		Unknown,
 		NoSpreadNoRotation,
 		NoGravity;
 
-		companion object : CwEnumIntDeserializer<Type> {
+		companion object : CwEnumByteDeserializer<Type> {
 			override val values = values()
 		}
 	}
@@ -293,16 +299,18 @@ data class Sound(
 data class WorldObject(
 	val chunk: Vector2<Int>,
 	val objectID: Int,
-	val paddingA: Int,
+	val paddingA: Int,//todo: cuwo doesnt have this ??
 	val objectType: ObjectType,
 	val paddingB: Int,
 	val position: Vector3<Long>,
 	val orientation: Orientation,
 	val size: Vector3<Float>,
 	val isClosed: Boolean,
+	val paddingC: Byte,
+	val paddingD: Short,
 	val transformTime: Int,
 	val unknown: Int,
-	val paddingC: Int,
+	val paddingE: Int,
 	val interactor: Long
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
@@ -314,10 +322,12 @@ data class WorldObject(
 		writer.writeVector3Long(position)
 		orientation.writeTo(writer)
 		writer.writeVector3Float(size)
-		writer.writeBoolean(isClosed); writer.pad(3)
+		writer.writeBoolean(isClosed)
+		writer.writeByte(paddingC)
+		writer.writeShort(paddingD)
 		writer.writeInt(transformTime)
 		writer.writeInt(unknown)
-		writer.writeInt(paddingC)
+		writer.writeInt(paddingE)
 		writer.writeLong(interactor)
 	}
 
@@ -332,10 +342,12 @@ data class WorldObject(
 				position = reader.readVector3Long(),
 				orientation = Orientation.readFrom(reader),
 				size = reader.readVector3Float(),
-				isClosed = reader.readInt() > 0,
+				isClosed = reader.readBoolean(),
+				paddingC = reader.readByte(),
+				paddingD = reader.readShort(),
 				transformTime = reader.readInt(),
 				unknown = reader.readInt(),
-				paddingC = reader.readInt(),
+				paddingE = reader.readInt(),
 				interactor = reader.readLong()
 			)
 	}
@@ -460,20 +472,24 @@ data class Drop(
 	val position: Vector3<Long>,
 	val rotation: Float,
 	val scale: Float,
-	val unknownA: Int,
+	val unknownA: Byte,
+	val paddingA: Byte,
+	val paddingB: Short,
 	val droptime: Int,
 	val unknownB: Int,
-	val unknownC: Int
+	val paddingC: Int
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		item.writeTo(writer)
 		writer.writeVector3Long(position)
 		writer.writeFloat(rotation)
 		writer.writeFloat(scale)
-		writer.writeInt(unknownA)
+		writer.writeByte(unknownA)
+		writer.writeByte(paddingA)
+		writer.writeShort(paddingB)
 		writer.writeInt(droptime)
 		writer.writeInt(unknownB)
-		writer.writeInt(unknownC)
+		writer.writeInt(paddingC)
 	}
 
 	companion object {
@@ -483,10 +499,12 @@ data class Drop(
 				position = reader.readVector3Long(),
 				rotation = reader.readFloat(),
 				scale = reader.readFloat(),
-				unknownA = reader.readInt(),
+				unknownA = reader.readByte(),
+				paddingA = reader.readByte(),
+				paddingB = reader.readShort(),
 				droptime = reader.readInt(),
 				unknownB = reader.readInt(),
-				unknownC = reader.readInt()
+				paddingC = reader.readInt()
 			)
 	}
 }

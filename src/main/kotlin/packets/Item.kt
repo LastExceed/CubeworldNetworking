@@ -10,7 +10,7 @@ data class Item(
 	val randomSeed: Int,
 	val recipe: Type.Major,
 	val paddingB: Byte,
-	val paddingC: Short,
+	val paddingC: Short, //todo: cuwo says 'minus modifier'
 	val rarity: Rarity,
 	val material: Material,
 	val flags: FlagSet<Flag>,

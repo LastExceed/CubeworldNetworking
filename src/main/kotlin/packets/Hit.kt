@@ -7,28 +7,32 @@ data class Hit(
 	val target: CreatureId,
 	val damage: Float,
 	val critical: Boolean,
+	val paddingA: Byte,
+	val paddingB: Short,
 	val stuntime: Int,
-	val paddingA: Int,
+	val paddingC: Int,//todo: cuwo says this is something
 	val position: Vector3<Long>,
 	val direction: Vector3<Float>,
 	val isYellow: Boolean,
 	val type: Type,
 	val flash: Boolean,
-	val paddingB: Byte
+	val paddingD: Byte
 ) : Packet(PacketId.Hit), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(attacker.value)
 		writer.writeLong(target.value)
 		writer.writeFloat(damage)
-		writer.writeBoolean(critical); writer.pad(3)
+		writer.writeBoolean(critical)
+		writer.writeByte(paddingA)
+		writer.writeShort(paddingB)
 		writer.writeInt(stuntime)
-		writer.writeInt(paddingA)
+		writer.writeInt(paddingC)
 		writer.writeVector3Long(position)
 		writer.writeVector3Float(direction)
 		writer.writeBoolean(isYellow)
 		type.writeTo(writer)
 		writer.writeBoolean(flash)
-		writer.writeByte(paddingB)
+		writer.writeByte(paddingD)
 	}
 
 	companion object : CwDeserializer<Hit> {
@@ -37,15 +41,17 @@ data class Hit(
 				attacker = CreatureId(reader.readLong()),
 				target = CreatureId(reader.readLong()),
 				damage = reader.readFloat(),
-				critical = reader.readInt() > 0,
+				critical = reader.readBoolean(),
+				paddingA = reader.readByte(),
+				paddingB = reader.readShort(),
 				stuntime = reader.readInt(),
-				paddingA = reader.readInt(),
+				paddingC = reader.readInt(),
 				position = reader.readVector3Long(),
 				direction = reader.readVector3Float(),
 				isYellow = reader.readBoolean(),
 				type = Type.readFrom(reader),
 				flash = reader.readBoolean(),
-				paddingB = reader.readByte()
+				paddingD = reader.readByte()
 			)
 	}
 

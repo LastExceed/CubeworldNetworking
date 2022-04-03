@@ -6,22 +6,22 @@ data class StatusEffect(
 	val source: CreatureId,
 	val target: CreatureId,
 	val type: Type,
-	val unknownA: Byte,
-	val unknownB: Short,//most likely padding, content seems to be garbage data
+	val paddingA: Byte,
+	val paddingB: Short,
 	val modifier: Float,
 	val duration: Int,
-	val unknownC: Int,
+	val paddingC: Int,
 	val creatureId3: CreatureId
 ) : Packet(PacketId.StatusEffect), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(source.value)
 		writer.writeLong(target.value)
 		type.writeTo(writer)
-		writer.writeByte(unknownA)
-		writer.writeShort(unknownB)
+		writer.writeByte(paddingA)
+		writer.writeShort(paddingB)
 		writer.writeFloat(modifier)
 		writer.writeInt(duration)
-		writer.writeInt(unknownC)
+		writer.writeInt(paddingC)
 		writer.writeLong(creatureId3.value)
 	}
 
@@ -31,11 +31,11 @@ data class StatusEffect(
 				source = CreatureId(reader.readLong()),
 				target = CreatureId(reader.readLong()),
 				type = Type.readFrom(reader),
-				unknownA = reader.readByte(),
-				unknownB = reader.readShort(),
+				paddingA = reader.readByte(),
+				paddingB = reader.readShort(),
 				modifier = reader.readFloat(),
 				duration = reader.readInt(),
-				unknownC = reader.readInt(),
+				paddingC = reader.readInt(),
 				creatureId3 = CreatureId(reader.readLong())
 			)
 	}

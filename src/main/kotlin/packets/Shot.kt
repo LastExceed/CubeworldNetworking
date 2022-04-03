@@ -11,15 +11,19 @@ data class Shot(
 	val unknownV: Vector3<Int>,
 	val velocity: Vector3<Float>,
 	val legacyDamage: Float,
-	val unknownB: Float,
+	val unknownB: Float, //2-4 depending on mana for boomerangs, otherwise 0.5
 	val scale: Float,
 	val mana: Float,
 	val particles: Float,
-	val skill: Int,
+	val skill: Byte,
+	val paddingB: Byte,
+	val paddingC: Short,
 	val projectile: Projectile,
-	val paddingB: Int,
-	val unknownC: Float,
-	val unknownD: Float
+	val unknownC: Byte,
+	val paddingD: Byte,
+	val paddingE: Short,
+	val unknownD: Float,
+	val unknownE: Float
 ) : Packet(PacketId.Shot), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(attacker.value)
@@ -34,11 +38,15 @@ data class Shot(
 		writer.writeFloat(scale)
 		writer.writeFloat(mana)
 		writer.writeFloat(particles)
-		writer.writeInt(skill)
+		writer.writeByte(skill)
+		writer.writeByte(paddingB)
+		writer.writeShort(paddingC)
 		projectile.writeTo(writer)
-		writer.writeInt(paddingB)
-		writer.writeFloat(unknownC)
+		writer.writeByte(unknownC)
+		writer.writeByte(paddingD)
+		writer.writeShort(paddingE)
 		writer.writeFloat(unknownD)
+		writer.writeFloat(unknownE)
 	}
 
 	companion object : CwDeserializer<Shot> {
@@ -56,11 +64,15 @@ data class Shot(
 				scale = reader.readFloat(),
 				mana = reader.readFloat(),
 				particles = reader.readFloat(),
-				skill = reader.readInt(),
+				skill = reader.readByte(),
+				paddingB = reader.readByte(),
+				paddingC = reader.readShort(),
 				projectile = Projectile.readFrom(reader),
-				paddingB = reader.readInt(),
-				unknownC = reader.readFloat(),
-				unknownD = reader.readFloat()
+				unknownC = reader.readByte(),
+				paddingD = reader.readByte(),
+				paddingE = reader.readShort(),
+				unknownD = reader.readFloat(),
+				unknownE = reader.readFloat()
 			)
 	}
 
