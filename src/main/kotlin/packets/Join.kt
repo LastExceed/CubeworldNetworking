@@ -3,7 +3,7 @@ package com.github.lastexceed.cubeworldnetworking.packets
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
 class Join(
-	val unknown: Int,
+	val unknown: Int = 0,
 	val assignedID: CreatureId,
 	val junk: ByteArray
 ) : Packet(PacketId.Join) {

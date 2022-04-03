@@ -7,16 +7,16 @@ data class Hit(
 	val target: CreatureId,
 	val damage: Float,
 	val critical: Boolean,
-	val paddingA: Byte,
-	val paddingB: Short,
+	val paddingA: Byte = 0,
+	val paddingB: Short = 0,
 	val stuntime: Int,
-	val paddingC: Int,//todo: cuwo says this is something
+	val paddingC: Int = 0,//todo: cuwo says this is something
 	val position: Vector3<Long>,
 	val direction: Vector3<Float>,
 	val isYellow: Boolean,
 	val type: Type,
 	val flash: Boolean,
-	val paddingD: Byte
+	val paddingD: Byte = 0
 ) : Packet(PacketId.Hit), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(attacker.value)

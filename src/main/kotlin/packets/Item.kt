@@ -6,17 +6,17 @@ import kotlin.math.*
 data class Item(
 	val typeMajor: Type.Major,
 	val typeMinor: Type.Minor,
-	val paddingA: Short,
+	val paddingA: Short = 0,
 	val randomSeed: Int,
 	val recipe: Type.Major,
-	val paddingB: Byte,
-	val paddingC: Short, //todo: cuwo says 'minus modifier'
+	val paddingB: Byte = 0,
+	val paddingC: Short = 0, //todo: cuwo says 'minus modifier'
 	val rarity: Rarity,
 	val material: Material,
 	val flags: FlagSet<Flag>,
-	val paddingD: Byte,
+	val paddingD: Byte = 0,
 	val level: Short,
-	val paddingE: Short,
+	val paddingE: Short = 0,
 	val spirits: Array<Spirit>,
 	val spiritCounter: Int
 ) : SubPacket {
@@ -84,7 +84,7 @@ data class Item(
 		val position: Vector3<Byte>,
 		val material: Material,
 		val level: Short,
-		val padding: Short
+		val padding: Short = 0
 	) : SubPacket {
 		override suspend fun writeTo(writer: Writer) {
 			writer.writeVector3Byte(position)

@@ -6,11 +6,11 @@ data class StatusEffect(
 	val source: CreatureId,
 	val target: CreatureId,
 	val type: Type,
-	val paddingA: Byte,
-	val paddingB: Short,
+	val paddingA: Byte = 0,
+	val paddingB: Short = 0,
 	val modifier: Float,
 	val duration: Int,
-	val paddingC: Int,
+	val paddingC: Int = 0,
 	val creatureId3: CreatureId
 ) : Packet(PacketId.StatusEffect), SubPacket {
 	override suspend fun writeTo(writer: Writer) {

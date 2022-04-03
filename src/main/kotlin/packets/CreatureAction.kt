@@ -6,10 +6,10 @@ data class CreatureAction(
 	val item: Item,
 	val chunk: Vector2<Int>,
 	val chunkItemIndex: Int,
-	val unknownA: Int,
+	val unknownA: Int = 0,
 	val type: Type,
-	val unknownB: Byte,
-	val unknownC: Short
+	val unknownB: Byte = 0,
+	val unknownC: Short = 0
 ) : Packet(PacketId.CreatureAction) {
 	override suspend fun writeTo(writer: Writer) {
 		item.writeTo(writer)

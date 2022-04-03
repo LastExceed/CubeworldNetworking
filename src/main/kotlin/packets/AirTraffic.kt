@@ -24,21 +24,21 @@ data class AirTraffic(
 
 data class Airship(
 	val id: Long,
-	val unknownA: Byte,
-	val paddingA: Byte,
-	val paddingB: Short,
-	val paddingC: Int,
+	val unknownA: Byte = 0,
+	val paddingA: Byte = 0,
+	val paddingB: Short = 0,
+	val paddingC: Int = 0,
 	val position: Vector3<Long>,
 	val velocity: Vector3<Float>,
 	val rotation: Float,
 	val station: Vector3<Long>,
 	val pathRotation: Float,
-	val paddingD: Int,
+	val paddingD: Int = 0,
 	val destination: Vector3<Long>,
 	val state: State,
-	val paddingE: Byte,
-	val paddingF: Short,
-	val paddingG: Int
+	val paddingE: Byte = 0,
+	val paddingF: Short = 0,
+	val paddingG: Int = 0
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(id)

@@ -5,25 +5,25 @@ import com.github.lastexceed.cubeworldnetworking.utils.*
 data class Shot(
 	val attacker: CreatureId,
 	val chunk: Vector2<Int>,
-	val unknownA: Int,
-	val paddingA: Int,
+	val unknownA: Int = 0,
+	val paddingA: Int = 0,
 	val position: Vector3<Long>,
-	val unknownV: Vector3<Int>,
+	val unknownV: Vector3<Int> = Vector3(0, 0, 0),
 	val velocity: Vector3<Float>,
 	val legacyDamage: Float,
-	val unknownB: Float, //2-4 depending on mana for boomerangs, otherwise 0.5
+	val unknownB: Float = 0.5f, //2-4 depending on mana for boomerangs, otherwise 0.5
 	val scale: Float,
 	val mana: Float,
 	val particles: Float,
 	val skill: Byte,
-	val paddingB: Byte,
-	val paddingC: Short,
+	val paddingB: Byte = 0,
+	val paddingC: Short = 0,
 	val projectile: Projectile,
-	val unknownC: Byte,
-	val paddingD: Byte,
-	val paddingE: Short,
-	val unknownD: Float,
-	val unknownE: Float
+	val unknownC: Byte = 0,
+	val paddingD: Byte = 0,
+	val paddingE: Short = 0,
+	val unknownD: Float = 0.0f,
+	val unknownE: Float = 0.0f
 ) : Packet(PacketId.Shot), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(attacker.value)

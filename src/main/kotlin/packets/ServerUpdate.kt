@@ -76,7 +76,7 @@ data class WorldEdit(
 	val position: Vector3<Int>,
 	val color: Vector3<Byte>,
 	val blockType: BlockType,
-	val padding: Int
+	val padding: Int = 0
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector3Int(position)
@@ -115,10 +115,10 @@ data class Particle(
 	val size: Float,
 	val count: Int,
 	val type: Type,
-	val paddingA: Byte,
-	val paddingB: Short,
+	val paddingA: Byte = 0,
+	val paddingB: Short = 0,
 	val spread: Float,
-	val paddingC: Int
+	val paddingC: Int = 0
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector3Long(position)
@@ -299,18 +299,18 @@ data class Sound(
 data class WorldObject(
 	val chunk: Vector2<Int>,
 	val objectID: Int,
-	val paddingA: Int,//todo: cuwo doesnt have this ??
+	val paddingA: Int = 0,//todo: cuwo doesnt have this ??
 	val objectType: ObjectType,
-	val paddingB: Int,
+	val paddingB: Int = 0,
 	val position: Vector3<Long>,
 	val orientation: Orientation,
 	val size: Vector3<Float>,
 	val isClosed: Boolean,
-	val paddingC: Byte,
-	val paddingD: Short,
+	val paddingC: Byte = 0,
+	val paddingD: Short = 0,
 	val transformTime: Int,
-	val unknown: Int,
-	val paddingE: Int,
+	val unknown: Int = 0,
+	val paddingE: Int = 0,
 	val interactor: Long
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
@@ -472,12 +472,12 @@ data class Drop(
 	val position: Vector3<Long>,
 	val rotation: Float,
 	val scale: Float,
-	val unknownA: Byte,
-	val paddingA: Byte,
-	val paddingB: Short,
-	val droptime: Int,
-	val unknownB: Int,
-	val paddingC: Int
+	val unknownA: Byte = 0,
+	val paddingA: Byte = 0,
+	val paddingB: Short = 0,
+	val droptime: Int = 0,
+	val unknownB: Int = 0,
+	val paddingC: Int = 0
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		item.writeTo(writer)
@@ -551,7 +551,7 @@ data class Pickup(
 data class Kill(
 	val killer: CreatureId,
 	val victim: CreatureId,
-	val unknown: Int,
+	val unknown: Int = 0,
 	val xp: Int
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
@@ -576,7 +576,7 @@ data class Attack(
 	val target: Long,
 	val attacker: Long,
 	val damage: Float,
-	val unknown: Int
+	val unknown: Int = 0
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeLong(target)
@@ -598,16 +598,16 @@ data class Attack(
 
 data class Mission(
 	val sector: Vector2<Int>,
-	val unknownA: Int,
-	val unknownB: Int,
-	val unknownC: Int,
+	val unknownA: Int = 0,
+	val unknownB: Int = 0,
+	val unknownC: Int = 0,
 	val id: Int,
 	val type: Int,
 	val boss: Race,
 	val level: Int,
-	val unknownE: Byte,
+	val unknownE: Byte = 0,
 	val state: State,
-	val padding: Short,
+	val padding: Short = 0,
 	val currentHP: Int,
 	val maxHP: Int,
 	val chunk: Vector2<Int>
