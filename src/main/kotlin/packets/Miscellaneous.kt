@@ -1,9 +1,7 @@
 package com.github.lastexceed.cubeworldnetworking.packets
 
-import io.ktor.util.toByteArray
-import io.ktor.utils.io.ByteChannel
-import io.ktor.utils.io.close
 import com.github.lastexceed.cubeworldnetworking.utils.*
+import java.nio.*
 
 data class Miscellaneous(
 	val worldEdits: List<WorldEdit> = emptyList(),
@@ -21,8 +19,9 @@ data class Miscellaneous(
 	val missions: List<Mission> = emptyList()
 ) : Packet(PacketId.Miscellaneous) {
 	override suspend fun writeTo(writer: Writer) {
-		val inflatedChannel = ByteChannel(true)
-		val inflatedWriter = Writer(inflatedChannel)
+		val buffer = ByteBuffer.allocate(0x10000)//todo: pre-compute
+			.order(ByteOrder.LITTLE_ENDIAN)
+		val bufferWriter = ByteBufferAdapter(buffer)
 
 		listOf(
 			worldEdits,
@@ -39,15 +38,17 @@ data class Miscellaneous(
 			statusEffects,
 			missions
 		).forEach {
-			inflatedWriter.writeInt(it.size)
+			bufferWriter.writeInt(it.size)
 			it.forEach { subPacket ->
-				subPacket.writeTo(inflatedWriter)
+				subPacket.writeTo(bufferWriter)
 			}
 		}
-		inflatedChannel.close()
-		val deflated = Zlib.deflate(inflatedChannel.toByteArray())
-		writer.writeInt(deflated.size)
-		writer.writeByteArray(deflated)
+
+		val inflated = buffer.array().copyOfRange(0, buffer.position())
+		Zlib.deflate(inflated).run {
+			writer.writeInt(size)
+			writer.writeByteArray(this)
+		}
 	}
 
 	companion object : CwDeserializer<Miscellaneous> {

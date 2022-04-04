@@ -8,7 +8,7 @@ data class CreatureAction(
 	val chunkItemIndex: Int,
 	val unknownA: Int = 0,
 	val type: Type,
-	val unknownB: Byte = 0,
+	var unknownB: Byte = 0,
 	val unknownC: Short = 0
 ) : Packet(PacketId.CreatureAction) {
 	override suspend fun writeTo(writer: Writer) {

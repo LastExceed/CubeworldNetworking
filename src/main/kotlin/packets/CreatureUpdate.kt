@@ -1,9 +1,7 @@
 package com.github.lastexceed.cubeworldnetworking.packets
 
-import io.ktor.util.toByteArray
-import io.ktor.utils.io.ByteChannel
-import io.ktor.utils.io.close
 import com.github.lastexceed.cubeworldnetworking.utils.*
+import java.nio.*
 
 data class CreatureUpdate(
 	val id: CreatureId,
@@ -63,220 +61,219 @@ data class CreatureUpdate(
 	val manaCubes: Int? = null
 ) : Packet(PacketId.CreatureUpdate) {
 	override suspend fun writeTo(writer: Writer) {
-		val optionalChannel = ByteChannel(true)
-		val optionalDataWriter = Writer(optionalChannel)
+		val buffer = ByteBuffer.allocate(4450)
+			.order(ByteOrder.LITTLE_ENDIAN)
+			.position(16)
+		val bufferWriter = ByteBufferAdapter(buffer)
+
 		val mask = BooleanArray(Long.SIZE_BITS)
 
 		position?.let {
-			optionalDataWriter.writeVector3Long(it)
+			bufferWriter.writeVector3Long(it)
 			mask[0] = true
 		}
 		rotation?.let {
-			optionalDataWriter.writeVector3Float(it)
+			bufferWriter.writeVector3Float(it)
 			mask[1] = true
 		}
 		velocity?.let {
-			optionalDataWriter.writeVector3Float(it)
+			bufferWriter.writeVector3Float(it)
 			mask[2] = true
 		}
 		acceleration?.let {
-			optionalDataWriter.writeVector3Float(it)
+			bufferWriter.writeVector3Float(it)
 			mask[3] = true
 		}
 		velocityExtra?.let {
-			optionalDataWriter.writeVector3Float(it)
+			bufferWriter.writeVector3Float(it)
 			mask[4] = true
 		}
 		climbAnimationState?.let {
-			optionalDataWriter.writeFloat(it)
+			bufferWriter.writeFloat(it)
 			mask[5] = true
 		}
 		flagsPhysics?.let {
-			optionalDataWriter.writeInt(it.inner.toInt())
+			bufferWriter.writeInt(it.inner.toInt())
 			mask[6] = true
 		}
 		affiliation?.run {
-			writeTo(optionalDataWriter)
+			writeTo(bufferWriter)
 			mask[7] = true
 		}
 		race?.run {
-			writeTo(optionalDataWriter)
+			writeTo(bufferWriter)
 			mask[8] = true
 		}
 		animation?.run {
-			writeTo(optionalDataWriter)
+			writeTo(bufferWriter)
 			mask[9] = true
 		}
 		animationTime?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[10] = true
 		}
 		combo?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[11] = true
 		}
 		hitTimeOut?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[12] = true
 		}
 		appearance?.let {
-			it.writeTo(optionalDataWriter)
+			it.writeTo(bufferWriter)
 			mask[13] = true
 		}
 		flags?.let {
-			optionalDataWriter.writeShort(it.inner.toShort())
+			bufferWriter.writeShort(it.inner.toShort())
 			mask[14] = true
 		}
 		effectTimeDodge?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[15] = true
 		}
 		effectTimeStun?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[16] = true
 		}
 		effectTimeFear?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[17] = true
 		}
 		effectTimeIce?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[18] = true
 		}
 		effectTimeWind?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[19] = true
 		}
 		showPatchTime?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[20] = true
 		}
 		combatClassMajor?.run {
-			writeTo(optionalDataWriter)
+			writeTo(bufferWriter)
 			mask[21] = true
 		}
 		combatClassMinor?.run {
-			writeTo(optionalDataWriter)
+			writeTo(bufferWriter)
 			mask[22] = true
 		}
 		manaCharge?.let {
-			optionalDataWriter.writeFloat(it)
+			bufferWriter.writeFloat(it)
 			mask[23] = true
 		}
 		unknown24?.let {
-			optionalDataWriter.writeVector3Float(it)
+			bufferWriter.writeVector3Float(it)
 			mask[24] = true
 		}
 		unknown25?.let {
-			optionalDataWriter.writeVector3Float(it)
+			bufferWriter.writeVector3Float(it)
 			mask[25] = true
 		}
 		aimDisplacement?.let {
-			optionalDataWriter.writeVector3Float(it)
+			bufferWriter.writeVector3Float(it)
 			mask[26] = true
 		}
 		health?.let {
-			optionalDataWriter.writeFloat(it)
+			bufferWriter.writeFloat(it)
 			mask[27] = true
 		}
 		mana?.let {
-			optionalDataWriter.writeFloat(it)
+			bufferWriter.writeFloat(it)
 			mask[28] = true
 		}
 		blockingGauge?.let {
-			optionalDataWriter.writeFloat(it)
+			bufferWriter.writeFloat(it)
 			mask[29] = true
 		}
 		multipliers?.let {
-			it.writeTo(optionalDataWriter)
+			it.writeTo(bufferWriter)
 			mask[30] = true
 		}
 		unknown31?.let {
-			optionalDataWriter.writeByte(it)
+			bufferWriter.writeByte(it)
 			mask[31] = true
 		}
 		unknown32?.let {
-			optionalDataWriter.writeByte(it)
+			bufferWriter.writeByte(it)
 			mask[32] = true
 		}
 		level?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[33] = true
 		}
 		experience?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[34] = true
 		}
 		master?.let {
-			optionalDataWriter.writeLong(it.value)
+			bufferWriter.writeLong(it.value)
 			mask[35] = true
 		}
 		unknown36?.let {
-			optionalDataWriter.writeLong(it)
+			bufferWriter.writeLong(it)
 			mask[36] = true
 		}
 		powerBase?.let {
-			optionalDataWriter.writeByte(it)
+			bufferWriter.writeByte(it)
 			mask[37] = true
 		}
 		unknown38?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[38] = true
 		}
 		homeChunk?.let {
-			optionalDataWriter.writeVector3Int(it)
+			bufferWriter.writeVector3Int(it)
 			mask[39] = true
 		}
 		home?.let {
-			optionalDataWriter.writeVector3Long(it)
+			bufferWriter.writeVector3Long(it)
 			mask[40] = true
 		}
 		chunkToReveal?.let {
-			optionalDataWriter.writeVector3Int(it)
+			bufferWriter.writeVector3Int(it)
 			mask[41] = true
 		}
 		unknown42?.let {
-			optionalDataWriter.writeByte(it)
+			bufferWriter.writeByte(it)
 			mask[42] = true
 		}
 		consumable?.let {
-			it.writeTo(optionalDataWriter)
+			it.writeTo(bufferWriter)
 			mask[43] = true
 		}
 		equipment?.let {
-			it.writeTo(optionalDataWriter)
+			it.writeTo(bufferWriter)
 			mask[44] = true
 		}
 		name?.let {
 			val nameBytes = ByteArray(16)
 			it.toByteArray(Charsets.UTF_8).copyInto(nameBytes)
-			optionalDataWriter.writeByteArray(nameBytes)
+			bufferWriter.writeByteArray(nameBytes)
 			mask[45] = true
 		}
 		skillPointDistribution?.let {
-			it.writeTo(optionalDataWriter)
+			it.writeTo(bufferWriter)
 			mask[46] = true
 		}
 		manaCubes?.let {
-			optionalDataWriter.writeInt(it)
+			bufferWriter.writeInt(it)
 			mask[47] = true
 		}
 
-		optionalChannel.close()
-		val optionalData = optionalChannel.toByteArray()
+		val inflatedSize = buffer.position()
 
-		val inflatedChannel = ByteChannel(true)
-		val inflatedWriter = Writer(inflatedChannel)
+		buffer.position(0)
+		bufferWriter.writeLong(id.value)
+		bufferWriter.writeLong(mask.toLong())
 
-		inflatedWriter.writeLong(id.value)
-		inflatedWriter.writeLong(mask.toLong())
-		inflatedWriter.writeByteArray(optionalData)
-
-		inflatedChannel.close()
-		val deflated = Zlib.deflate(inflatedChannel.toByteArray())
-
-		writer.writeInt(deflated.size)
-		writer.writeByteArray(deflated)
+		val inflated = buffer.array().copyOfRange(0, inflatedSize)
+		Zlib.deflate(inflated).run {
+			writer.writeInt(size)
+			writer.writeByteArray(this)
+		}
 	}
 
 	companion object : CwDeserializer<CreatureUpdate> {
