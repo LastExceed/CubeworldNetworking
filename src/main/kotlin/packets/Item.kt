@@ -1,6 +1,7 @@
 package com.github.lastexceed.cubeworldnetworking.packets
 
 import com.github.lastexceed.cubeworldnetworking.utils.*
+import io.ktor.utils.io.ByteReadChannel
 import kotlin.math.*
 
 data class Item(
@@ -17,7 +18,7 @@ data class Item(
 	val paddingD: Byte = 0,
 	val level: Short,
 	val paddingE: Short = 0,
-	val spirits: Array<Spirit>,
+	val spirits: List<Spirit>,
 	val spiritCounter: Int
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
@@ -60,24 +61,58 @@ data class Item(
 		).reduce { accumulator, value -> accumulator * value }
 
 	companion object {
-		internal suspend fun readFrom(reader: Reader) =
-			Item(
-				typeMajor = Type.Major.readFrom(reader),
-				typeMinor = Type.Minor(reader.readByte()),
-				paddingA = reader.readShort(),
-				randomSeed = reader.readInt(),
-				recipe = Type.Major.readFrom(reader),
-				paddingB = reader.readByte(),
-				paddingC = reader.readShort(),
-				rarity = Rarity.readFrom(reader),
-				material = Material.readFrom(reader),
-				flags = FlagSet(reader.readByte().toBooleanArray()),
-				paddingD = reader.readByte(),
-				level = reader.readShort(),
-				paddingE = reader.readShort(),
-				spirits = Array(32) { Spirit.readFrom(reader) },
-				spiritCounter = reader.readInt()
-			)
+		internal suspend fun readFrom(reader: Reader): Item {
+			//wollay y u make me do dis
+			val typeMajor = Type.Major.readFrom(reader)
+			return if (typeMajor == Type.Major.None) {
+				reader.skip(279)
+				void
+			} else {
+				var spiritsToRead: Int
+
+				Item(
+					typeMajor = typeMajor,
+					typeMinor = Type.Minor(reader.readByte()),
+					paddingA = reader.readShort(),
+					randomSeed = reader.readInt(),
+					recipe = Type.Major.readFrom(reader),
+					paddingB = reader.readByte(),
+					paddingC = reader.readShort(),
+					rarity = Rarity.readFrom(reader),
+					material = Material.readFrom(reader),
+					flags = FlagSet(reader.readByte().toBooleanArray()),
+					paddingD = reader.readByte(),
+					level = reader.readShort(),
+					paddingE = reader.readShort(),
+					spirits = reader.readByteArray(256)
+						.let {
+							spiritsToRead = reader.readInt()
+							val buffer = ByteReadChannel(it)
+							val bufferReader = Reader(buffer)
+							List(spiritsToRead) {
+								Spirit.readFrom(bufferReader)
+							} + List(32 - spiritsToRead) {
+								bufferReader.skip(8)
+								Spirit.void
+							}
+						},
+					spiritCounter = spiritsToRead
+				)
+			}
+		}
+
+		val void = Item(
+			typeMajor = Type.Major.None,
+			typeMinor = Type.Minor(0),
+			randomSeed = 0,
+			recipe = Type.Major.None,
+			rarity = Rarity.Normal,
+			material = Material.None,
+			flags = FlagSet(BooleanArray(8)),
+			level = 0,
+			spirits = List(32) { Spirit.void },
+			spiritCounter = 0
+		)
 	}
 
 	data class Spirit(
@@ -101,6 +136,12 @@ data class Item(
 					level = reader.readShort(),
 					padding = reader.readShort()
 				)
+
+			val void = Spirit(
+				position = Vector3(0, 0, 0),
+				Material.None,
+				level = 0
+			)
 		}
 	}
 
