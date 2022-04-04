@@ -167,8 +167,8 @@ data class Particle(
 data class Sound(
 	val position: Vector3<Float>,
 	val type: Type,
-	val paddingA: Byte,
-	val paddingB: Short,
+	val paddingA: Byte = 0,
+	val paddingB: Short = 0,
 	val pitch: Float = 1f,
 	val volume: Float = 1f
 ) : SubPacket {
