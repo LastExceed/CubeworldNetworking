@@ -19,7 +19,7 @@ data class Miscellaneous(
 	val missions: List<Mission> = emptyList()
 ) : Packet(PacketId.Miscellaneous) {
 	override suspend fun writeTo(writer: Writer) {
-		val buffer = ByteBuffer.allocate(0x10000)//todo: pre-compute
+		val buffer: ByteBuffer = ByteBuffer.allocate(0x10000)//todo: pre-compute
 			.order(ByteOrder.LITTLE_ENDIAN)
 		val bufferWriter = ByteBufferAdapter(buffer)
 

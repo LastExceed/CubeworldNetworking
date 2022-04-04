@@ -61,7 +61,7 @@ data class CreatureUpdate(
 	val manaCubes: Int? = null
 ) : Packet(PacketId.CreatureUpdate) {
 	override suspend fun writeTo(writer: Writer) {
-		val buffer = ByteBuffer.allocate(4450)
+		val buffer: ByteBuffer = ByteBuffer.allocate(4450)
 			.order(ByteOrder.LITTLE_ENDIAN)
 			.position(16)
 		val bufferWriter = ByteBufferAdapter(buffer)
