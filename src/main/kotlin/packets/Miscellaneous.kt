@@ -20,7 +20,7 @@ data class Miscellaneous(
 ) : Packet(PacketId.Miscellaneous) {
 	override suspend fun writeTo(writer: Writer) {
 		val buffer: ByteBuffer = ByteBuffer.allocate(0x10000)//todo: pre-compute
-			.order(ByteOrder.LITTLE_ENDIAN)
+			.order(ByteOrder.LITTLE_ENDIAN) as ByteBuffer //necessary for jdk8
 		val bufferWriter = ByteBufferAdapter(buffer)
 
 		listOf(
