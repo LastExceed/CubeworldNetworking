@@ -805,8 +805,7 @@ enum class Race : CwSerializableEnumInt {
 	companion object : CwEnumIntDeserializer<Race> {
 		override val values = values()
 
-		//cuwo's xp dummy uses race 1000 which is invalid
-		//but i want this library to be compatible with cuwo so i'm parsing 1000 as 0
+		//workaround for https://github.com/matpow2/cuwo-scripts/pull/6
 		override suspend fun readFrom(reader: Reader) =
 			values[reader.readInt().let { if (it == 1000) 0 else it }]
 	}
