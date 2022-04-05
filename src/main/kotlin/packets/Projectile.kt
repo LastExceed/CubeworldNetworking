@@ -19,11 +19,9 @@ data class Projectile(
 	val paddingB: Byte = 0,
 	val paddingC: Short = 0,
 	val type: Type,
+	val unknownC: Byte = 0,
 	val paddingD: Byte = 0,
 	val paddingE: Short = 0,
-	val unknownC: Byte = 0,
-	val paddingF: Byte = 0,
-	val paddingG: Short = 0,
 	val unknownD: Float = 0.0f,
 	val unknownE: Float = 0.0f
 ) : Packet(PacketId.Projectile), SubPacket {
@@ -44,11 +42,9 @@ data class Projectile(
 		writer.writeByte(paddingB)
 		writer.writeShort(paddingC)
 		type.writeTo(writer)
+		writer.writeByte(unknownC)
 		writer.writeByte(paddingD)
 		writer.writeShort(paddingE)
-		writer.writeByte(unknownC)
-		writer.writeByte(paddingF)
-		writer.writeShort(paddingG)
 		writer.writeFloat(unknownD)
 		writer.writeFloat(unknownE)
 	}
@@ -72,24 +68,22 @@ data class Projectile(
 				paddingB = reader.readByte(),
 				paddingC = reader.readShort(),
 				type = Type.readFrom(reader),
+				unknownC = reader.readByte(),
 				paddingD = reader.readByte(),
 				paddingE = reader.readShort(),
-				unknownC = reader.readByte(),
-				paddingF = reader.readByte(),
-				paddingG = reader.readShort(),
 				unknownD = reader.readFloat(),
 				unknownE = reader.readFloat()
 			)
 	}
 
-	enum class Type : CwSerializableEnumByte {
+	enum class Type : CwSerializableEnumInt {
 		Arrow,
 		Magic,
 		Boomerang,
 		Unknown,
 		Boulder;
 
-		companion object : CwEnumByteDeserializer<Type> {
+		companion object : CwEnumIntDeserializer<Type> {
 			override val values = values()
 		}
 	}

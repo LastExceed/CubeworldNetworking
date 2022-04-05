@@ -116,10 +116,8 @@ data class Particle(
 	val size: Float,
 	val count: Int,
 	val type: Type,
-	val paddingA: Byte = 0,
-	val paddingB: Short = 0,
 	val spread: Float,
-	val paddingC: Int = 0
+	val paddingA: Int = 0
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector3Long(position)
@@ -129,10 +127,8 @@ data class Particle(
 		writer.writeFloat(size)
 		writer.writeInt(count)
 		type.writeTo(writer)
-		writer.writeByte(paddingA)
-		writer.writeShort(paddingB)
 		writer.writeFloat(spread)
-		writer.writeInt(paddingC)
+		writer.writeInt(paddingA)
 	}
 
 	companion object {
@@ -145,21 +141,19 @@ data class Particle(
 				size = reader.readFloat(),
 				count = reader.readInt(),
 				type = Type.readFrom(reader),
-				paddingA = reader.readByte(),
-				paddingB = reader.readShort(),
 				spread = reader.readFloat(),
-				paddingC = reader.readInt()
+				paddingA = reader.readInt()
 			)
 	}
 
-	enum class Type : CwSerializableEnumByte {
+	enum class Type : CwSerializableEnumInt {
 		Normal,
 		Spark,
 		Unknown,
 		NoSpreadNoRotation,
 		NoGravity;
 
-		companion object : CwEnumByteDeserializer<Type> {
+		companion object : CwEnumIntDeserializer<Type> {
 			override val values = values()
 		}
 	}
@@ -168,16 +162,12 @@ data class Particle(
 data class Sound(
 	val position: Vector3<Float>,
 	val type: Type,
-	val paddingA: Byte = 0,
-	val paddingB: Short = 0,
 	val pitch: Float = 1f,
 	val volume: Float = 1f
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector3Float(position)
 		type.writeTo(writer)
-		writer.writeByte(paddingA)
-		writer.writeShort(paddingB)
 		writer.writeFloat(pitch)
 		writer.writeFloat(volume)
 	}
@@ -187,14 +177,12 @@ data class Sound(
 			Sound(
 				position = reader.readVector3Float(),
 				type = Type.readFrom(reader),
-				paddingA = reader.readByte(),
-				paddingB = reader.readShort(),
 				pitch = reader.readFloat(),
 				volume = reader.readFloat()
 			)
 	}
 
-	enum class Type : CwSerializableEnumByte {
+	enum class Type : CwSerializableEnumInt {
 		Hit,
 		Blade1,
 		Blade2,
@@ -297,7 +285,7 @@ data class Sound(
 		Owl1,
 		Owl2;
 
-		companion object : CwEnumByteDeserializer<Type> {
+		companion object : CwEnumIntDeserializer<Type> {
 			override val values = values()
 		}
 	}
@@ -308,20 +296,18 @@ data class WorldObject(
 	val objectID: Int,
 	val paddingA: Int = 0,//todo: cuwo doesnt have this ??
 	val type: Type,
-	val paddingB: Byte = 0,
-	val paddingC: Short = 0,
-	val paddingD: Int = 0,
+	val paddingB: Int = 0,
 	val position: Vector3<Long>,
 	val orientation: Orientation,
-	val paddingE: Byte = 0,
-	val paddingF: Short = 0,
+	val paddingC: Byte = 0,
+	val paddingD: Short = 0,
 	val size: Vector3<Float>,
 	val isClosed: Boolean,
-	val paddingG: Byte = 0,
-	val paddingH: Short = 0,
+	val paddingE: Byte = 0,
+	val paddingF: Short = 0,
 	val transformTime: Int,
 	val unknown: Int = 0,
-	val paddingI: Int = 0,
+	val paddingG: Int = 0,
 	val interactor: Long
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
@@ -329,20 +315,18 @@ data class WorldObject(
 		writer.writeInt(objectID)
 		writer.writeInt(paddingA)
 		type.writeTo(writer)
-		writer.writeByte(paddingB)
-		writer.writeShort(paddingC)
-		writer.writeInt(paddingD)
+		writer.writeInt(paddingB)
 		writer.writeVector3Long(position)
 		orientation.writeTo(writer)
-		writer.writeByte(paddingE)
-		writer.writeShort(paddingF)
+		writer.writeByte(paddingC)
+		writer.writeShort(paddingD)
 		writer.writeVector3Float(size)
 		writer.writeBoolean(isClosed)
-		writer.writeByte(paddingG)
-		writer.writeShort(paddingH)
+		writer.writeByte(paddingE)
+		writer.writeShort(paddingF)
 		writer.writeInt(transformTime)
 		writer.writeInt(unknown)
-		writer.writeInt(paddingI)
+		writer.writeInt(paddingG)
 		writer.writeLong(interactor)
 	}
 
@@ -353,25 +337,23 @@ data class WorldObject(
 				objectID = reader.readInt(),
 				paddingA = reader.readInt(),
 				type = Type.readFrom(reader),
-				paddingB = reader.readByte(),
-				paddingC = reader.readShort(),
-				paddingD = reader.readInt(),
+				paddingB = reader.readInt(),
 				position = reader.readVector3Long(),
 				orientation = Orientation.readFrom(reader),
-				paddingE = reader.readByte(),
-				paddingF = reader.readShort(),
+				paddingC = reader.readByte(),
+				paddingD = reader.readShort(),
 				size = reader.readVector3Float(),
 				isClosed = reader.readBoolean(),
-				paddingG = reader.readByte(),
-				paddingH = reader.readShort(),
+				paddingE = reader.readByte(),
+				paddingF = reader.readShort(),
 				transformTime = reader.readInt(),
 				unknown = reader.readInt(),
-				paddingI = reader.readInt(),
+				paddingG = reader.readInt(),
 				interactor = reader.readLong()
 			)
 	}
 
-	enum class Type : CwSerializableEnumByte {
+	enum class Type : CwSerializableEnumInt {
 		Statue,
 		Door,
 		BigDoor,
@@ -450,7 +432,7 @@ data class WorldObject(
 		Workbench,
 		CustomizationBench;
 
-		companion object : CwEnumByteDeserializer<Type> {
+		companion object : CwEnumIntDeserializer<Type> {
 			override val values = values()
 		}
 	}
