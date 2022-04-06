@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
 	kotlin("jvm") version "1.6.20"
 	`maven-publish`
@@ -14,6 +16,10 @@ dependencies {
 	//technically only need to expose ktor-io, and use ktor-utils internally
 	//but consuming this library without ktor-network makes little sense
 	//so might as well just expose that since it depends on the other two
+}
+
+tasks.withType<KotlinCompile> {
+	sourceCompatibility = "17"
 }
 
 publishing {
