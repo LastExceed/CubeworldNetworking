@@ -20,6 +20,7 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
 	sourceCompatibility = "17"
+	targetCompatibility = "17"
 }
 
 publishing {
