@@ -89,18 +89,17 @@ data class Item(
 					paddingD = reader.readByte(),
 					level = reader.readShort(),
 					paddingE = reader.readShort(),
-					spirits = reader.readByteArray(256)
-						.let {
-							spiritsToRead = reader.readInt()
-							val buffer = ByteReadChannel(it)
-							val bufferReader = Reader(buffer)
-							List(spiritsToRead) {
-								Spirit.readFrom(bufferReader)
-							} + List(32 - spiritsToRead) {
-								bufferReader.skip(8)
-								Spirit.void
-							}
-						},
+					spirits = run {
+						val bufferReader = Reader(ByteReadChannel(reader.readByteArray(256)))
+						spiritsToRead = reader.readInt()
+
+						List(spiritsToRead) {
+							Spirit.readFrom(bufferReader)
+						} + List(32 - spiritsToRead) {
+							bufferReader.skip(8)
+							Spirit.void
+						}
+					},
 					spiritCounter = spiritsToRead
 				)
 			}
