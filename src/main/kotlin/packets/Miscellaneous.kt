@@ -40,7 +40,7 @@ data class Miscellaneous(
 				chunkLoots.sumOf { it.drops.size * 328 } +
 				p48s.sumOf { it.subPackets.size * 16 }
 		val buffer = ByteBuffer.allocate(bufferSize)
-			.order(ByteOrder.LITTLE_ENDIAN) as ByteBuffer //the cast is necessary on jdk8
+			.order(ByteOrder.LITTLE_ENDIAN)
 		val bufferWriter = ByteBufferAdapter(buffer)
 
 		subPacketSizes.map { it.first }.forEach {
