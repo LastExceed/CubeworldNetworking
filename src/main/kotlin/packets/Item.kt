@@ -75,7 +75,12 @@ data class Item(
 					typeMinor = Type.Minor(reader.readByte()),
 					paddingA = reader.readShort(),
 					randomSeed = reader.readInt(),
-					recipe = Type.Major.readFrom(reader),
+					recipe =
+					if (typeMajor in setOf(Type.Major.Formula, Type.Major.Leftovers))
+						Type.Major.readFrom(reader)
+					else
+						Type.Major.None
+							.also { reader.skip(1) },
 					paddingB = reader.readByte(),
 					paddingC = reader.readShort(),
 					rarity = Rarity.readFrom(reader),
