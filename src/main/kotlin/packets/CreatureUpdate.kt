@@ -63,7 +63,7 @@ data class CreatureUpdate(
 	override suspend fun writeTo(writer: Writer) {
 		val buffer = ByteBuffer.allocate(4450)
 			.order(ByteOrder.LITTLE_ENDIAN)
-			.position(16) as ByteBuffer //necessary for jdk8
+			.position(16) as ByteBuffer //the cast is necessary on jdk8
 		val bufferWriter = ByteBufferAdapter(buffer)
 
 		val mask = BooleanArray(Long.SIZE_BITS)

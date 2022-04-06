@@ -19,33 +19,38 @@ data class Miscellaneous(
 	val missions: List<Mission> = emptyList()
 ) : Packet(PacketId.Miscellaneous) {
 	override suspend fun writeTo(writer: Writer) {
-		val buffer: ByteBuffer = ByteBuffer.allocate(0x10000)//todo: pre-compute
-			.order(ByteOrder.LITTLE_ENDIAN) as ByteBuffer //necessary for jdk8
+		val subPacketSizes = listOf(
+			worldEdits to 20,
+			hits to 76,
+			particles to 72,
+			sounds to 24,
+			projectiles to 112,
+			worldObjects to 88,
+			chunkLoots to 12,
+			p48s to 12,
+			pickups to 288,
+			kills to 24,
+			attacks to 24,
+			statusEffects to 40,
+			missions to 56,
+		)
+		val bufferSize =
+			subPacketSizes.size * 4 +
+				subPacketSizes.sumOf { it.first.size * it.second } +
+				chunkLoots.sumOf { it.drops.size * 328 } +
+				p48s.sumOf { it.subPackets.size * 16 }
+		val buffer = ByteBuffer.allocate(bufferSize)
+			.order(ByteOrder.LITTLE_ENDIAN) as ByteBuffer //the cast is necessary on jdk8
 		val bufferWriter = ByteBufferAdapter(buffer)
 
-		listOf(
-			worldEdits,
-			hits,
-			particles,
-			sounds,
-			projectiles,
-			worldObjects,
-			chunkLoots,
-			p48s,
-			pickups,
-			kills,
-			attacks,
-			statusEffects,
-			missions
-		).forEach {
+		subPacketSizes.map { it.first }.forEach {
 			bufferWriter.writeInt(it.size)
 			it.forEach { subPacket ->
 				subPacket.writeTo(bufferWriter)
 			}
 		}
 
-		val inflated = buffer.array().copyOfRange(0, buffer.position())
-		Zlib.deflate(inflated).run {
+		Zlib.deflate(buffer.array()).run {
 			writer.writeInt(size)
 			writer.writeByteArray(this)
 		}
