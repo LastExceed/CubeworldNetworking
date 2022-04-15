@@ -10,7 +10,7 @@ enum class PacketId : CwSerializableEnumInt {
 	ServerTick,
 	Airships,
 	WorldUpdate,
-	WorldClock,
+	GameDateTime,
 	CreatureAction,
 	Hit,
 	StatusEffect,

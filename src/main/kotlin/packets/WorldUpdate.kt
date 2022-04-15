@@ -7,7 +7,7 @@ data class WorldUpdate(
 	val worldEdits: List<WorldEdit> = emptyList(),
 	val hits: List<Hit> = emptyList(),
 	val particles: List<Particle> = emptyList(),
-	val sounds: List<Sound> = emptyList(),
+	val soundEffects: List<SoundEffect> = emptyList(),
 	val projectiles: List<Projectile> = emptyList(),
 	val worldObjects: List<WorldObject> = emptyList(),
 	val chunkLoots: List<ChunkLoot> = emptyList(),
@@ -23,7 +23,7 @@ data class WorldUpdate(
 			worldEdits to 20,
 			hits to 76,
 			particles to 72,
-			sounds to 24,
+			soundEffects to 24,
 			projectiles to 112,
 			worldObjects to 88,
 			chunkLoots to 12,
@@ -63,7 +63,7 @@ data class WorldUpdate(
 					worldEdits = List(readInt()) { WorldEdit.readFrom(this) },
 					hits = List(readInt()) { Hit.readFrom(this) },
 					particles = List(readInt()) { Particle.readFrom(this) },
-					sounds = List(readInt()) { Sound.readFrom(this) },
+					soundEffects = List(readInt()) { SoundEffect.readFrom(this) },
 					projectiles = List(readInt()) { Projectile.readFrom(this) },
 					worldObjects = List(readInt()) { WorldObject.readFrom(this) },
 					chunkLoots = List(readInt()) { ChunkLoot.readFrom(this) },
@@ -164,30 +164,30 @@ data class Particle(
 	}
 }
 
-data class Sound(
+data class SoundEffect(
 	val position: Vector3<Float>,
-	val type: Type,
+	val sound: Sound,
 	val pitch: Float = 1f,
 	val volume: Float = 1f
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector3Float(position)
-		type.writeTo(writer)
+		sound.writeTo(writer)
 		writer.writeFloat(pitch)
 		writer.writeFloat(volume)
 	}
 
 	companion object {
 		internal suspend fun readFrom(reader: Reader) =
-			Sound(
+			SoundEffect(
 				position = reader.readVector3Float(),
-				type = Type.readFrom(reader),
+				sound = Sound.readFrom(reader),
 				pitch = reader.readFloat(),
 				volume = reader.readFloat()
 			)
 	}
 
-	enum class Type : CwSerializableEnumInt {
+	enum class Sound : CwSerializableEnumInt {
 		Hit,
 		Blade1,
 		Blade2,
@@ -290,7 +290,7 @@ data class Sound(
 		Owl1,
 		Owl2;
 
-		companion object : CwEnumIntDeserializer<Type> {
+		companion object : CwEnumIntDeserializer<Sound> {
 			override val values = values()
 		}
 	}
