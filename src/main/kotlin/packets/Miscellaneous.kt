@@ -298,8 +298,8 @@ data class Sound(
 
 data class WorldObject(
 	val chunk: Vector2<Int>,
-	val objectID: Int,
-	val paddingA: Int = 0,//todo: cuwo doesnt have this ??
+	val id: Int,
+	val paddingA: Int = 0,//either part of id, or something else. can't be padding because C struct alignment
 	val type: Type,
 	val paddingB: Int = 0,
 	val position: Vector3<Long>,
@@ -317,7 +317,7 @@ data class WorldObject(
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector2Int(chunk)
-		writer.writeInt(objectID)
+		writer.writeInt(id)
 		writer.writeInt(paddingA)
 		type.writeTo(writer)
 		writer.writeInt(paddingB)
@@ -339,7 +339,7 @@ data class WorldObject(
 		internal suspend fun readFrom(reader: Reader) =
 			WorldObject(
 				chunk = reader.readVector2Int(),
-				objectID = reader.readInt(),
+				id = reader.readInt(),
 				paddingA = reader.readInt(),
 				type = Type.readFrom(reader),
 				paddingB = reader.readInt(),
@@ -611,11 +611,11 @@ data class Mission(
 	val type: Int,
 	val boss: Race,
 	val level: Int,
-	val unknownE: Byte = 0,
+	val unknownD: Byte = 0,
 	val state: State,
 	val padding: Short = 0,
-	val currentHP: Int,
-	val maxHP: Int,
+	val healthCurrent: Int,
+	val healthMaximum: Int,
 	val chunk: Vector2<Int>
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
@@ -627,11 +627,11 @@ data class Mission(
 		writer.writeInt(type)
 		boss.writeTo(writer)
 		writer.writeInt(level)
-		writer.writeByte(unknownE)
+		writer.writeByte(unknownD)
 		state.writeTo(writer)
 		writer.writeShort(padding)
-		writer.writeInt(currentHP)
-		writer.writeInt(maxHP)
+		writer.writeInt(healthCurrent)
+		writer.writeInt(healthMaximum)
 		writer.writeVector2Int(chunk)
 	}
 
@@ -646,11 +646,11 @@ data class Mission(
 				type = reader.readInt(),
 				boss = Race.readFrom(reader),
 				level = reader.readInt(),
-				unknownE = reader.readByte(),
+				unknownD = reader.readByte(),
 				state = State.readFrom(reader),
 				padding = reader.readShort(),
-				currentHP = reader.readInt(),
-				maxHP = reader.readInt(),
+				healthCurrent = reader.readInt(),
+				healthMaximum = reader.readInt(),
 				chunk = reader.readVector2Int()
 			)
 	}
