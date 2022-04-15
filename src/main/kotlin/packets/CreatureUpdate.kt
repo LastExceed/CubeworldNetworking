@@ -833,7 +833,7 @@ enum class Animation : CwSerializableEnumByte {
 	DaggersM1a,
 	DaggersM1b,
 	FistsM2,
-	Kick, //same as 20
+	Kick,
 	ShootArrow,
 	CrossbowM2,
 	CrossbowM2Charging,
@@ -859,7 +859,7 @@ enum class Animation : CwSerializableEnumByte {
 	WandWaterM1,
 	WandWaterM2,
 	WandFireM2,
-	Unknown047, //same as 54
+	Unknown047, //same as smash
 	Intercept,
 	Teleport,
 	Unknown050,
@@ -905,7 +905,7 @@ enum class Animation : CwSerializableEnumByte {
 	Splash,
 	EarthQuake,
 	Clone,
-	Unknown093, //same as 48
+	Unknown093, //same as intercept
 	FireBeam,
 	FireRay,
 	Shuriken,
@@ -944,7 +944,7 @@ enum class CombatClassMajor(override val serialized: Byte) : CwSerializableEnumB
 	Blacksmith(-123),//no function
 	Woodworker(-122),//no function
 	Weaver(-121),//no function
-	Villager(-120),
+	Villager(-120),//no function
 	Adapter(-119);
 
 	companion object : CwEnumByteDeserializer<CombatClassMajor> {
