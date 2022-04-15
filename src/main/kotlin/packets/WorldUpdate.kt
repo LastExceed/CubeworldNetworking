@@ -579,14 +579,14 @@ data class Kill(
 }
 
 data class Attack(
-	val target: Long,
-	val attacker: Long,
+	val target: CreatureId,
+	val attacker: CreatureId,
 	val damage: Float,
 	val unknown: Int = 0
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeLong(target)
-		writer.writeLong(attacker)
+		writer.writeLong(target.value)
+		writer.writeLong(attacker.value)
 		writer.writeFloat(damage)
 		writer.writeInt(unknown)
 	}
@@ -594,8 +594,8 @@ data class Attack(
 	companion object {
 		internal suspend fun readFrom(reader: Reader) =
 			Attack(
-				target = reader.readLong(),
-				attacker = reader.readLong(),
+				target = CreatureId(reader.readLong()),
+				attacker = CreatureId(reader.readLong()),
 				damage = reader.readFloat(),
 				unknown = reader.readInt()
 			)
