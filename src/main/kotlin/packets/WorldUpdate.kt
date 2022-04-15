@@ -3,7 +3,7 @@ package com.github.lastexceed.cubeworldnetworking.packets
 import com.github.lastexceed.cubeworldnetworking.utils.*
 import java.nio.*
 
-data class Miscellaneous(
+data class WorldUpdate(
 	val worldEdits: List<WorldEdit> = emptyList(),
 	val hits: List<Hit> = emptyList(),
 	val particles: List<Particle> = emptyList(),
@@ -17,7 +17,7 @@ data class Miscellaneous(
 	val attacks: List<Attack> = emptyList(),
 	val statusEffects: List<StatusEffect> = emptyList(),
 	val missions: List<Mission> = emptyList()
-) : Packet(PacketId.Miscellaneous) {
+) : Packet(PacketId.WorldUpdate) {
 	override suspend fun writeTo(writer: Writer) {
 		val subPacketSizes = listOf(
 			worldEdits to 20,
@@ -56,10 +56,10 @@ data class Miscellaneous(
 		}
 	}
 
-	companion object : CwDeserializer<Miscellaneous> {
+	companion object : CwDeserializer<WorldUpdate> {
 		override suspend fun readFrom(reader: Reader) =
 			Reader(Zlib.inflate(reader.readByteArray(reader.readInt()))).run {
-				Miscellaneous(
+				WorldUpdate(
 					worldEdits = List(readInt()) { WorldEdit.readFrom(this) },
 					hits = List(readInt()) { Hit.readFrom(this) },
 					particles = List(readInt()) { Particle.readFrom(this) },
