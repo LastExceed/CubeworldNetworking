@@ -23,7 +23,7 @@ class Airships(
 }
 
 data class Airship(
-	val id: Long,
+	val id: Id,
 	val unknownA: Byte = 0,
 	val paddingA: Byte = 0,
 	val paddingB: Short = 0,
@@ -41,7 +41,7 @@ data class Airship(
 	val paddingG: Int = 0
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeLong(id)
+		id.writeTo(writer)
 		writer.writeByte(unknownA)
 		writer.writeByte(paddingA)
 		writer.writeShort(paddingB)
@@ -62,7 +62,7 @@ data class Airship(
 	companion object {
 		internal suspend fun readFrom(reader: Reader): Airship =
 			Airship(
-				id = reader.readLong(),
+				id = Id(reader.readLong()),
 				unknownA = reader.readByte(),
 				paddingA = reader.readByte(),
 				paddingB = reader.readShort(),
@@ -79,6 +79,18 @@ data class Airship(
 				paddingF = reader.readShort(),
 				paddingG = reader.readInt()
 			)
+	}
+
+	@JvmInline
+	value class Id(val value: Long) : CwSerializable {
+		override suspend fun writeTo(writer: Writer) {
+			writer.writeLong(value)
+		}
+
+
+		companion object : CwDeserializer<Id> {
+			override suspend fun readFrom(reader: Reader) = Id(reader.readLong())
+		}
 	}
 
 	enum class State : CwSerializableEnumByte {

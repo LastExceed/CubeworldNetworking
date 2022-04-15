@@ -298,7 +298,7 @@ data class SoundEffect(
 
 data class WorldObject(
 	val chunk: Vector2<Int>,
-	val id: Int,
+	val id: Id,
 	val paddingA: Int = 0,//either part of id, or something else. can't be padding because C struct alignment
 	val type: Type,
 	val paddingB: Int = 0,
@@ -317,7 +317,7 @@ data class WorldObject(
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector2Int(chunk)
-		writer.writeInt(id)
+		id.writeTo(writer)
 		writer.writeInt(paddingA)
 		type.writeTo(writer)
 		writer.writeInt(paddingB)
@@ -339,7 +339,7 @@ data class WorldObject(
 		internal suspend fun readFrom(reader: Reader) =
 			WorldObject(
 				chunk = reader.readVector2Int(),
-				id = reader.readInt(),
+				id = Id.readFrom(reader),
 				paddingA = reader.readInt(),
 				type = Type.readFrom(reader),
 				paddingB = reader.readInt(),
@@ -356,6 +356,18 @@ data class WorldObject(
 				paddingG = reader.readInt(),
 				interactor = reader.readLong()
 			)
+	}
+
+	@JvmInline
+	value class Id(val value: Int) : CwSerializable {
+		override suspend fun writeTo(writer: Writer) {
+			writer.writeInt(value)
+		}
+
+
+		companion object : CwDeserializer<Id> {
+			override suspend fun readFrom(reader: Reader) = Id(reader.readInt())
+		}
 	}
 
 	enum class Type : CwSerializableEnumInt {
@@ -607,7 +619,7 @@ data class Mission(
 	val unknownA: Int = 0,
 	val unknownB: Int = 0,
 	val unknownC: Int = 0,
-	val id: Int,
+	val id: Id,
 	val type: Int,
 	val boss: Race,
 	val level: Int,
@@ -623,7 +635,7 @@ data class Mission(
 		writer.writeInt(unknownA)
 		writer.writeInt(unknownB)
 		writer.writeInt(unknownC)
-		writer.writeInt(id)
+		id.writeTo(writer)
 		writer.writeInt(type)
 		boss.writeTo(writer)
 		writer.writeInt(level)
@@ -642,7 +654,7 @@ data class Mission(
 				unknownA = reader.readInt(),
 				unknownB = reader.readInt(),
 				unknownC = reader.readInt(),
-				id = reader.readInt(),
+				id = Id.readFrom(reader),
 				type = reader.readInt(),
 				boss = Race.readFrom(reader),
 				level = reader.readInt(),
@@ -662,6 +674,18 @@ data class Mission(
 
 		companion object : CwEnumByteDeserializer<State> {
 			override val values = values()
+		}
+	}
+
+	@JvmInline
+	value class Id(val value: Int) : CwSerializable {
+		override suspend fun writeTo(writer: Writer) {
+			writer.writeInt(value)
+		}
+
+
+		companion object : CwDeserializer<Id> {
+			override suspend fun readFrom(reader: Reader) = Id(reader.readInt())
 		}
 	}
 }
