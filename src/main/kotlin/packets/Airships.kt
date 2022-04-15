@@ -2,19 +2,19 @@ package com.github.lastexceed.cubeworldnetworking.packets
 
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
-data class AirshipTraffic(
-	val airships: List<Airship> = emptyList()
-) : Packet(PacketId.AirshipTraffic) {
+class Airships(
+	airships: List<Airship> = emptyList()
+) : Packet(PacketId.Airships), List<Airship> by airships {
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeInt(airships.size)
-		airships.forEach {
+		writer.writeInt(size)
+		forEach {
 			it.writeTo(writer)
 		}
 	}
 
-	companion object : CwDeserializer<AirshipTraffic> {
+	companion object : CwDeserializer<Airships> {
 		override suspend fun readFrom(reader: Reader) =
-			AirshipTraffic(
+			Airships(
 				List(reader.readInt()) {
 					Airship.readFrom(reader)
 				}
