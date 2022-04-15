@@ -9,7 +9,7 @@ class PlayerInitialization(
 ) : Packet(PacketId.PlayerInitialization) {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeInt(unknown)
-		writer.writeLong(assignedId.value)
+		assignedId.writeTo(writer)
 		writer.writeByteArray(borkedCreatureData)
 	}
 
@@ -17,7 +17,7 @@ class PlayerInitialization(
 		override suspend fun readFrom(reader: Reader) =
 			PlayerInitialization(
 				unknown = reader.readInt(),
-				assignedId = CreatureId(reader.readLong()),
+				assignedId = CreatureId.readFrom(reader),
 				borkedCreatureData = reader.readByteArray(0x1168)
 			)
 	}

@@ -26,14 +26,14 @@ abstract class ChatMessage : Packet(PacketId.ChatMessage) {
 		override val text: String
 	) : ChatMessage() {
 		override suspend fun writeTo(writer: Writer) {
-			writer.writeLong(source.value)
+			source.writeTo(writer)
 			super.writeTo(writer)
 		}
 
 		companion object : CwDeserializer<ChatMessage.FromServer> {
 			override suspend fun readFrom(reader: Reader) =
 				ChatMessage.FromServer(
-					source = CreatureId(reader.readLong()),
+					source = CreatureId.readFrom(reader),
 					text = readText(reader)
 				)
 		}

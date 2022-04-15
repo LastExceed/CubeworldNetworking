@@ -26,7 +26,7 @@ data class Projectile(
 	val unknownE: Float = 0.0f
 ) : Packet(PacketId.Projectile), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeLong(attacker.value)
+		attacker.writeTo(writer)
 		writer.writeVector2Int(chunk)
 		writer.writeInt(unknownA)
 		writer.writeInt(paddingA)
@@ -52,7 +52,7 @@ data class Projectile(
 	companion object : CwDeserializer<Projectile> {
 		override suspend fun readFrom(reader: Reader) =
 			Projectile(
-				attacker = CreatureId(reader.readLong()),
+				attacker = CreatureId.readFrom(reader),
 				chunk = reader.readVector2Int(),
 				unknownA = reader.readInt(),
 				paddingA = reader.readInt(),

@@ -19,8 +19,8 @@ data class Hit(
 	val paddingD: Byte = 0
 ) : Packet(PacketId.Hit), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeLong(attacker.value)
-		writer.writeLong(target.value)
+		attacker.writeTo(writer)
+		target.writeTo(writer)
 		writer.writeFloat(damage)
 		writer.writeBoolean(critical)
 		writer.writeByte(paddingA)
@@ -38,8 +38,8 @@ data class Hit(
 	companion object : CwDeserializer<Hit> {
 		override suspend fun readFrom(reader: Reader) =
 			Hit(
-				attacker = CreatureId(reader.readLong()),
-				target = CreatureId(reader.readLong()),
+				attacker = CreatureId.readFrom(reader),
+				target = CreatureId.readFrom(reader),
 				damage = reader.readFloat(),
 				critical = reader.readBoolean(),
 				paddingA = reader.readByte(),

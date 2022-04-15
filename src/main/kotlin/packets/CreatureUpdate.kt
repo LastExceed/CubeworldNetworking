@@ -209,7 +209,7 @@ data class CreatureUpdate(
 			mask[34] = true
 		}
 		master?.let {
-			bufferWriter.writeLong(it.value)
+			it.writeTo(bufferWriter)
 			mask[35] = true
 		}
 		unknown36?.let {
@@ -266,7 +266,7 @@ data class CreatureUpdate(
 		val inflatedSize = buffer.position()
 
 		buffer.position(0)
-		bufferWriter.writeLong(id.value)
+		id.writeTo(bufferWriter)
 		bufferWriter.writeLong(mask.toLong())
 
 		val inflated = buffer.array().copyOfRange(0, inflatedSize)
@@ -283,7 +283,7 @@ data class CreatureUpdate(
 			val inflated = Zlib.inflate(deflated)
 			val inflatedReader = Reader(inflated)
 
-			val id = CreatureId(inflatedReader.readLong())
+			val id = CreatureId.readFrom(inflatedReader)
 			val mask = inflatedReader.readLong().toBooleanArray()
 
 			return CreatureUpdate(
@@ -323,7 +323,7 @@ data class CreatureUpdate(
 				unknown32 = if (mask[32]) inflatedReader.readByte() else null,
 				level = if (mask[33]) inflatedReader.readInt() else null,
 				experience = if (mask[34]) inflatedReader.readInt() else null,
-				master = if (mask[35]) CreatureId(inflatedReader.readLong()) else null,
+				master = if (mask[35]) CreatureId.readFrom(inflatedReader) else null,
 				unknown36 = if (mask[36]) inflatedReader.readLong() else null,
 				powerBase = if (mask[37]) inflatedReader.readByte() else null,
 				unknown38 = if (mask[38]) inflatedReader.readInt() else null,
@@ -342,7 +342,15 @@ data class CreatureUpdate(
 }
 
 @JvmInline
-value class CreatureId(val value: Long)
+value class CreatureId(val value: Long) : CwSerializable {
+	override suspend fun writeTo(writer: Writer) {
+		writer.writeLong(value)
+	}
+
+	companion object : CwDeserializer<CreatureId> {
+		override suspend fun readFrom(reader: Reader) = CreatureId(reader.readLong())
+	}
+}
 
 data class Appearance(
 	val unknownA: Byte,

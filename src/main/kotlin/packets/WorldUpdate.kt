@@ -541,14 +541,14 @@ data class Pickup(
 	val item: Item
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeLong(interactor.value)
+		interactor.writeTo(writer)
 		item.writeTo(writer)
 	}
 
 	companion object {
 		internal suspend fun readFrom(reader: Reader) =
 			Pickup(
-				interactor = CreatureId(reader.readLong()),
+				interactor = CreatureId.readFrom(reader),
 				item = Item.readFrom(reader)
 			)
 	}
@@ -561,8 +561,8 @@ data class Kill(
 	val xp: Int
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeLong(killer.value)
-		writer.writeLong(victim.value)
+		killer.writeTo(writer)
+		victim.writeTo(writer)
 		writer.writeInt(unknown)
 		writer.writeInt(xp)
 	}
@@ -570,8 +570,8 @@ data class Kill(
 	companion object {
 		internal suspend fun readFrom(reader: Reader) =
 			Kill(
-				killer = CreatureId(reader.readLong()),
-				victim = CreatureId(reader.readLong()),
+				killer = CreatureId.readFrom(reader),
+				victim = CreatureId.readFrom(reader),
 				unknown = reader.readInt(),
 				xp = reader.readInt()
 			)
@@ -585,8 +585,8 @@ data class Attack(
 	val unknown: Int = 0
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeLong(target.value)
-		writer.writeLong(attacker.value)
+		target.writeTo(writer)
+		attacker.writeTo(writer)
 		writer.writeFloat(damage)
 		writer.writeInt(unknown)
 	}
@@ -594,8 +594,8 @@ data class Attack(
 	companion object {
 		internal suspend fun readFrom(reader: Reader) =
 			Attack(
-				target = CreatureId(reader.readLong()),
-				attacker = CreatureId(reader.readLong()),
+				target = CreatureId.readFrom(reader),
+				attacker = CreatureId.readFrom(reader),
 				damage = reader.readFloat(),
 				unknown = reader.readInt()
 			)

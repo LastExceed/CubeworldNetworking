@@ -14,29 +14,29 @@ data class StatusEffect(
 	val creatureId3: CreatureId
 ) : Packet(PacketId.StatusEffect), SubPacket {
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeLong(source.value)
-		writer.writeLong(target.value)
+		source.writeTo(writer)
+		target.writeTo(writer)
 		type.writeTo(writer)
 		writer.writeByte(paddingA)
 		writer.writeShort(paddingB)
 		writer.writeFloat(modifier)
 		writer.writeInt(duration)
 		writer.writeInt(paddingC)
-		writer.writeLong(creatureId3.value)
+		creatureId3.writeTo(writer)
 	}
 
 	companion object : CwDeserializer<StatusEffect> {
 		override suspend fun readFrom(reader: Reader) =
 			StatusEffect(
-				source = CreatureId(reader.readLong()),
-				target = CreatureId(reader.readLong()),
+				source = CreatureId.readFrom(reader),
+				target = CreatureId.readFrom(reader),
 				type = Type.readFrom(reader),
 				paddingA = reader.readByte(),
 				paddingB = reader.readShort(),
 				modifier = reader.readFloat(),
 				duration = reader.readInt(),
 				paddingC = reader.readInt(),
-				creatureId3 = CreatureId(reader.readLong())
+				creatureId3 = CreatureId.readFrom(reader)
 			)
 	}
 
