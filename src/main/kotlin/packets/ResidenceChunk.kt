@@ -4,7 +4,7 @@ import com.github.lastexceed.cubeworldnetworking.utils.*
 
 data class ResidenceChunk(
 	val chunk: Vector2<Int>
-) : Packet(PacketId.ChunkDiscovery) {
+) : Packet(PacketId.ResidenceChunk) {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector2Int(chunk)
 	}

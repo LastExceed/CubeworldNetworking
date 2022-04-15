@@ -16,7 +16,7 @@ enum class PacketId : CwSerializableEnumInt {
 	StatusEffect,
 	Projectile,
 	ChatMessage,
-	ChunkDiscovery,
+	ResidenceChunk,
 	ResidenceBiome,
 	Unknown13,
 	Unknown14,
