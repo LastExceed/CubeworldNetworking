@@ -345,40 +345,40 @@ data class CreatureUpdate(
 value class CreatureId(val value: Long)
 
 data class Appearance(
-	var unknownA: Byte,
-	var unknownB: Byte,
-	var hairColor: Vector3<Byte>,
-	var unknownC: Byte,
-	var flags: FlagSet<AppearanceFlag>,
-	var creatureSize: Vector3<Float>,
-	var headModel: Short,
-	var hairModel: Short,
-	var handModel: Short,
-	var footModel: Short,
-	var bodyModel: Short,
-	var tailModel: Short,
-	var shoulder2Model: Short,
-	var wingModel: Short,
-	var headSize: Float,
-	var bodySize: Float,
-	var handSize: Float,
-	var footSize: Float,
-	var shoulder2Size: Float,
-	var weaponSize: Float,
-	var tailSize: Float,
-	var shoulder1Size: Float,
-	var wingSize: Float,
-	var bodyRotation: Float,
-	var handRotation: Vector3<Float>,
-	var feetRotation: Float,
-	var wingRotation: Float,
-	var tailRotation: Float,
-	var bodyOffset: Vector3<Float>,
-	var headOffset: Vector3<Float>,
-	var handOffset: Vector3<Float>,
-	var footOffset: Vector3<Float>,
-	var tailOffset: Vector3<Float>,
-	var wingOffset: Vector3<Float>
+	val unknownA: Byte,
+	val unknownB: Byte,
+	val hairColor: Vector3<Byte>,
+	val unknownC: Byte,
+	val flags: FlagSet<AppearanceFlag>,
+	val creatureSize: Vector3<Float>,
+	val headModel: Short,
+	val hairModel: Short,
+	val handModel: Short,
+	val footModel: Short,
+	val bodyModel: Short,
+	val tailModel: Short,
+	val shoulder2Model: Short,
+	val wingModel: Short,
+	val headSize: Float,
+	val bodySize: Float,
+	val handSize: Float,
+	val footSize: Float,
+	val shoulder2Size: Float,
+	val weaponSize: Float,
+	val tailSize: Float,
+	val shoulder1Size: Float,
+	val wingSize: Float,
+	val bodyRotation: Float,
+	val handRotation: Vector3<Float>,
+	val feetRotation: Float,
+	val wingRotation: Float,
+	val tailRotation: Float,
+	val bodyOffset: Vector3<Float>,
+	val headOffset: Vector3<Float>,
+	val handOffset: Vector3<Float>,
+	val footOffset: Vector3<Float>,
+	val tailOffset: Vector3<Float>,
+	val wingOffset: Vector3<Float>
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeByte(unknownA)
@@ -459,11 +459,11 @@ data class Appearance(
 }
 
 data class Multipliers(
-	var health: Float,
-	var attackSpeed: Float,
-	var damage: Float,
-	var armor: Float,
-	var resi: Float
+	val health: Float,
+	val attackSpeed: Float,
+	val damage: Float,
+	val armor: Float,
+	val resi: Float
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeFloat(health)
@@ -486,19 +486,19 @@ data class Multipliers(
 }
 
 data class Equipment(
-	var unknown: Item,
-	var neck: Item,
-	var chest: Item,
-	var feet: Item,
-	var hands: Item,
-	var shoulder: Item,
-	var leftWeapon: Item,
-	var rightWeapon: Item,
-	var leftRing: Item,
-	var rightRing: Item,
-	var lamp: Item,
-	var special: Item,
-	var pet: Item
+	val unknown: Item,
+	val neck: Item,
+	val chest: Item,
+	val feet: Item,
+	val hands: Item,
+	val shoulder: Item,
+	val leftWeapon: Item,
+	val rightWeapon: Item,
+	val leftRing: Item,
+	val rightRing: Item,
+	val lamp: Item,
+	val special: Item,
+	val pet: Item
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		unknown.writeTo(writer)
@@ -537,17 +537,17 @@ data class Equipment(
 }
 
 data class SkillDistribution(
-	var petMaster: Int,
-	var petRiding: Int,
-	var sailing: Int,
-	var climbing: Int,
-	var hangGliding: Int,
-	var swimming: Int,
-	var ability1: Int,
-	var ability2: Int,
-	var ability3: Int,
-	var ability4: Int,
-	var ability5: Int
+	val petMaster: Int,
+	val petRiding: Int,
+	val sailing: Int,
+	val climbing: Int,
+	val hangGliding: Int,
+	val swimming: Int,
+	val ability1: Int,
+	val ability2: Int,
+	val ability3: Int,
+	val ability4: Int,
+	val ability5: Int
 ) : SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeInt(petMaster)
