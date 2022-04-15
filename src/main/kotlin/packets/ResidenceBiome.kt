@@ -3,10 +3,10 @@ package com.github.lastexceed.cubeworldnetworking.packets
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
 data class ResidenceBiome(
-	val sector: Vector2<Int>
-) : Packet(PacketId.ChunkDiscovery) {
+	val biome: Vector2<Int>
+) : Packet(PacketId.ResidenceBiome) {
 	override suspend fun writeTo(writer: Writer) {
-		writer.writeVector2Int(sector)
+		writer.writeVector2Int(biome)
 	}
 
 	companion object : CwDeserializer<ResidenceBiome> {
