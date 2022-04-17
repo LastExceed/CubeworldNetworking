@@ -2,7 +2,7 @@ package com.github.lastexceed.cubeworldnetworking.packets
 
 import com.github.lastexceed.cubeworldnetworking.utils.*
 
-abstract class Packet(val packetId: PacketId) : CwSerializable
+sealed class Packet(val packetId: PacketId) : CwSerializable
 
 enum class PacketId : CwSerializableEnumInt {
 	CreatureUpdate,
