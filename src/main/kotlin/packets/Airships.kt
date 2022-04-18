@@ -39,7 +39,7 @@ data class Airship(
 	val paddingE: Byte = 0,
 	val paddingF: Short = 0,
 	val paddingG: Int = 0
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		id.writeTo(writer)
 		writer.writeByte(unknownA)

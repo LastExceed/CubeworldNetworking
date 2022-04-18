@@ -24,7 +24,7 @@ data class Projectile(
 	val paddingE: Short = 0,
 	val unknownD: Float = 0.0f,
 	val unknownE: Float = 0.0f
-) : Packet(PacketId.Projectile), SubPacket {
+) : Packet(PacketId.Projectile) {
 	override suspend fun writeTo(writer: Writer) {
 		attacker.writeTo(writer)
 		writer.writeVector2Int(chunk)

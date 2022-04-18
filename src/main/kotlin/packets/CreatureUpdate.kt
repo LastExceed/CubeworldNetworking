@@ -387,7 +387,7 @@ data class Appearance(
 	val footOffset: Vector3<Float>,
 	val tailOffset: Vector3<Float>,
 	val wingOffset: Vector3<Float>
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeByte(unknownA)
 		writer.writeByte(unknownB)
@@ -472,7 +472,7 @@ data class Multipliers(
 	val damage: Float,
 	val armor: Float,
 	val resi: Float
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeFloat(health)
 		writer.writeFloat(attackSpeed)
@@ -507,7 +507,7 @@ data class Equipment(
 	val lamp: Item,
 	val special: Item,
 	val pet: Item
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		unknown.writeTo(writer)
 		neck.writeTo(writer)
@@ -556,7 +556,7 @@ data class SkillDistribution(
 	val ability3: Int,
 	val ability4: Int,
 	val ability5: Int
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeInt(petMaster)
 		writer.writeInt(petRiding)

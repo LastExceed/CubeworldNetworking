@@ -83,7 +83,7 @@ data class WorldEdit(
 	val color: Vector3<Byte>,
 	val blockType: BlockType,
 	val padding: Int = 0
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector3Int(position)
 		writer.writeVector3Byte(color)
@@ -123,7 +123,7 @@ data class Particle(
 	val type: Type,
 	val spread: Float,
 	val paddingA: Int = 0
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector3Long(position)
 		writer.writeVector3Float(velocity)
@@ -169,7 +169,7 @@ data class SoundEffect(
 	val sound: Sound,
 	val pitch: Float = 1f,
 	val volume: Float = 1f
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector3Float(position)
 		sound.writeTo(writer)
@@ -314,7 +314,7 @@ data class WorldObject(
 	val unknown: Int = 0,
 	val paddingG: Int = 0,
 	val interactor: Long
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector2Int(chunk)
 		id.writeTo(writer)
@@ -469,7 +469,7 @@ data class WorldObject(
 data class ChunkLoot(
 	val chunk: Vector2<Int>,
 	val drops: List<Drop> = listOf()
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector2Int(chunk)
 		writer.writeInt(drops.size)
@@ -496,7 +496,7 @@ data class Drop(
 	val droptime: Int = 0,
 	val unknownB: Int = 0,
 	val paddingC: Int = 0
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		item.writeTo(writer)
 		writer.writeVector3Long(position)
@@ -530,7 +530,7 @@ data class Drop(
 data class P48(
 	val chunk: Vector2<Int>,
 	val subPackets: List<ByteArray> = listOf()
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector2Int(chunk)
 		writer.writeInt(subPackets.size)
@@ -551,7 +551,7 @@ data class P48(
 data class Pickup(
 	val interactor: CreatureId,
 	val item: Item
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		interactor.writeTo(writer)
 		item.writeTo(writer)
@@ -571,7 +571,7 @@ data class Kill(
 	val victim: CreatureId,
 	val unknown: Int = 0,
 	val xp: Int
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		killer.writeTo(writer)
 		victim.writeTo(writer)
@@ -595,7 +595,7 @@ data class Attack(
 	val attacker: CreatureId,
 	val damage: Float,
 	val unknown: Int = 0
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		target.writeTo(writer)
 		attacker.writeTo(writer)
@@ -629,7 +629,7 @@ data class Mission(
 	val healthCurrent: Int,
 	val healthMaximum: Int,
 	val chunk: Vector2<Int>
-) : SubPacket {
+) : CwSerializable {
 	override suspend fun writeTo(writer: Writer) {
 		writer.writeVector2Int(sector)
 		writer.writeInt(unknownA)

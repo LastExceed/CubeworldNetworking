@@ -30,8 +30,6 @@ enum class PacketId : CwSerializableEnumInt {
 	}
 }
 
-interface SubPacket : CwSerializable
-
 interface CwSerializable {
 	suspend fun writeTo(writer: Writer)
 }
