@@ -1,5 +1,7 @@
 package com.github.lastexceed.cubeworldnetworking.utils
 
+import com.github.lastexceed.cubeworldnetworking.packets.*
+
 object Utils {
 	fun creatureToSoundPosition(creaturePosition: Vector3<Long>) =
 		Vector3(
@@ -21,4 +23,22 @@ object Utils {
 	const val SIZE_ZONE = SIZE_CHUNK * 8L
 	const val SIZE_BIOME = SIZE_ZONE * 64L
 	const val SIZE_WORLD = SIZE_BIOME * 1024L
+}
+
+fun WorldUpdate.Companion.from(subPacket: WorldUpdate.SubPacket) {
+	WorldUpdate(
+		worldEdits = listOfNotNull(subPacket as? WorldEdit),
+		hits = listOfNotNull(subPacket as? Hit),
+		particles = listOfNotNull(subPacket as? Particle),
+		soundEffects = listOfNotNull(subPacket as? SoundEffect),
+		projectiles = listOfNotNull(subPacket as? Projectile),
+		worldObjects = listOfNotNull(subPacket as? WorldObject),
+		chunkLoots = listOfNotNull(subPacket as? ChunkLoot),
+		p48s = listOfNotNull(subPacket as? P48),
+		pickups = listOfNotNull(subPacket as? Pickup),
+		kills = listOfNotNull(subPacket as? Kill),
+		attacks = listOfNotNull(subPacket as? Attack),
+		statusEffects = listOfNotNull(subPacket as? StatusEffect),
+		missions = listOfNotNull(subPacket as? Mission),
+	)
 }

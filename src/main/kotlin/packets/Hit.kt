@@ -17,7 +17,7 @@ data class Hit(
 	val type: Type,
 	val flash: Boolean,
 	val paddingD: Byte = 0
-) : Packet(PacketId.Hit) {
+) : Packet(PacketId.Hit), WorldUpdate.SubPacket {
 	override suspend fun writeTo(writer: Writer) {
 		attacker.writeTo(writer)
 		target.writeTo(writer)
