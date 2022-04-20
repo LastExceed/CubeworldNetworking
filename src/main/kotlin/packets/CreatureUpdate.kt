@@ -249,9 +249,8 @@ data class CreatureUpdate(
 			mask[44] = true
 		}
 		name?.let {
-			val nameBytes = ByteArray(16)
-			it.toByteArray(Charsets.UTF_8).copyInto(nameBytes)
-			bufferWriter.writeByteArray(nameBytes)
+			bufferWriter.writeByteArray(it.toByteArray(Charsets.ISO_8859_1))
+			bufferWriter.pad(16 - it.length)
 			mask[45] = true
 		}
 		skillPointDistribution?.let {
@@ -333,7 +332,7 @@ data class CreatureUpdate(
 				unknown42 = if (mask[42]) inflatedReader.readByte() else null,
 				consumable = if (mask[43]) Item.readFrom(inflatedReader) else null,
 				equipment = if (mask[44]) Equipment.readFrom(inflatedReader) else null,
-				name = if (mask[45]) inflatedReader.readByteArray(16).toString(Charsets.UTF_8).trimEnd(Char.MIN_VALUE) else null,
+				name = if (mask[45]) inflatedReader.readByteArray(16).toString(Charsets.ISO_8859_1).takeWhile { it != Char.MIN_VALUE } else null,
 				skillPointDistribution = if (mask[46]) SkillDistribution.readFrom(inflatedReader) else null,
 				manaCubes = if (mask[47]) inflatedReader.readInt() else null
 			)
